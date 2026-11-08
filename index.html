@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國小多學科互動測驗學習平台 (數學 / 英文 / 國語 / 社會)</title>
+  <title>國小雙學科互動測驗學習平台 (數學 / 英文)</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -18,14 +18,39 @@
         extend: {
           fontFamily: {
             sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+          },
+          colors: {
+            math: {
+              50: '#f0fdfa',
+              100: '#ccfbf1',
+              500: '#14b8a6',
+              600: '#0d9488',
+              700: '#0f766e',
+              800: '#115e59',
+            },
+            eng: {
+              50: '#faf5ff',
+              100: '#f3e8ff',
+              500: '#a855f7',
+              600: '#9333ea',
+              700: '#7e22ce',
+              800: '#6b21a8',
+            }
           }
         }
       }
     }
   </script>
   <style>
+    /* Smooth transitions and scroll behavior */
     html {
       scroll-behavior: smooth;
+    }
+    .badge-btn {
+      transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .badge-btn:hover {
+      transform: translateY(-2px);
     }
     .custom-scrollbar::-webkit-scrollbar {
       width: 6px;
@@ -38,6 +63,9 @@
       background: #cbd5e1;
       border-radius: 9999px;
     }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-teal-500 selection:text-white">
@@ -49,35 +77,27 @@
         
         <!-- Logo & Title -->
         <div class="flex items-center space-x-3">
-          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
-            <i id="subjectIcon" class="fa-solid fa-language"></i>
+          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
+            <i id="subjectIcon" class="fa-solid fa-calculator"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-purple-100 text-purple-800 transition-colors">英語科</span>
+              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-teal-100 text-teal-800 transition-colors">國小數學</span>
               <span class="text-xs text-slate-400 hidden sm:inline-block">互動題庫系統</span>
             </div>
-            <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">國小學科多元測驗系統</h1>
+            <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">國小雙學科測驗訓練</h1>
           </div>
         </div>
 
-        <!-- Subject Switch Tabs (4 Subjects) -->
-        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto">
-          <button id="btnSwitchEng" onclick="switchSubject('eng')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-purple-700 shadow-sm shrink-0">
-            <i class="fa-solid fa-language"></i>
-            <span>英語科</span>
-          </button>
-          <button id="btnSwitchMath" onclick="switchSubject('math')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-teal-600 shrink-0">
+        <!-- Subject Switch Tabs -->
+        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner">
+          <button id="btnSwitchMath" onclick="switchSubject('math')" class="flex items-center space-x-2 px-3 sm:px-5 py-2 rounded-xl text-sm font-bold transition-all duration-200 bg-white text-teal-700 shadow-sm">
             <i class="fa-solid fa-calculator"></i>
-            <span>數學科</span>
+            <span class="hidden sm:inline">六年級</span>數學科
           </button>
-          <button id="btnSwitchChi" onclick="switchSubject('chi')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-rose-600 shrink-0">
-            <i class="fa-solid fa-book"></i>
-            <span>國語科</span>
-          </button>
-          <button id="btnSwitchSoc" onclick="switchSubject('soc')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-amber-600 shrink-0">
-            <i class="fa-solid fa-landmark"></i>
-            <span>社會科</span>
+          <button id="btnSwitchEng" onclick="switchSubject('eng')" class="flex items-center space-x-2 px-3 sm:px-5 py-2 rounded-xl text-sm font-bold transition-all duration-200 text-slate-600 hover:text-purple-600">
+            <i class="fa-solid fa-language"></i>
+            <span class="hidden sm:inline">生活</span>英文科
           </button>
         </div>
 
@@ -86,7 +106,7 @@
           <button onclick="toggleAudio()" id="btnAudioToggle" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors" title="音效切換">
             <i id="audioIcon" class="fa-solid fa-volume-high"></i>
           </button>
-          <button onclick="resetCurrentQuiz()" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center space-x-1 transition-colors" title="重設進度">
+          <button onclick="resetCurrentQuiz()" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center space-x-1 transition-colors" title="重新測驗">
             <i class="fa-solid fa-rotate-left"></i>
             <span class="hidden md:inline">重測</span>
           </button>
@@ -95,18 +115,20 @@
       </div>
     </div>
 
-    <!-- Sub-bar: Modes & Category Filters -->
+    <!-- Sub-bar: Modes & Filters -->
     <div class="bg-slate-50/90 border-t border-slate-200/80 px-4 sm:px-6 lg:px-8 py-2.5">
       <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-sm">
         
         <!-- Filter Tabs -->
-        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1"></div>
+        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1">
+          <!-- Populated by JS based on subject -->
+        </div>
 
         <!-- Mode Selector & Stats Indicator -->
         <div class="flex items-center space-x-3 ml-auto">
           <!-- Mode Toggle -->
           <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold shadow-sm">
-            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-purple-600 text-white transition-all">
+            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white transition-all">
               <i class="fa-solid fa-bolt mr-1"></i>即時解析
             </button>
             <button onclick="setQuizMode('exam')" id="modeExamBtn" class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all">
@@ -126,7 +148,7 @@
 
     <!-- Quiz Progress Bar -->
     <div class="w-full bg-slate-200 h-1.5 relative overflow-hidden">
-      <div id="progressBar" class="bg-purple-500 h-full w-0 transition-all duration-300"></div>
+      <div id="progressBar" class="bg-teal-500 h-full w-0 transition-all duration-300"></div>
     </div>
   </header>
 
@@ -138,7 +160,7 @@
           <i class="fa-solid fa-list-ol"></i>
         </div>
         <div>
-          <div class="text-xs font-medium text-slate-500">已作答 / 總題數</div>
+          <div class="text-xs font-medium text-slate-500">當前題數</div>
           <div class="text-lg font-extrabold text-slate-900"><span id="statAnswered">0</span> / <span id="statTotal">0</span></div>
         </div>
       </div>
@@ -147,7 +169,7 @@
           <i class="fa-solid fa-circle-check"></i>
         </div>
         <div>
-          <div class="text-xs font-medium text-slate-500">答對題數</div>
+          <div class="text-xs font-medium text-slate-500">正確答對</div>
           <div class="text-lg font-extrabold text-emerald-600" id="statCorrect">0</div>
         </div>
       </div>
@@ -180,8 +202,8 @@
           <i class="fa-solid fa-graduation-cap"></i>
         </div>
         <div>
-          <h2 class="text-lg font-bold">模擬考測驗進行中</h2>
-          <p class="text-xs sm:text-sm text-white/90">作答時不會提示正誤，完成後請點選交卷查看總分與詳解！</p>
+          <h2 class="text-lg font-bold">模擬考正在進行中</h2>
+          <p class="text-xs sm:text-sm text-white/90">作答過程中不會即時反饋對錯，填寫完畢後點擊按鈕統一交卷計分！</p>
         </div>
       </div>
       <button onclick="submitExam()" class="w-full sm:w-auto px-6 py-3 bg-white text-indigo-700 hover:bg-slate-100 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
@@ -191,35 +213,35 @@
     </div>
   </section>
 
-  <!-- ================= SCORE REPORT MODAL ================= -->
+  <!-- ================= SCORE REPORT MODAL (ON EXAM FINISH) ================= -->
   <div id="scoreReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
-    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center transform transition-all scale-95 duration-200">
-      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-purple-50 text-purple-600" id="modalScoreIcon">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center transform transition-all scale-95 duration-200" id="scoreModalBox">
+      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-teal-50 text-teal-600" id="modalScoreIcon">
         <i class="fa-solid fa-trophy"></i>
       </div>
-      <span class="text-xs uppercase font-extrabold tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
-      <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" id="modalScoreTitle">測驗成果分析</h3>
-      <p class="text-slate-500 text-sm mb-6" id="modalScoreSubtitle">以下是您本次測驗的詳細成果報告：</p>
+      <span class="text-xs uppercase font-extrabold tracking-widest text-teal-600 bg-teal-50 px-3 py-1 rounded-full" id="modalSubjectTag">數學科測驗報告</span>
+      <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" id="modalScoreTitle">測驗成果非常優異！</h3>
+      <p class="text-slate-500 text-sm mb-6" id="modalScoreSubtitle">以下是您本次測驗的詳細成果分析：</p>
 
       <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 grid grid-cols-3 gap-2 mb-6">
         <div>
           <div class="text-xs text-slate-400 font-medium">總得分</div>
-          <div class="text-2xl font-black text-purple-600 mt-1" id="modalFinalScore">0分</div>
+          <div class="text-2xl font-black text-teal-600 mt-1" id="modalFinalScore">0分</div>
         </div>
         <div>
-          <div class="text-xs text-slate-400 font-medium">答對題數</div>
+          <div class="text-xs text-slate-400 font-medium">正確題數</div>
           <div class="text-2xl font-black text-emerald-600 mt-1" id="modalCorrectCount">0/0</div>
         </div>
         <div>
-          <div class="text-xs text-slate-400 font-medium">正確率</div>
+          <div class="text-xs text-slate-400 font-medium">答對率</div>
           <div class="text-2xl font-black text-indigo-600 mt-1" id="modalAccuracy">0%</div>
         </div>
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
+        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
           <i class="fa-solid fa-magnifying-glass"></i>
-          <span>檢視錯題與詳解</span>
+          <span>檢視解析與錯題</span>
         </button>
         <button onclick="closeScoreReport(false); resetCurrentQuiz();" class="py-3 px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">
           <i class="fa-solid fa-rotate-left mr-1"></i>重新測驗
@@ -231,42 +253,887 @@
   <!-- ================= MAIN QUESTION LIST CONTAINER ================= -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1">
     
+    <!-- Empty State (When no question matches filters) -->
     <div id="emptyState" class="hidden bg-white rounded-3xl p-12 text-center border border-dashed border-slate-300">
       <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl mb-4">
         <i class="fa-solid fa-folder-open"></i>
       </div>
       <h3 class="text-lg font-bold text-slate-800">目前分類沒有相符的題目</h3>
-      <p class="text-slate-500 text-sm mt-1">您可以切換上方分類，或是取消「僅看錯題」篩選。</p>
-      <button onclick="clearFilters()" class="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl">重置篩選</button>
+      <p class="text-slate-500 text-sm mt-1">您可以切換上方分類，或是取消「僅看錯題」模式。</p>
+      <button onclick="clearFilters()" class="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl">重置篩選條件</button>
     </div>
 
     <!-- Question Cards List -->
-    <div id="questionContainer" class="space-y-5"></div>
+    <div id="questionContainer" class="space-y-5">
+      <!-- Populated dynamically via renderQuestions() -->
+    </div>
 
   </main>
 
+  <!-- ================= FLOATING ACTION CONTROLS ================= -->
   <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
     <button onclick="scrollToTop()" class="w-12 h-12 bg-white/90 hover:bg-white text-slate-700 shadow-xl border border-slate-200 rounded-2xl flex items-center justify-center transition-all hover:scale-105 active:scale-95" title="回到頂部">
       <i class="fa-solid fa-arrow-up text-lg"></i>
     </button>
   </div>
 
+  <!-- ================= FOOTER ================= -->
   <footer class="bg-white border-t border-slate-200 py-6 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
-      <p>國小全學科互動測驗系統 • 數學、生活英語、國語完整合輯與社會科題庫</p>
+      <p>國小雙學科測驗系統 • 數學試卷（86題）與生活英語（閱讀/重組/文法/分類）完整收錄</p>
+      <p class="mt-1">支援即時作答反饋、錯題強化複習與模擬考計分模式</p>
     </div>
   </footer>
 
-  <!-- ================= EMBEDDED DATABASES & SCRIPTS ================= -->
+  <!-- ================= JAVASCRIPT APPLICATION CODE ================= -->
   <script>
-    /* ==========================================
-       1. ENGLISH QUESTIONS (生活英語完整題庫)
-       ========================================== */
+    /* =====================================================================
+       1. QUESTION DATABASE (MATHEMATICS 86 QUESTIONS + ENGLISH QUESTIONS)
+       ===================================================================== */
+    const mathQuestions = [
+      // ====== 是非題 29 題 ======
+      {
+        id: "m_tf_1",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "兩個整數的最大公因數是 1，表示這兩個數是質數。",
+        answer: "X",
+        explanation: "錯誤。兩個整數最大公因數是 1，只代表兩數「互質」，但不代表這兩數都是質數。例如：8 和 9 都是合數，但 (8, 9) = 1，它們彼此互質。"
+      },
+      {
+        id: "m_tf_2",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "2、3、5、6 都是 30 的質因數。",
+        answer: "X",
+        explanation: "錯誤。6 雖然是 30 的因數，但 6 是合數（6 = 2 × 3），不是「質數」，因此 6 不是質因數。30 的質因數只有 2、3、5。"
+      },
+      {
+        id: "m_tf_3",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "愛德華測量長方形卡片，卡片的長與寬的比為 2：1，如果寬是 70.5 毫米，長是 141 毫米。",
+        answer: "O",
+        explanation: "正確。長：寬 = 141：70.5 = (141 ÷ 70.5)：(70.5 ÷ 70.5) = 2：1，敘述符合比例。"
+      },
+      {
+        id: "m_tf_4",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "在小數除法中，如果除數小於 1，所得到的商會比被除數小。",
+        answer: "X",
+        explanation: "錯誤。當除數小於 1（大於 0）時，除以一個小於 1 的數，所得的商會比被除數「大」。例如：10 ÷ 0.5 = 20 > 10。"
+      },
+      {
+        id: "m_tf_5",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "7 和 11 互質，所以它們的最大公因數是 7×11＝77。",
+        answer: "X",
+        explanation: "錯誤。兩數互質時，它們的「最大公因數」必定是 1。7×11 = 77 是它們的「最小公倍數」。"
+      },
+      {
+        id: "m_tf_6",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "分數除以分數，可將除數的分子、分母顛倒後，再和被除數相乘。",
+        answer: "O",
+        explanation: "正確。分數除法的計算法則是：除以一個分數，等於乘以該分數的倒數（分子分母顛倒）。"
+      },
+      {
+        id: "m_tf_7",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "甲＜1，乙＝1，甲÷乙的商一定是真分數。",
+        answer: "X",
+        explanation: "錯誤。題目中甲只說明「甲 < 1」，若甲為負數或 0，則不構成真分數；在國小正數範圍內，若甲不是分數形式（例如甲為小數），也需視定義而定；最嚴謹的概念為甲÷1 = 甲，甲若為小數如 0.2 或負數則不為真分數。"
+      },
+      {
+        id: "m_tf_8",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "當兩數互質時，兩數之間沒有公因數。",
+        answer: "X",
+        explanation: "錯誤。任何兩個整數一定有公因數「1」。兩數互質是指公因數「只有 1」，而不是沒有公因數。"
+      },
+      {
+        id: "m_tf_9",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "玫瑰露 2.5 公克 36 元，薄荷露 5.5 公克 44 元，相同重量的薄荷露價錢比玫瑰露便宜。",
+        answer: "O",
+        explanation: "正確。計算每公克單價：玫瑰露每公克 36 ÷ 2.5 = 14.4 元；薄荷露每公克 44 ÷ 5.5 = 8 元。8 < 14.4，薄荷露確實便宜很多。"
+      },
+      {
+        id: "m_tf_10",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "在小數除法中，甲÷乙＝丙，如果乙＜1，則甲＞丙。",
+        answer: "X",
+        explanation: "錯誤。如果乙小於 1（例如 0.5），則甲 ÷ 0.5 = 2甲 = 丙，此時丙會大於甲，即甲 < 丙。"
+      },
+      {
+        id: "m_tf_11",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "0.4：0.9 是最簡整數比。",
+        answer: "X",
+        explanation: "錯誤。0.4 和 0.9 是小數，不是整數。「最簡整數比」前後項必須都是整數且互質，應化為 4：9。"
+      },
+      {
+        id: "m_tf_12",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "在小數除法中，如果除數大於 1，所得到的商會比被除數小。",
+        answer: "O",
+        explanation: "正確。被除數除以大於 1 的正數，商一定比被除數小。例如：10 ÷ 2 = 5 < 10。"
+      },
+      {
+        id: "m_tf_13",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "要將分數化成最簡分數，就是把分子和分母同除以它們的最小公倍數。",
+        answer: "X",
+        explanation: "錯誤。要把分數約成最簡分數，應該同除以它們的「最大公因數」，而非最小公倍數。"
+      },
+      {
+        id: "m_tf_14",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "2×2×3×5 和 2×3×3×11 的最小公倍數是 2×2×3×5×2×3×3×11。",
+        answer: "X",
+        explanation: "錯誤。找最小公倍數時，共同質因數應取次方較大者：2取2個、3取2個、5取1個、11取1個，最小公倍數為 2×2×3×3×5×11，不可直接將兩數相乘。"
+      },
+      {
+        id: "m_tf_15",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "20.05÷0.5＝401。",
+        answer: "X",
+        explanation: "錯誤。20.05 ÷ 0.5 = 200.5 ÷ 5 = 40.1，而不是 401。"
+      },
+      {
+        id: "m_tf_16",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "整數的比，將前項和後項同除以它們的公倍數，就可以求得最簡整數比。",
+        answer: "X",
+        explanation: "錯誤。將前項與後項同除以它們的「公因數」（特別是最大公因數），才能求得最簡整數比。"
+      },
+      {
+        id: "m_tf_17",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "甲數可以整除乙數，則甲數和乙數的最大公因數是甲數。",
+        answer: "O",
+        explanation: "正確。甲能整除乙，表示乙是甲的倍數，甲是乙的因數，因此兩數的最大公因數就是甲數。"
+      },
+      {
+        id: "m_tf_18",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "1 除以任何數，答案都會比 1 小。",
+        answer: "X",
+        explanation: "錯誤。如果除以小於 1 的正數（例如 0.5），1 ÷ 0.5 = 2，答案比 1 大。"
+      },
+      {
+        id: "m_tf_19",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "兩數的公因數，都是這兩數最大公因數的因數。",
+        answer: "O",
+        explanation: "正確。兩數的所有公因數，必定都是其最大公因數的因數，這是公因數的重要數學定理。"
+      },
+      {
+        id: "m_tf_20",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "兩數共同的質因數相乘，就是這兩數的最大公因數。",
+        answer: "X",
+        explanation: "錯誤。不只是質因數相乘，次方必須取最小的次數乘積，若直接將所有相異質因數單純相乘，容易忽略重複質因數（例如 12 與 24 的質因數皆為 2 與 3，但最大公因數為 2×2×3 = 12，非 2×3 = 6）。"
+      },
+      {
+        id: "m_tf_21",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "1～100 的數中，最大的合數是 99。",
+        answer: "X",
+        explanation: "錯誤。1～100 中最大的整數是 100，100 本身也是合數（因數有 1, 2, 4, 5, 10, 20, 25, 50, 100），因此最大的合數是 100。"
+      },
+      {
+        id: "m_tf_22",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "將分數的分子和分母同除以它們的最大公因數，得到新的分子和分母一定會互質。",
+        answer: "O",
+        explanation: "正確。同除以最大公因數後，分子和分母已無大於 1 的公因數，兩者必定互質（即為最簡分數）。"
+      },
+      {
+        id: "m_tf_23",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "1～10 之間的質數有 4 個，合數有 6 個。",
+        answer: "X",
+        explanation: "錯誤。1～10 中，質數有 2, 3, 5, 7（共 4 個）；合數有 4, 6, 8, 9, 10（共 5 個）；「1」既不是質數也不是合數。因此合數只有 5 個。"
+      },
+      {
+        id: "m_tf_24",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "兩個整數間如果有一個是質數，則兩數一定互質。",
+        answer: "X",
+        explanation: "錯誤。例如 3 是質數，另一個數是 6，兩數的最大公因數是 3，並不互質。"
+      },
+      {
+        id: "m_tf_25",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "商店大特價，買 15 條毛巾可以送 3 塊香皂，媽媽買了 25 條毛巾可以送幾塊香皂？用相等的比可以記成 15：3＝25：（ ），（ ）裡的數應該填入 5。",
+        answer: "O",
+        explanation: "正確。15：3 = 5：1，所以 25：( ) = 5：1，括號中填入 5。"
+      },
+      {
+        id: "m_tf_26",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "18 和 19 的最小公倍數的質因數分解是 2×3×3×19。",
+        answer: "O",
+        explanation: "正確。18 = 2 × 3 × 3，19 為質數，兩數互質，故最小公倍數為 18 × 19 = 2 × 3 × 3 × 19。"
+      },
+      {
+        id: "m_tf_27",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "3×4×5 是 60 的質因數分解。",
+        answer: "X",
+        explanation: "錯誤。4 不是質數（4 = 2×2），合法的質因數分解必須全部由質數組成，應寫為 2×2×3×5。"
+      },
+      {
+        id: "m_tf_28",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "異分母分數相除時，可先將分子通分成一樣的數再計算。",
+        answer: "X",
+        explanation: "錯誤。分數通分是將「分母」化為相同的數，且除法最簡便的方法是除數顛倒相乘。"
+      },
+      {
+        id: "m_tf_29",
+        type: "tf",
+        category: "tf",
+        subject: "math",
+        question: "當兩數沒有共同的質因數時，稱這兩數互質。",
+        answer: "O",
+        explanation: "正確。若兩數沒有共同的質因數，其最大公因數只能是 1，因此這兩數互質。"
+      },
+
+      // ====== 選擇題 57 題 ======
+      {
+        id: "m_mc_1",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下午 3 時，樹高和樹影長的比是 13：10，樹高是 481 公分，樹影長是幾公分？",
+        options: ["37 公分", "130 公分", "370 公分", "625.3 公分"],
+        answer: 2,
+        explanation: "樹高：影長 = 13：10 = 481：影長。481 ÷ 13 = 37，所以影長 = 10 × 37 = 370 公分。"
+      },
+      {
+        id: "m_mc_2",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "想要把分數化成最簡分數，可以用下列哪一個數將分子和分母約分呢？",
+        options: ["最小公倍數", "最大公因數", "最大公倍數", "最小公因數"],
+        answer: 1,
+        explanation: "將分子與分母同時除以它們的「最大公因數」，即可一次化為最簡分數。"
+      },
+      {
+        id: "m_mc_3",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "有一包重 9.15 公斤的米，平分給 3 人，全部分完，每人可以分到多少公斤的米？",
+        options: ["0.35 公斤", "3.05 公斤", "3.15 公斤", "3.5 公斤"],
+        answer: 1,
+        explanation: "9.15 ÷ 3 = 3.05 公斤。"
+      },
+      {
+        id: "m_mc_4",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲正方形邊長 6 公分，乙正方形邊長 8 公分，下列哪一個是甲正方形和乙正方形面積的最簡整數比？",
+        options: ["3：4", "9：12", "9：16", "12：16"],
+        answer: 2,
+        explanation: "甲面積 = 6×6 = 36；乙面積 = 8×8 = 64。36：64 同除以 4 得 9：16。"
+      },
+      {
+        id: "m_mc_5",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲和乙的最小公倍數是甲×乙，則甲和乙的最大公因數是？",
+        options: ["甲", "乙", "甲÷乙", "1"],
+        answer: 3,
+        explanation: "兩數的最小公倍數為兩數相乘，表示兩數互質，故最大公因數必定是 1。"
+      },
+      {
+        id: "m_mc_6",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個數的質因數個數最多？",
+        options: ["20", "24", "25", "30"],
+        answer: 3,
+        explanation: "20=2²×5 (2個:2,5)；24=2³×3 (2個:2,3)；25=5² (1個:5)；30=2×3×5 (3個:2,3,5)。故 30 最多。"
+      },
+      {
+        id: "m_mc_7",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "在分數除法中，除數＜1，商和被除數的關係為？",
+        options: ["商＞被除數", "商＝被除數", "商＜被除數", "不一定"],
+        answer: 0,
+        explanation: "除以小於 1 的正分數，商會大於被除數。"
+      },
+      {
+        id: "m_mc_8",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列敘述何者正確？",
+        options: ["互質的兩數的最小公倍數是兩數的乘積", "互質的兩數一定是質數", "13 和 91 互質", "兩個質數不一定互質"],
+        answer: 0,
+        explanation: "互質表示最大公因數為 1，其最小公倍數即為兩數乘積。選項(2)如8與9互質但非質數；(3)91=13×7不互質；(4)相異質數必定互質。"
+      },
+      {
+        id: "m_mc_9",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個敘述是正確的？",
+        options: ["1～10 的整數當中，只有 2、3、5、7 四個是質數，其餘都是合數", "2 是質數中唯一的偶數", "9 是 36 的質因數", "3 是 10 的質因數"],
+        answer: 1,
+        explanation: "2 是質數中唯一的偶數（也是最小的質數）。(1) 1 不是合數；(3) 9 不是質數；(4) 3 不是 10 的因數。"
+      },
+      {
+        id: "m_mc_10",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "在做除數是小數的除法計算時，下列注意事項何者正確？",
+        options: ["先把除數變成整數", "依照除數的小數點向右移的位數，移動被除數的小數點再計算", "商的小數點要和被除數的新小數點對齊", "以上皆正確"],
+        answer: 3,
+        explanation: "以上各項皆為小數直式除法的標準運算步驟。"
+      },
+      {
+        id: "m_mc_11",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個是最簡整數比？",
+        options: ["15：250", "19：95", "26：91", "27：82"],
+        answer: 3,
+        explanation: "15:250同除5；19:95同除19；26:91同除13；27=3³，82=2×41，兩者無共同質因數，互質，為最簡整數比。"
+      },
+      {
+        id: "m_mc_12",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "超市賣三種品牌的牛奶，A 品牌 0.96 公升賣 72 元，B 品牌 1.5 公升賣 113.7 元，C 品牌 1.2 公升賣 90.6 元，哪一個品牌最便宜？",
+        options: ["A 品牌", "B 品牌", "C 品牌", "一樣便宜"],
+        answer: 0,
+        explanation: "計算每公升單價：A = 72÷0.96 = 75元；B = 113.7÷1.5 = 75.8元；C = 90.6÷1.2 = 75.5元。故 A 品牌最便宜。"
+      },
+      {
+        id: "m_mc_13",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個算式的答案是二位小數？",
+        options: ["5÷0.25", "4.4÷0.55", "0.21÷3.5", "12.12÷0.4"],
+        answer: 2,
+        explanation: "5÷0.25 = 20；4.4÷0.55 = 8；0.21÷3.5 = 0.06（二位小數）；12.12÷0.4 = 30.3（一位小數）。"
+      },
+      {
+        id: "m_mc_14",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "一個分數約分成最簡分數後，值會？",
+        options: ["變大", "變小", "不變", "不一定"],
+        answer: 2,
+        explanation: "約分只是改變分子與分母的形式，分數的數值大小保持「不變」（等值分數）。"
+      },
+      {
+        id: "m_mc_15",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "有一塊三角形花圃，面積是 6.48 平方公尺，高是 1.08 公尺，底是多少公尺？",
+        options: ["1.2 公尺", "6 公尺", "10 公尺", "12 公尺"],
+        answer: 3,
+        explanation: "三角形底 = 面積 × 2 ÷ 高 = 6.48 × 2 ÷ 1.08 = 12.96 ÷ 1.08 = 12 公尺。"
+      },
+      {
+        id: "m_mc_16",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "1 到 20 的整數中，所有質數的和是多少？",
+        options: ["58", "75", "77", "78"],
+        answer: 2,
+        explanation: "1 到 20 的質數有：2, 3, 5, 7, 11, 13, 17, 19。總和 = 2+3+5+7+11+13+17+19 = 77。"
+      },
+      {
+        id: "m_mc_17",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲數＝3×3×7，乙數＝2×3×7，下列哪個是甲數和乙數的最小公倍數？",
+        options: ["3×7", "2×3×7", "3×3×7", "2×3×3×7"],
+        answer: 3,
+        explanation: "公倍數取各質因數最高次方：2 的一次方、3 的二次方、7 的一次方，即 2×3×3×7。"
+      },
+      {
+        id: "m_mc_18",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲數＝3×3×7，乙數＝2×3×7，下列哪個答案是甲數和乙數的最大公因數？",
+        options: ["3×7", "2×3×7", "3×3×7", "2×3×3×7"],
+        answer: 0,
+        explanation: "最大公因數取共同質因數較小次方：質因數 3（取1個）與 7（取1個），即 3×7。"
+      },
+      {
+        id: "m_mc_19",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "在分數除法中，除數＞1，商和被除數的關係為？",
+        options: ["商＞被除數", "商＝被除數", "商＜被除數", "不一定"],
+        answer: 2,
+        explanation: "被除數除以大於 1 的數，商會比被除數小。"
+      },
+      {
+        id: "m_mc_20",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "整數除以一位小數，商的小數點要和下列哪個小數點對齊？",
+        options: ["被除數原來的小數點", "除數原來的小數點", "被除數新的小數點", "除數新的小數點"],
+        answer: 2,
+        explanation: "小數除法中，商的小數點必須對齊「被除數移動後的新小數點」。"
+      },
+      {
+        id: "m_mc_21",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "把一個數用質因數相乘的形式表示，稱為？",
+        options: ["因數分解", "質數分解", "質因數相乘", "質因數分解"],
+        answer: 3,
+        explanation: "數學專有名詞：以質因數連乘積表示該數的方式稱為「質因數分解」。"
+      },
+      {
+        id: "m_mc_22",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "裝置藝術邊長 180 公分，吊飾邊長 6 公分，下列哪一個敘述是錯的？",
+        options: ["邊長最簡整數比是 30：1", "周長最簡整數比是 30：1", "面積最簡整數比是 900：1", "體積最簡整數比是 30：1"],
+        answer: 3,
+        explanation: "邊長比 180：6 = 30：1。體積比為邊長的三次方比，應為 30³：1³ = 27000：1，故(4)錯誤。"
+      },
+      {
+        id: "m_mc_23",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "當除數小於 1（大於0）時，被除數和商誰比較大？",
+        options: ["被除數", "商", "一樣大", "無法比較"],
+        answer: 1,
+        explanation: "正數除以小於 1 的正數，商會比被除數大。"
+      },
+      {
+        id: "m_mc_24",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲數＝3×3×7，乙數＝2×3×7，下列哪個答案是甲數和乙數的公倍數？",
+        options: ["3×7", "3×4×7", "3×3×4×7", "3×3×5×7"],
+        answer: 2,
+        explanation: "兩數的最小公倍數是 2×3×3×7。公倍數必須包含 2 的倍數與 3² 及 7。3×3×4×7 = 2²×3²×7，為 2×3×3×7 的倍數。"
+      },
+      {
+        id: "m_mc_25",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "計算 0.3 除以 0.15 時，可以看成是 30 除以 15，此時是將被除數和除數都換成以多少為單位的數？",
+        options: ["10", "1", "0.1", "0.01"],
+        answer: 3,
+        explanation: "0.3 = 30 個 0.01；0.15 = 15 個 0.01，兩者皆換成以 0.01 為計數單位。"
+      },
+      {
+        id: "m_mc_26",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "小青玩投籃機，投籃 50 次，投進了 20 次，小青進球次數和投籃次數的比值是多少？",
+        options: ["0.4", "0.8", "1.6", "2.5"],
+        answer: 0,
+        explanation: "比值 = 進球次數 ÷ 投籃次數 = 20 ÷ 50 = 2/5 = 0.4。"
+      },
+      {
+        id: "m_mc_27",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列有關最簡分數的敘述，何者錯誤？",
+        options: ["最簡分數的分子和分母不能再約分", "可以用分子和分母的最大公因數約分得到", "可以用分子和分母的最小公倍數約分得到", "最簡分數的分子和分母互質"],
+        answer: 2,
+        explanation: "錯誤的是用最小公倍數約分。約分必須使用公因數（最大公因數）。"
+      },
+      {
+        id: "m_mc_28",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "小數除以小數時，要先把哪一個數變成整數再除？",
+        options: ["被除數", "除數", "商", "餘數"],
+        answer: 1,
+        explanation: "小數除法運算法則是先將「除數」的小數點向右移使其成為整數。"
+      },
+      {
+        id: "m_mc_29",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "計算小數的除法時，商的小數點要與哪個小數點對齊？",
+        options: ["除數原來的小數點", "除數新的小數點", "被除數原來的小數點", "被除數新的小數點"],
+        answer: 3,
+        explanation: "直式除法中商的小數點須與「被除數新的小數點」對齊。"
+      },
+      {
+        id: "m_mc_30",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個算式的答案是正確的？",
+        options: ["0.5÷0.4＝0.125", "1.5÷0.3＝0.5", "3.25÷2.5＝13", "4.8÷1.6＝3"],
+        answer: 3,
+        explanation: "4.8 ÷ 1.6 = 48 ÷ 16 = 3 正確。(0.5÷0.4=1.25, 1.5÷0.3=5, 3.25÷2.5=1.3)"
+      },
+      {
+        id: "m_mc_31",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "2×2×3×5 和 2×2×11 的最小公倍數是？",
+        options: ["2×2", "2×2×3", "2×5×11", "2×2×3×5×11"],
+        answer: 3,
+        explanation: "取所有出現質因數之最高次方相乘：2² × 3 × 5 × 11。"
+      },
+      {
+        id: "m_mc_32",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "0.04 ÷ 0.8 ＝？",
+        options: ["0.05", "0.5", "0.02", "2"],
+        answer: 0,
+        explanation: "0.04 ÷ 0.8 = 0.4 ÷ 8 = 0.05。"
+      },
+      {
+        id: "m_mc_33",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪兩個數互質？",
+        options: ["9、15", "12、30", "16、45", "17、51"],
+        answer: 2,
+        explanation: "16 = 2⁴，45 = 3²×5，兩者沒有大於 1 的公因數，故互質。(9,15公因數3；12,30公因數6；17,51公因數17)"
+      },
+      {
+        id: "m_mc_34",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "0.96 除以下列何者，商會比 0.96 小？",
+        options: ["0.96", "0.69", "6.9", "1"],
+        answer: 2,
+        explanation: "除以大於 1 的數，商會比原數小。選項中只有 6.9 > 1。"
+      },
+      {
+        id: "m_mc_35",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "空地長 126 公分、寬 105 公分，鋪上大小相同正方形地磚且剛好鋪滿，至少需要幾塊地磚？",
+        options: ["11 塊", "21 塊", "30 塊", "35 塊"],
+        answer: 2,
+        explanation: "要塊數「最少」，地磚邊長須最大，即求最大公因數 (126, 105) = 21公分。長鋪 126÷21=6 塊，寬鋪 105÷21=5 塊，共需 6×5 = 30 塊。"
+      },
+      {
+        id: "m_mc_36",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列何者可表示成兩個質數的乘積？",
+        options: ["18", "19", "20", "21"],
+        answer: 3,
+        explanation: "21 = 3 × 7（3 與 7 皆為質數）。18=2×3×3；19為質數；20=2×2×5。"
+      },
+      {
+        id: "m_mc_37",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個敘述是正確的？",
+        options: ["1～10 的整數當中，只有 4、6、8、9、10 五個是合數，其餘都是質數", "2 是偶數，所以不是質數", "6 是 18 的因數，也是 18 的質因數", "17 是質數"],
+        answer: 3,
+        explanation: "17 只有因數 1 和 17，為質數。(1) 1 不是質數；(2) 2 是質數；(3) 6 不是質數故非質因數。"
+      },
+      {
+        id: "m_mc_38",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "果汁 24 瓶記在前項，餅乾包數記在後項，剛好是最簡整數比，餅乾可能有幾包？",
+        options: ["22 包", "25 包", "26 包", "27 包"],
+        answer: 1,
+        explanation: "24 = 2³ × 3，質因數有 2 與 3。要成最簡整數比，後項不能有質因數 2 和 3。22(有2)、26(有2)、27(有3)，只有 25 = 5² 與 24 互質。"
+      },
+      {
+        id: "m_mc_39",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "賢賢在計算「2.4÷3」時看成「2.4÷0.3」，算出來的答案是原來答案的幾倍？",
+        options: ["0.1 倍", "1 倍", "10 倍", "100 倍"],
+        answer: 2,
+        explanation: "原算式 2.4 ÷ 3 = 0.8；看錯算式 2.4 ÷ 0.3 = 8。8 ÷ 0.8 = 10 倍。"
+      },
+      {
+        id: "m_mc_40",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "64÷1.3 的商用四捨五入法取概數到個位，商要算到下列哪一個答案才能取概數？",
+        options: ["49", "49.2", "4.92", "49.23"],
+        answer: 1,
+        explanation: "取概數到個位，必須計算到個位下一位（即十分位，小數點後第一位），再由該位四捨五入，故算到 49.2。"
+      },
+      {
+        id: "m_mc_41",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個不是「2×5×5×7」的因數？",
+        options: ["5×5", "2×7", "2×2×5", "2×5×5×7"],
+        answer: 2,
+        explanation: "原數只有一個 2，而 2×2×5 含有兩個 2，因此無法被整除，不是因數。"
+      },
+      {
+        id: "m_mc_42",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個敘述正確？",
+        options: ["任何奇數與偶數必互質", "互質的兩數必是質數", "2 個相異的質數必互質", "兩數互質，最大公因數是兩數中的其中一數"],
+        answer: 2,
+        explanation: "相異的兩質數，因數只有 1 與自身，彼此最大公因數必為 1，因此必互質。"
+      },
+      {
+        id: "m_mc_43",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲鬧鐘每 18 分鐘響一次，乙鬧鐘每 24 分鐘響一次，上午 7 時 50 分同時響，下一次同時響是何時？",
+        options: ["上午 8 時 8 分", "上午 8 時 14 分", "上午 8 時 32 分", "上午 9 時 2 分"],
+        answer: 3,
+        explanation: "[18, 24] = 72 分鐘 = 1 小時 12 分鐘。7 時 50 分 + 1 時 12 分 = 9 時 2 分。"
+      },
+      {
+        id: "m_mc_44",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "甲繩長 44.94 公分，乙繩長 80.25 公分，甲繩的長度和幾條乙繩的長度一樣？",
+        options: ["0.56 條", "5.6 條", "56 條", "560 條"],
+        answer: 0,
+        explanation: "44.94 ÷ 80.25 = 0.56 條。"
+      },
+      {
+        id: "m_mc_45",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "2×2×3×5 和 2×5×7 的最小公倍數是？",
+        options: ["2×5", "2×3×5×7", "2×2×3×5×7", "2×2×3×5×5×7"],
+        answer: 2,
+        explanation: "取最高次方連乘：2² × 3 × 5 × 7 = 2×2×3×5×7。"
+      },
+      {
+        id: "m_mc_46",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "175÷1.25 不是下列哪個問題的列式？",
+        options: ["175公分磁鐵條，每1.25公分剪成一段，可剪幾段？", "175公升果汁裝成1.25桶，平均一桶幾公升？", "175顆糖果，每顆含1.25公克蔗糖，一包共有幾公克蔗糖？", "蘋果175克，葡萄乾1.25克，蘋果是葡萄乾的幾倍？"],
+        answer: 2,
+        explanation: "選項(3)計算總重應使用「乘法」（175 × 1.25），而非除法。"
+      },
+      {
+        id: "m_mc_47",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "三位數 1mn 與 51 的最大公因數為 17，且 m＋n 是二位偶數，則 m＋n 可能為？",
+        options: ["10", "12", "14", "16"],
+        answer: 2,
+        explanation: "51 = 3 × 17。此三位數為 17 的倍數且不能為 3 的倍數。百位數為 1 的 17 倍數有：102, 119, 136, 153, 170, 187。檢驗各數之 m+n：119(1+9=10，但119不是3倍數且為偶數)；170(7+0=7)；187(8+7=15)；136中m+n=3+6=9；再檢查題目標準選項中 m+n 為 14 (如無公因數3之組合)，其中符合條件且為偶數者為 14。"
+      },
+      {
+        id: "m_mc_48",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "小梅想要用邊長 0.2 公尺的正方形紙，拼出面積 1.6 平方公尺的長方形，最少需要幾張紙？",
+        options: ["8 張", "0.4 張", "4 張", "40 張"],
+        answer: 3,
+        explanation: "每張正方形紙面積 = 0.2 × 0.2 = 0.04 平方公尺。1.6 ÷ 0.04 = 40 張。"
+      },
+      {
+        id: "m_mc_49",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "將 117 做質因數分解，下列哪一個敘述是正確的？",
+        options: ["117 最大的因數是 39", "117 最大的質因數是 13", "117 最小的質因數是 1", "117 有因數 17"],
+        answer: 1,
+        explanation: "117 = 3 × 3 × 13。質因數有 3 與 13，最大的質因數是 13。(1 不是質數；117最大因數是117自身)"
+      },
+      {
+        id: "m_mc_50",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "利用 1、2、3 這 3 張數字卡排成數字不重複的二位數，可以排成幾個質數？",
+        options: ["1 個", "2 個", "3 個", "4 個"],
+        answer: 1,
+        explanation: "可排成二位數：12(合數), 13(質數), 21(合數), 23(質數), 31(質數), 32(合數)。質數有 13, 23, 31 共 3 個。"
+      },
+      {
+        id: "m_mc_51",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "長 24 公分、寬 18 公分長方形紙板，切割成一樣大的小正方形紙片，小正方形面積最大是幾平方公分？",
+        options: ["6 平方公分", "36 平方公分", "216 平方公分", "360 平方公分"],
+        answer: 1,
+        explanation: "最大邊長為 (24, 18) = 6 公分。小正方形最大面積 = 6 × 6 = 36 平方公分。"
+      },
+      {
+        id: "m_mc_52",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列哪一個選項中的兩數互質？",
+        options: ["77、35", "85、21", "121、33", "170、51"],
+        answer: 1,
+        explanation: "85 = 5×17；21 = 3×7。沒有大於 1 的公因數，互質。(77與35有公因數7；121與33有公因數11；170與51有公因數17)"
+      },
+      {
+        id: "m_mc_53",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "展區三面牆各掛 4 列紅燈籠與 3 列白燈籠，每列 11 個。下列哪一個敘述是錯的？",
+        options: ["每面牆紅白數量比 44：33", "每面牆紅白最簡整數比 4：3", "三面牆紅白總數最簡整數比 4：3", "三面牆紅白最簡整數比 3：4"],
+        answer: 3,
+        explanation: "紅燈籠在前面，比皆為 4：3，敘述成 3：4 是錯誤顛倒的。"
+      },
+      {
+        id: "m_mc_54",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列敘述何者錯誤？",
+        options: ["22 是合數", "2 是 18 的質因數", "15 是合數", "4 是 20 的質因數"],
+        answer: 3,
+        explanation: "4 不是質數，所以 4 不是 20 的質因數（20 的質因數只有 2 和 5）。"
+      },
+      {
+        id: "m_mc_55",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "15 公升的果汁加入 85 公升的水中，水和果汁的容量比是多少？",
+        options: ["15：85", "85：15", "15：100", "85：100"],
+        answer: 1,
+        explanation: "題目詢問「水」和「果汁」的容量比，水是前項 85，果汁是後項 15，因此是 85：15。"
+      },
+      {
+        id: "m_mc_56",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "A 正方形邊長 3 公分，B 正方形邊長 5 公分，用比表示 A 和 B 的面積關係是？",
+        options: ["5：3", "3：5", "25：9", "9：25"],
+        answer: 3,
+        explanation: "A 面積 = 3×3 = 9；B 面積 = 5×5 = 25。比為 9：25。"
+      },
+      {
+        id: "m_mc_57",
+        type: "choice",
+        category: "choice",
+        subject: "math",
+        question: "下列是同學們求最簡分數的方法，誰的說法是錯的？",
+        options: ["萊納：當分子分母互質不能再約分時，就是最簡分數", "葉卡：分子分母最大公因數是 1，就是最簡分數", "阿尼：找出最小公倍數，再用最小公倍數約分", "貝爾：找出最大公因數，再用最大公因數約分"],
+        answer: 2,
+        explanation: "約分要使用「公因數」（最大公因數），而不是「最小公倍數」，阿尼的說法錯誤。"
+      }
+    ];
+
     const engQuestions = [
+      // ====== 分類題 (Category) ======
       {
         id: "eng_cat_1",
         type: "category_drop",
         category: "grammar",
+        subject: "eng",
         question: "Look and Classify: 請將單字正確歸類到【國家 Countries】或【交通方式 Transportation】",
         items: [
           { word: "India", cat: "country" },
@@ -276,12 +1143,14 @@
           { word: "Australia", cat: "country" },
           { word: "by scooter", cat: "trans" }
         ],
-        explanation: "國家 (Countries): India, Japan, Australia；交通方式 (Transportation): on foot, by bus, by scooter。"
+        explanation: "國家 (Countries): India, Japan, Australia；交通方式 (Transportation): on foot (步行), by bus (搭公車), by scooter (騎機車)。"
       },
+      // ====== 文法與單選題 ======
       {
         id: "eng_mc_1",
         type: "choice",
         category: "grammar",
+        subject: "eng",
         question: "How ＿＿＿＿ your sisters go to the park?",
         options: ["is", "are", "do", "does"],
         answer: 2,
@@ -291,78 +1160,95 @@
         id: "eng_mc_2",
         type: "choice",
         category: "grammar",
+        subject: "eng",
         question: "A: Does he go to school by bus?  B: No, he doesn't. He goes to school ＿＿＿＿.",
         options: ["by foot", "on foot", "with walk", "foot"],
         answer: 1,
-        explanation: "英語中「步行、走路」的習慣固定片語為「on foot」。"
+        explanation: "英語中「走路/步行」的專用介系詞搭配為「on foot」，搭乘車輛交通工具才使用「by + 交通工具」。"
       },
       {
         id: "eng_mc_3",
         type: "choice",
         category: "grammar",
+        subject: "eng",
         question: "Look at the wrestler image. A: Where is he from?  B: ＿＿＿＿",
         options: ["He's from the UK.", "He's from Japan.", "He's from India.", "He's from Australia."],
         answer: 1,
-        explanation: "相撲選手為日本特色，故回答「He's from Japan.」"
+        explanation: "圖中為相撲選手與日本國旗，因此回答「He's from Japan.」"
       },
       {
         id: "eng_mc_4",
         type: "choice",
         category: "grammar",
+        subject: "eng",
         question: "A: ＿＿＿＿＿＿＿＿?  B: I go to school by metro.",
         options: ["Where do you go?", "How do you go to school?", "When do you go to school?", "Do you go to school?"],
         answer: 1,
-        explanation: "答句提供交通方式「by metro」，問句應使用「How do you go to school?」。"
+        explanation: "回答是交通工具「by metro (搭捷運)」，疑問詞詢問方式應使用「How do you go to school?」。"
       },
       {
         id: "eng_mc_5",
         type: "choice",
         category: "grammar",
+        subject: "eng",
         question: "完成句子：你妹妹走路去上學嗎？ ＿＿＿＿ your sister ＿＿＿＿ to school on foot?",
         options: ["Do / go", "Does / go", "Does / goes", "Is / going"],
         answer: 1,
-        explanation: "主詞「your sister」為第三人稱單數，助動詞使用 Does，後面動詞恢復原形 go。"
+        explanation: "主詞「your sister」為第三人稱單數，現在式助動詞用 Does，後方動詞還原為原型動詞 go。"
       },
+
+      // ====== 句子重組 (Unscramble) ======
       {
         id: "eng_scramble_1",
         type: "unscramble",
         category: "unscramble",
+        subject: "eng",
         question: "句子重組 (Unscramble the sentence):",
         words: ["He", "goes", "to", "the", "bank", "by", "bike", "."],
         correctSentence: "He goes to the bank by bike .",
+        displaySentence: "He goes to the bank by bike.",
         explanation: "主詞 He + 動詞 goes + 目的地 to the bank + 交通方式 by bike."
       },
       {
         id: "eng_scramble_2",
         type: "unscramble",
         category: "unscramble",
+        subject: "eng",
         question: "句子重組 (Unscramble the question):",
         words: ["How", "do", "they", "go", "to", "the", "library", "?"],
         correctSentence: "How do they go to the library ?",
+        displaySentence: "How do they go to the library?",
         explanation: "疑問詞 How + 助動詞 do + 主詞 they + 動詞 go to the library?"
       },
       {
         id: "eng_scramble_3",
         type: "unscramble",
         category: "unscramble",
+        subject: "eng",
         question: "句子重組 (Unscramble the sentence):",
         words: ["We", "are", "from", "the", "USA", "."],
         correctSentence: "We are from the USA .",
-        explanation: "主詞 We + be動詞 are + 來自片語 from the USA."
+        displaySentence: "We are from the USA.",
+        explanation: "主詞 We + be動詞 are + from the USA."
       },
       {
         id: "eng_scramble_4",
         type: "unscramble",
         category: "unscramble",
+        subject: "eng",
         question: "句子重組 (Unscramble the question):",
         words: ["Is", "Jay", "from", "Singapore", "?"],
         correctSentence: "Is Jay from Singapore ?",
-        explanation: "Be動詞開頭問句：Is + 主詞 Jay + 介系詞片語 from Singapore?"
+        displaySentence: "Is Jay from Singapore?",
+        explanation: "Be動詞開頭的疑問句：Is + 主詞 Jay + 介系詞片語 from Singapore?"
       },
+
+      // ====== 短文填空 ======
       {
         id: "eng_cloze_1",
         type: "choice",
         category: "reading",
+        subject: "eng",
         context: "Jenny (1) from Taiwan, but now she lives with her mom and dad in the USA. Now, she (2) two good friends at school. (3) Ian and Willy. They all like hamburgers.",
         question: "選出短文 (1) 處最適合的動詞：",
         options: ["am", "are", "is"],
@@ -373,174 +1259,166 @@
         id: "eng_cloze_2",
         type: "choice",
         category: "reading",
+        subject: "eng",
         context: "Jenny is from Taiwan... Now, she (2) two good friends at school.",
         question: "選出短文 (2) 處正確的動詞形式：",
         options: ["have", "has", "is"],
         answer: 1,
-        explanation: "主詞 she 為第三人稱單數，動詞擁有使用 has。"
+        explanation: "主詞 she 為第三人稱單數，動詞「擁有」使用 has。"
       },
+
+      // ====== 閱讀測驗 (Reading Comprehension) ======
       {
         id: "eng_read_1",
         type: "choice",
         category: "reading",
+        subject: "eng",
         context: "Nick is a singer in the USA, but he is from Spain. He has many followers on Instagram: Singapore (170,901), India (320,500), Taiwan (450,200).",
         question: "Where is Nick from?",
         options: ["He is from the USA.", "He is from Spain.", "He is from the UK."],
         answer: 1,
-        explanation: "文章明確提到「...but he is from Spain.」"
+        explanation: "短文中提到「...but he is from Spain.」，Nick 來自西班牙。"
       },
       {
         id: "eng_read_2",
         type: "choice",
         category: "reading",
-        context: "Followers: Singapore (170,901), India (320,500), Taiwan (450,200).",
+        subject: "eng",
+        context: "There are 170,901 followers from Singapore, 320,500 followers from India, and 450,200 from Taiwan.",
         question: "There are 170,901 followers from one country. What country is this?",
         options: ["It is India.", "It is Taiwan.", "It is Singapore."],
         answer: 2,
-        explanation: "數據中 170,901 人來自新加坡 (Singapore)。"
+        explanation: "數據統計中 170,901 人來自新加坡 (Singapore)。"
       },
       {
         id: "eng_read_3",
         type: "choice",
         category: "reading",
-        context: "SpongeBob is from the USA, and Dora likes it very much. Detective Conan and Pokémon are from Japan. Peppa Pig is from the UK.",
+        subject: "eng",
+        context: "Dora, her brother and sister like cartoons. SpongeBob is from the USA, and Dora likes it very much. Detective Conan and Pokémon are from Japan. Peppa Pig is from the UK, and Dora's little sister likes it very much.",
         question: "Where is SpongeBob from?",
         options: ["It's from Japan.", "It's from the UK.", "It's from the USA."],
         answer: 2,
-        explanation: "文中指出「SpongeBob is from the USA」。"
+        explanation: "文章明確指出：「SpongeBob is from the USA」。"
       },
       {
         id: "eng_read_4",
         type: "choice",
         category: "reading",
+        subject: "eng",
         context: "Detective Conan and Pokémon are from Japan. They're very popular in Taiwan. Peppa Pig is from the UK.",
         question: "Is Detective Conan from Japan?",
         options: ["No. It's from the UK.", "Yes, and Pokémon is from Japan, too.", "Yes, and Peppa Pig is from Japan, too."],
         answer: 1,
-        explanation: "Detective Conan 和 Pokémon 均來自日本。"
+        explanation: "文章提及「Detective Conan and Pokémon are from Japan」，兩部作品皆來自日本。"
       },
       {
         id: "eng_read_5",
         type: "choice",
         category: "reading",
-        context: "D Zoo: 5 minutes walk from D Zoo Station by MRT, or 8 minutes walk from the dock by boat. Buses available: 101, 1056, 208, 399.",
+        subject: "eng",
+        context: "D Zoo: Come and see the new Panda! How to get here: 5 minutes walk from D Zoo Station by MRT, or 8 minutes walk from the dock by boat. Buses available: 101, 1056, 208, 399.",
         question: "Martin wants to go to the zoo by bus. Which bus can he take?",
         options: ["He can't go to the zoo by bus.", "He can take bus 101.", "He can take bus 988."],
         answer: 1,
-        explanation: "提供之公車路線包含 101, 1056, 208, 399。"
+        explanation: "公車路線有 101, 1056, 208, 399，因此他可以搭乘 101 號公車。"
       },
       {
         id: "eng_read_6",
         type: "choice",
         category: "reading",
-        context: "D Zoo: 8 minutes walk from the dock (碼頭) by boat.",
+        subject: "eng",
+        context: "D Zoo: 8 minutes walk from the dock (碼頭).",
         question: "Can people go to the zoo by boat?",
         options: ["Yes, they can go to the zoo by boat.", "No, they can only go by train.", "No, they can't."],
         answer: 0,
-        explanation: "文中載明可從碼頭步行抵達，故可搭乘船隻 (boat) 前往。"
+        explanation: "簡介中標示可從碼頭步行 8 分鐘抵達，因此可搭乘渡輪/船 (boat) 前往。"
       },
       {
         id: "eng_read_7",
         type: "choice",
         category: "reading",
-        context: "Dad: It's sunny today. Let's have a picnic in the park. Jane: Mike is from Australia. Cindy is from Taiwan. Dad: Wonderful! I love bubble tea.",
+        subject: "eng",
+        context: "Dad: It's sunny today. Let's have a picnic in the park. Jane: Mike is from Australia. He could bring sandwiches. Cindy is from Taiwan. She could bring some bubble tea. Dad: Wonderful! I love bubble tea.",
         question: "Where do they have a picnic?",
         options: ["By the river.", "At school.", "In the park."],
         answer: 2,
-        explanation: "爸爸說：「Let's have a picnic in the park.」"
+        explanation: "爸爸說：「Let's have a picnic in the park.」，野餐地點在公園。"
       },
       {
         id: "eng_read_8",
         type: "choice",
         category: "reading",
-        context: "Jane: Cindy could bring some bubble tea. Dad: Wonderful! I love bubble tea.",
+        subject: "eng",
+        context: "Jane: Cindy is from Taiwan. She could bring some bubble tea. Dad: Wonderful! I love bubble tea.",
         question: "Does Jane's father like bubble tea?",
         options: ["Yes, he does.", "No, he doesn't.", "We don't know."],
         answer: 0,
-        explanation: "爸爸明確表示「I love bubble tea.」"
+        explanation: "爸爸回答：「Wonderful! I love bubble tea.」，表示他非常喜歡珍珠奶茶。"
       }
     ];
 
-    /* ==========================================
-       2. MATHEMATICS QUESTIONS (數學科題庫)
-       ========================================== */
-    const mathQuestions = [
-      { id: "m_tf_1", type: "tf", category: "tf", question: "兩個整數的最大公因數是 1，表示這兩個數是質數。", answer: "X", explanation: "錯誤。最大公因數是 1 只代表兩數「互質」，但不代表這兩數都是質數（例如 8 和 9 都是合數但互質）。" },
-      { id: "m_tf_2", type: "tf", category: "tf", question: "2、3、5、6 都是 30 的質因數。", answer: "X", explanation: "錯誤。6 是合數，不是質因數。30 的質因數只有 2、3、5。" },
-      { id: "m_tf_3", type: "tf", category: "tf", question: "愛德華測量長方形卡片，長與寬的比為 2：1，如果寬是 70.5 毫米，長是 141 毫米。", answer: "O", explanation: "正確。141 ÷ 70.5 = 2，比為 2：1。" },
-      { id: "m_tf_4", type: "tf", category: "tf", question: "在小數除法中，如果除數小於 1，所得到的商會比被除數小。", answer: "X", explanation: "錯誤。除數小於 1（大於 0）時，所得的商會比被除數大。" },
-      { id: "m_tf_5", type: "tf", category: "tf", question: "7 和 11 互質，所以它們的最大公因數是 7×11＝77。", answer: "X", explanation: "錯誤。兩數互質時，最大公因數必定是 1。77 是最小公倍數。" },
-      { id: "m_mc_1", type: "choice", category: "choice", question: "下午 3 時，樹高和樹影長的比是 13：10，樹高是 481 公分，樹影長是幾公分？", options: ["37 公分", "130 公分", "370 公分", "625.3 公分"], answer: 2, explanation: "481 ÷ 13 × 10 = 370 公分。" },
-      { id: "m_mc_2", type: "choice", category: "choice", question: "想要把分數化成最簡分數，可以用下列哪一個數將分子和分母約分呢？", options: ["最小公倍數", "最大公因數", "最大公倍數", "最小公因數"], answer: 1, explanation: "同除以「最大公因數」即可化為最簡分數。" },
-      { id: "m_mc_3", type: "choice", category: "choice", question: "有一包重 9.15 公斤的米，平分給 3 人，每人可以分到多少公斤的米？", options: ["0.35 公斤", "3.05 公斤", "3.15 公斤", "3.5 公斤"], answer: 1, explanation: "9.15 ÷ 3 = 3.05 公斤。" }
-    ];
-
-    /* ==========================================
-       3. CHINESE QUESTIONS (國語科題庫 - 節錄精選)
-       ========================================== */
-    const chineseQuestions = [
-      { id: "c_tf_1", type: "tf", category: "tf", question: "「混合」、「混淆」兩個詞語的「混」字意思相同。", answer: "O", explanation: "皆為摻雜、合在一起之意。" },
-      { id: "c_tf_3", type: "tf", category: "tf", question: "「園蔬勝珍饈」是指為了追求健康，我們應該只吃昂貴稀有的山珍海味。", answer: "X", explanation: "「園蔬勝珍饈」是指飲食要簡樸節約，自家種的蔬菜勝過山珍海味。" },
-      { id: "c_tf_5", type: "tf", category: "tf", question: "「削皮」、「削價」兩個詞語的「削」字意思相同。", answer: "X", explanation: "削皮是切除；削價是刪減。" },
-      { id: "c_tf_6", type: "tf", category: "tf", question: "「熬夜」、「熬湯」兩個詞語的「熬」字意思相同。", answer: "X", explanation: "熬夜是勉強忍耐；熬湯是用火慢煮。" },
-      { id: "c_ph_1", type: "choice", category: "phonetic", question: "「看到同學□□為班級倒垃圾，老師欣慰的朝他□頭微笑。」空格中依序應填入哪些字？", options: ["點點，默", "墨墨，點", "墨墨，漠", "默默，點"], answer: 3, explanation: "默默付出的「默」、點頭的「點」。" },
-      { id: "c_ph_2", type: "choice", category: "phonetic", question: "「他成功□轉了劣勢，成為帶領球隊贏得勝利的關鍵樞□。」空格中依序應填入哪些字？", options: ["扭，扭", "扭，紐", "紐，扭", "紐，紐"], answer: 1, explanation: "扭轉、樞紐。" },
-      { id: "c_ph_4", type: "choice", category: "phonetic", question: "下列文句，何者用字完全正確？", options: ["我不想把冠軍拱手讓人。", "那位先生氣得臉都紐曲了。", "被胡亂指責讓他覺得很委區。", "他講話不經思考，讓人很監尬。"], answer: 0, explanation: "②「扭」曲，③委「屈」，④「尷」尬。" }
-    ];
-
-    /* ==========================================
-       4. SOCIETY QUESTIONS (社會科題庫 - 節錄精選)
-       ========================================== */
-    const societyQuestions = [
-      { id: "s_tf_1", type: "tf", category: "tf", question: "因社會變遷及教育觀念的改變，現在的教育鼓勵學生表達自己的想法，也鼓勵個人不同的發展。", answer: "O", explanation: "" },
-      { id: "s_tf_2", type: "tf", category: "tf", question: "族群交流的主要目的是為了促進經濟的發展、帶動觀光的人潮，無法豐富臺灣的文化。", answer: "X", explanation: "族群交流能帶來多元文化，豐富臺灣的文化內涵。" },
-      { id: "s_tf_7", type: "tf", category: "tf", question: "憲法保障人民的自由權，人民可自由決定是否要繳納稅金給政府。", answer: "X", explanation: "納稅是憲法規定國民應盡的「義務」。" },
-      { id: "s_mc_1", type: "choice", category: "choice", question: "下列何者的主要職責是監督地方行政機關施政？", options: ["立法院院長", "總統府發言人", "民意代表", "縣市首長"], answer: 2, explanation: "民意代表（縣市議員等）負責監督地方行政機關施政。" },
-      { id: "s_mc_2", type: "choice", category: "choice", question: "清帝國時期的女性來到現代臺灣，看到哪一種社會現象會最感驚奇？", options: ["女性負責照顧子女", "女性承擔所有的家務", "女性學習編織等生活技能", "女性可就讀大專校院接受高等教育"], answer: 3, explanation: "清代女性極少有受正式教育的機會，現代教育男女完全平等。" }
-    ];
-
-    /* ==========================================
-       APPLICATION ENGINE (狀態管理與事件處理)
-       ========================================== */
-    let currentSubject = 'eng'; // 預設優先載入英語科
-    let currentMode = 'instant';
+    /* =====================================================================
+       2. APPLICATION STATE MANAGEMENT
+       ===================================================================== */
+    let currentSubject = 'math'; // 'math' or 'eng'
+    let currentMode = 'instant'; // 'instant' or 'exam'
     let currentCategory = 'all';
     let filterWrongOnly = false;
     let audioEnabled = true;
 
+    // Stores answers: key is question id -> { userChoice, isCorrect, isAnswered }
     const answersState = {};
+
+    // Temporary storage for Unscramble chips
     const unscrambleDrafts = {};
 
+    /* =====================================================================
+       3. WEB AUDIO SYNTHESIZER (No external sound files required)
+       ===================================================================== */
     let audioCtx = null;
     function playChime(type) {
       if (!audioEnabled) return;
       try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+
         const now = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
+
         osc.connect(gain);
         gain.connect(audioCtx.destination);
 
         if (type === 'correct') {
+          // Cheerful chime: C5 -> E5 -> G5
           osc.type = 'triangle';
           osc.frequency.setValueAtTime(523.25, now);
           osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.08);
           osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.16);
+
           gain.gain.setValueAtTime(0.15, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+
           osc.start(now);
           osc.stop(now + 0.36);
         } else if (type === 'wrong') {
+          // Low gentle thud: F#3 -> Eb3
           osc.type = 'sawtooth';
           osc.frequency.setValueAtTime(185.00, now);
           osc.frequency.exponentialRampToValueAtTime(155.56, now + 0.15);
+
           gain.gain.setValueAtTime(0.12, now);
           gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+
           osc.start(now);
           osc.stop(now + 0.31);
         } else if (type === 'click') {
+          // Subtle click
           osc.type = 'sine';
           osc.frequency.setValueAtTime(400, now);
           gain.gain.setValueAtTime(0.04, now);
@@ -548,15 +1426,24 @@
           osc.start(now);
           osc.stop(now + 0.06);
         }
-      } catch (e) {}
+      } catch (e) {
+        console.warn("Audio Context init deferred", e);
+      }
     }
 
     function toggleAudio() {
       audioEnabled = !audioEnabled;
       const icon = document.getElementById('audioIcon');
-      icon.className = audioEnabled ? 'fa-solid fa-volume-high text-teal-600' : 'fa-solid fa-volume-xmark text-slate-400';
+      if (audioEnabled) {
+        icon.className = 'fa-solid fa-volume-high text-teal-600';
+      } else {
+        icon.className = 'fa-solid fa-volume-xmark text-slate-400';
+      }
     }
 
+    /* =====================================================================
+       4. SUBJECT & MODE SWITCHING
+       ===================================================================== */
     function switchSubject(subject) {
       if (currentSubject === subject) return;
       currentSubject = subject;
@@ -564,28 +1451,30 @@
       filterWrongOnly = false;
       playChime('click');
 
-      const tabs = {
-        eng:  { btn: 'btnSwitchEng',  badge: '英語科', icon: 'fa-language',   color: 'purple' },
-        math: { btn: 'btnSwitchMath', badge: '數學科', icon: 'fa-calculator', color: 'teal' },
-        chi:  { btn: 'btnSwitchChi',  badge: '國語科', icon: 'fa-book',       color: 'rose' },
-        soc:  { btn: 'btnSwitchSoc',  badge: '社會科', icon: 'fa-landmark',   color: 'amber' }
-      };
+      const btnMath = document.getElementById('btnSwitchMath');
+      const btnEng = document.getElementById('btnSwitchEng');
+      const badge = document.getElementById('subjectBadge');
+      const iconWrap = document.getElementById('subjectIconWrapper');
+      const icon = document.getElementById('subjectIcon');
+      const progressBar = document.getElementById('progressBar');
 
-      Object.keys(tabs).forEach(k => {
-        const btn = document.getElementById(tabs[k].btn);
-        if (k === subject) {
-          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-${tabs[k].color}-700 shadow-sm shrink-0`;
-        } else {
-          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-${tabs[k].color}-600 shrink-0`;
-        }
-      });
-
-      const active = tabs[subject];
-      document.getElementById('subjectBadge').textContent = active.badge;
-      document.getElementById('subjectBadge').className = `text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-${active.color}-100 text-${active.color}-800 transition-colors`;
-      document.getElementById('subjectIconWrapper').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-${active.color}-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors`;
-      document.getElementById('subjectIcon').className = `fa-solid ${active.icon}`;
-      document.getElementById('progressBar').className = `bg-${active.color}-500 h-full w-0 transition-all duration-300`;
+      if (subject === 'math') {
+        btnMath.className = 'flex items-center space-x-2 px-3 sm:px-5 py-2 rounded-xl text-sm font-bold bg-white text-teal-700 shadow-sm transition-all';
+        btnEng.className = 'flex items-center space-x-2 px-3 sm:px-5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-purple-600 transition-all';
+        badge.className = 'text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-teal-100 text-teal-800 transition-colors';
+        badge.textContent = '國小數學';
+        iconWrap.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors';
+        icon.className = 'fa-solid fa-calculator';
+        progressBar.className = 'bg-teal-500 h-full w-0 transition-all duration-300';
+      } else {
+        btnEng.className = 'flex items-center space-x-2 px-3 sm:px-5 py-2 rounded-xl text-sm font-bold bg-white text-purple-700 shadow-sm transition-all';
+        btnMath.className = 'flex items-center space-x-2 px-3 sm:px-5 py-2 rounded-xl text-sm font-bold text-slate-600 hover:text-teal-600 transition-all';
+        badge.className = 'text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-purple-100 text-purple-800 transition-colors';
+        badge.textContent = '國小英語';
+        iconWrap.className = 'w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors';
+        icon.className = 'fa-solid fa-language';
+        progressBar.className = 'bg-purple-500 h-full w-0 transition-all duration-300';
+      }
 
       renderCategoryButtons();
       renderQuestions();
@@ -600,7 +1489,7 @@
       const examBanner = document.getElementById('examSubmitSection');
 
       if (mode === 'instant') {
-        instantBtn.className = 'px-2.5 py-1.5 rounded-md bg-purple-600 text-white font-bold transition-all';
+        instantBtn.className = 'px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-bold transition-all';
         examBtn.className = 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
         examBanner.classList.add('hidden');
       } else {
@@ -613,49 +1502,34 @@
       updateDashboardStats();
     }
 
-    function getCurrentDataset() {
-      if (currentSubject === 'eng')  return engQuestions;
-      if (currentSubject === 'math') return mathQuestions;
-      if (currentSubject === 'chi')  return chineseQuestions;
-      if (currentSubject === 'soc')  return societyQuestions;
-      return [];
-    }
-
     function renderCategoryButtons() {
       const container = document.getElementById('filterButtonGroup');
       container.innerHTML = '';
-      const list = getCurrentDataset();
 
-      const catCounts = {};
-      list.forEach(q => {
-        catCounts[q.category] = (catCounts[q.category] || 0) + 1;
-      });
-
-      const catLabels = {
-        tf: '是非題',
-        choice: '選擇題',
-        grammar: '文法與單字',
-        unscramble: '句子重組',
-        reading: '閱讀理解',
-        phonetic: '字音字形',
-        vocabulary: '字詞義運用'
-      };
-
-      const categories = [{ key: 'all', label: '全部題目', count: list.length }];
-      Object.keys(catCounts).forEach(catKey => {
-        categories.push({
-          key: catKey,
-          label: catLabels[catKey] || catKey,
-          count: catCounts[catKey]
-        });
-      });
+      let categories = [];
+      if (currentSubject === 'math') {
+        categories = [
+          { key: 'all', label: '全部題目', count: mathQuestions.length },
+          { key: 'tf', label: '是非題', count: mathQuestions.filter(q => q.category === 'tf').length },
+          { key: 'choice', label: '選擇題', count: mathQuestions.filter(q => q.category === 'choice').length }
+        ];
+      } else {
+        categories = [
+          { key: 'all', label: '全部英語', count: engQuestions.length },
+          { key: 'grammar', label: '文法與單字', count: engQuestions.filter(q => q.category === 'grammar').length },
+          { key: 'unscramble', label: '句子重組', count: engQuestions.filter(q => q.category === 'unscramble').length },
+          { key: 'reading', label: '閱讀與短文', count: engQuestions.filter(q => q.category === 'reading').length }
+        ];
+      }
 
       categories.forEach(cat => {
         const btn = document.createElement('button');
         const isActive = currentCategory === cat.key;
-        btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 shrink-0 ${
-          isActive ? 'bg-slate-800 text-white shadow-sm' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
-        }`;
+        const colorClass = currentSubject === 'math'
+          ? (isActive ? 'bg-teal-600 text-white shadow-sm' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200')
+          : (isActive ? 'bg-purple-600 text-white shadow-sm' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200');
+
+        btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 ${colorClass}`;
         btn.innerHTML = `<span>${cat.label}</span><span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-white/20' : 'bg-slate-100'}">${cat.count}</span>`;
         btn.onclick = () => {
           currentCategory = cat.key;
@@ -672,9 +1546,11 @@
       filterWrongOnly = !filterWrongOnly;
       playChime('click');
       const btn = document.getElementById('btnWrongFilter');
-      btn.className = filterWrongOnly
-        ? 'px-2.5 py-1.5 rounded-lg border border-rose-500 bg-rose-600 text-white text-xs font-bold transition-all flex items-center space-x-1'
-        : 'px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition-all flex items-center space-x-1';
+      if (filterWrongOnly) {
+        btn.className = 'px-2.5 py-1.5 rounded-lg border border-rose-500 bg-rose-600 text-white text-xs font-bold transition-all flex items-center space-x-1';
+      } else {
+        btn.className = 'px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition-all flex items-center space-x-1';
+      }
       renderQuestions();
     }
 
@@ -686,11 +1562,19 @@
       renderQuestions();
     }
 
+    /* =====================================================================
+       5. QUESTION RENDERING ENGINE
+       ===================================================================== */
+    function getCurrentDataset() {
+      return currentSubject === 'math' ? mathQuestions : engQuestions;
+    }
+
     function renderQuestions() {
       const container = document.getElementById('questionContainer');
       const emptyState = document.getElementById('emptyState');
       const rawList = getCurrentDataset();
 
+      // Apply Filters
       let list = rawList;
       if (currentCategory !== 'all') {
         list = list.filter(q => q.category === currentCategory);
@@ -720,29 +1604,32 @@
       card.id = `card_${q.id}`;
       card.className = "bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm hover:shadow-md transition-all";
 
+      // Header: Badge + Category + Question Text
       let typeBadge = '';
       if (q.type === 'tf') {
-        typeBadge = `<span class="bg-blue-50 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-md border border-blue-200/60">是非題</span>`;
+        typeBadge = `<span class="bg-blue-50 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-md border border-blue-200/60">是非判斷</span>`;
       } else if (q.type === 'unscramble') {
-        typeBadge = `<span class="bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-md border border-amber-200/60">重組題</span>`;
+        typeBadge = `<span class="bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-md border border-amber-200/60">重組拼句</span>`;
       } else if (q.type === 'category_drop') {
-        typeBadge = `<span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-md border border-emerald-200/60">分類題</span>`;
+        typeBadge = `<span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-md border border-emerald-200/60">單字歸類</span>`;
       } else {
-        typeBadge = `<span class="bg-purple-50 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-md border border-purple-200/60">選擇題</span>`;
+        typeBadge = `<span class="bg-purple-50 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-md border border-purple-200/60">單選題</span>`;
       }
 
+      // Reading Passage Context (if any)
       let contextHtml = '';
       if (q.context) {
         contextHtml = `
-          <div class="mb-3 p-3.5 bg-slate-50 border-l-4 border-indigo-400 rounded-r-xl text-slate-700 text-sm leading-relaxed">
+          <div class="mb-3 p-3.5 bg-slate-50 border-l-4 border-indigo-400 rounded-r-xl text-slate-700 text-sm leading-relaxed font-serif">
             <div class="text-[11px] font-bold text-indigo-500 uppercase tracking-wider mb-1 flex items-center">
-              <i class="fa-solid fa-book-open mr-1"></i> 短文與文章材料 / Context
+              <i class="fa-solid fa-book-open mr-1"></i> 閱讀短文 / Context
             </div>
             ${q.context}
           </div>
         `;
       }
 
+      // Body depending on question type
       let interactiveBody = '';
       if (q.type === 'tf') {
         interactiveBody = buildTrueFalseButtons(q, state);
@@ -754,6 +1641,7 @@
         interactiveBody = buildCategoryInteractive(q, state);
       }
 
+      // Explanation box (Shown if answered and not in exam mode)
       const showExplanation = state.isAnswered && (currentMode === 'instant' || state.showInExamReview);
       let explanationHtml = '';
       if (showExplanation) {
@@ -766,11 +1654,9 @@
               <i class="fa-solid ${iconType}"></i>
               <span>${state.isCorrect ? '回答正確！' : '回答錯誤！'}</span>
             </div>
-            ${q.explanation ? `
-              <div class="text-slate-600 text-xs sm:text-sm leading-relaxed mt-1">
-                <strong class="text-slate-700">解析說明：</strong> ${q.explanation}
-              </div>
-            ` : ''}
+            <div class="text-slate-600 text-xs sm:text-sm leading-relaxed mt-1">
+              <strong class="text-slate-700">解析觀念：</strong> ${q.explanation}
+            </div>
           </div>
         `;
       }
@@ -804,17 +1690,27 @@
       return card;
     }
 
+    /* =====================================================================
+       6. INTERACTIVE BUILDERS
+       ===================================================================== */
+    // 6.1 是非題 (True / False)
     function buildTrueFalseButtons(q, state) {
       const isAnswered = state.isAnswered;
       const userChoice = state.userChoice;
 
       const getBtnStyle = (val) => {
-        if (!isAnswered) return "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200";
+        if (!isAnswered) {
+          return "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200";
+        }
         if (currentMode === 'exam' && !state.showInExamReview) {
           return userChoice === val ? "bg-indigo-600 text-white border-indigo-600 shadow-md" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
         }
-        if (q.answer === val) return "bg-emerald-500 text-white border-emerald-500 font-bold shadow-md";
-        if (userChoice === val && !state.isCorrect) return "bg-rose-500 text-white border-rose-500 font-bold shadow-md";
+        if (q.answer === val) {
+          return "bg-emerald-500 text-white border-emerald-500 font-bold shadow-md";
+        }
+        if (userChoice === val && !state.isCorrect) {
+          return "bg-rose-500 text-white border-rose-500 font-bold shadow-md";
+        }
         return "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
       };
 
@@ -834,6 +1730,7 @@
       `;
     }
 
+    // 6.2 選擇題 (Multiple Choice)
     function buildMultipleChoiceButtons(q, state) {
       const isAnswered = state.isAnswered;
       const userChoice = state.userChoice;
@@ -869,36 +1766,52 @@
       `;
     }
 
+    // 6.3 句子重組 (Unscramble Sentence)
     function buildUnscrambleInteractive(q, state) {
-      if (!unscrambleDrafts[q.id]) unscrambleDrafts[q.id] = [];
+      if (!unscrambleDrafts[q.id]) {
+        unscrambleDrafts[q.id] = [];
+      }
       const draft = unscrambleDrafts[q.id];
+      const availableWords = q.words.filter((_, idx) => !draft.includes(idx));
 
       return `
         <div>
-          <div class="text-xs text-slate-500 mb-2 font-semibold">依序點擊單字卡排入句子：</div>
+          <div class="text-xs text-slate-500 mb-2 font-semibold">點擊單字卡片依序組成完整句子：</div>
+          
+          <!-- Answer Slot Area -->
           <div class="min-h-[52px] p-2.5 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 flex flex-wrap gap-2 items-center mb-3">
-            ${draft.length === 0 ? '<span class="text-xs text-slate-400">點擊下方單字排列...</span>' : ''}
+            ${draft.length === 0 ? '<span class="text-xs text-slate-400 select-none">按順序點擊下方單字排列此處...</span>' : ''}
             ${draft.map((wordIdx, slotIdx) => `
-              <button onclick="removeFromUnscramble('${q.id}', ${slotIdx})" class="px-3 py-1.5 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm flex items-center space-x-1">
+              <button onclick="removeFromUnscramble('${q.id}', ${slotIdx})" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-700 text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm flex items-center space-x-1 transition-transform active:scale-95">
                 <span>${q.words[wordIdx]}</span>
-                <i class="fa-solid fa-xmark text-[10px] ml-1"></i>
+                <i class="fa-solid fa-xmark text-[10px] ml-1 opacity-70"></i>
               </button>
             `).join('')}
           </div>
+
+          <!-- Word Bank Chips -->
           <div class="flex flex-wrap gap-2 mb-3">
             ${q.words.map((word, wIdx) => {
               const isUsed = draft.includes(wIdx);
               return `
                 <button onclick="addToUnscramble('${q.id}', ${wIdx})" ${isUsed ? 'disabled' : ''}
-                  class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold border ${isUsed ? 'bg-slate-100 text-slate-300 border-slate-200' : 'bg-white hover:bg-purple-50 text-slate-800 border-slate-300'}">
+                  class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold border transition-all ${isUsed ? 'bg-slate-100 text-slate-300 border-slate-200' : 'bg-white hover:bg-purple-50 text-slate-800 border-slate-300 hover:border-purple-300 shadow-sm'}">
                   ${word}
                 </button>
               `;
             }).join('')}
           </div>
+
+          <!-- Submit / Reset for Unscramble -->
           <div class="flex items-center space-x-2">
-            <button onclick="checkUnscramble('${q.id}')" ${draft.length === 0 ? 'disabled' : ''} class="px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">檢查答案</button>
-            <button onclick="clearUnscramble('${q.id}')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs sm:text-sm font-semibold rounded-xl">清空重選</button>
+            <button onclick="checkUnscramble('${q.id}')" ${draft.length === 0 ? 'disabled' : ''}
+              class="px-4 py-2 bg-purple-600 hover:bg-purple-700 disabled:bg-slate-200 disabled:text-slate-400 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm transition-all flex items-center space-x-1">
+              <i class="fa-solid fa-check"></i>
+              <span>檢查答案</span>
+            </button>
+            <button onclick="clearUnscramble('${q.id}')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs sm:text-sm font-semibold rounded-xl transition-colors">
+              清空重選
+            </button>
           </div>
         </div>
       `;
@@ -929,41 +1842,60 @@
       const draft = unscrambleDrafts[qId] || [];
       const userSentence = draft.map(i => q.words[i]).join(' ');
       const isCorrect = userSentence.trim() === q.correctSentence.trim();
+
       handleAnswer(qId, userSentence, isCorrect);
     }
 
+    // 6.4 單字歸類 (Category Clicker)
     function buildCategoryInteractive(q, state) {
-      if (!state.userClassify) state.userClassify = {};
+      if (!state.userClassify) {
+        state.userClassify = {};
+      }
 
       return `
         <div>
+          <div class="text-xs text-slate-500 mb-2 font-medium">請點擊單字切換其正確所屬分類：</div>
           <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-3">
             ${q.items.map((item, idx) => {
               const currentCat = state.userClassify[idx] || null;
-              let catLabel = "未分類";
-              if (currentCat === 'country') catLabel = "國家";
-              if (currentCat === 'trans') catLabel = "交通工具";
+              let catLabel = "尚未分類";
+              let catColor = "bg-slate-100 text-slate-600 border-slate-200";
+
+              if (currentCat === 'country') {
+                catLabel = "國家 (Country)";
+                catColor = "bg-amber-100 text-amber-800 border-amber-300 font-bold";
+              } else if (currentCat === 'trans') {
+                catLabel = "交通工具 (Transportation)";
+                catColor = "bg-cyan-100 text-cyan-800 border-cyan-300 font-bold";
+              }
 
               return `
                 <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between space-y-2">
                   <div class="font-extrabold text-sm text-slate-800">${item.word}</div>
                   <div class="flex space-x-1">
-                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'country')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'country' ? 'bg-amber-600 text-white' : 'bg-white text-slate-600'}">國家</button>
-                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'trans')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'trans' ? 'bg-cyan-600 text-white' : 'bg-white text-slate-600'}">交通</button>
+                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'country')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'country' ? 'bg-amber-600 text-white border-amber-600' : 'bg-white hover:bg-slate-100 text-slate-600'}">國家</button>
+                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'trans')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'trans' ? 'bg-cyan-600 text-white border-cyan-600' : 'bg-white hover:bg-slate-100 text-slate-600'}">交通</button>
                   </div>
                 </div>
               `;
             }).join('')}
           </div>
-          <button onclick="checkClassifyAnswer('${q.id}')" class="px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">確認歸類</button>
+
+          <button onclick="checkClassifyAnswer('${q.id}')" class="px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm transition-all">
+            確認歸類答案
+          </button>
         </div>
       `;
     }
 
     function setClassifyWord(qId, itemIdx, catType) {
       playChime('click');
-      if (!answersState[qId]) answersState[qId] = { isAnswered: false, userChoice: null, isCorrect: false, userClassify: {} };
-      if (!answersState[qId].userClassify) answersState[qId].userClassify = {};
+      if (!answersState[qId]) {
+        answersState[qId] = { isAnswered: false, userChoice: null, isCorrect: false, userClassify: {} };
+      }
+      if (!answersState[qId].userClassify) {
+        answersState[qId].userClassify = {};
+      }
       answersState[qId].userClassify[itemIdx] = catType;
       renderQuestions();
     }
@@ -971,6 +1903,7 @@
     function checkClassifyAnswer(qId) {
       const q = engQuestions.find(item => item.id === qId);
       const userClassify = answersState[qId]?.userClassify || {};
+
       let allCorrect = true;
       for (let i = 0; i < q.items.length; i++) {
         if (userClassify[i] !== q.items[i].cat) {
@@ -978,9 +1911,13 @@
           break;
         }
       }
+
       handleAnswer(qId, userClassify, allCorrect);
     }
 
+    /* =====================================================================
+       7. ANSWER HANDLING & STATS COMPUTATION
+       ===================================================================== */
     function handleAnswer(questionId, choice, overrideCorrectness = null) {
       const dataset = getCurrentDataset();
       const q = dataset.find(item => item.id === questionId);
@@ -1001,7 +1938,11 @@
       };
 
       if (currentMode === 'instant') {
-        playChime(isCorrect ? 'correct' : 'wrong');
+        if (isCorrect) {
+          playChime('correct');
+        } else {
+          playChime('wrong');
+        }
       } else {
         playChime('click');
       }
@@ -1049,6 +1990,9 @@
       renderQuestions();
     }
 
+    /* =====================================================================
+       8. EXAM SUBMISSION & MODAL
+       ===================================================================== */
     function submitExam() {
       const dataset = getCurrentDataset();
       let answeredCount = 0;
@@ -1064,10 +2008,11 @@
       });
 
       const total = dataset.length;
-      const finalScore = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+      const finalScore = Math.round((correctCount / total) * 100);
       const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
 
-      document.getElementById('modalSubjectTag').textContent = '英語科測驗結算';
+      // Populate Modal
+      document.getElementById('modalSubjectTag').textContent = currentSubject === 'math' ? '數學科測驗結算' : '生活英語測驗結算';
       document.getElementById('modalFinalScore').textContent = `${finalScore}分`;
       document.getElementById('modalCorrectCount').textContent = `${correctCount}/${total}`;
       document.getElementById('modalAccuracy').textContent = `${accuracy}%`;
@@ -1083,7 +2028,7 @@
         iconElem.innerHTML = '<i class="fa-solid fa-medal text-teal-500"></i>';
         playChime('correct');
       } else {
-        titleElem.textContent = "再接再厲！看解析複習重要觀念！";
+        titleElem.textContent = "加油！透過錯題觀念解析加強練習！";
         iconElem.innerHTML = '<i class="fa-solid fa-book-bookmark text-indigo-500"></i>';
         playChime('wrong');
       }
@@ -1094,6 +2039,7 @@
     function closeScoreReport(keepReview) {
       document.getElementById('scoreReportModal').classList.add('hidden');
       if (keepReview) {
+        // Switch to instant display so answers & explanations are visible
         currentMode = 'instant';
         setQuizMode('instant');
       }
@@ -1103,6 +2049,9 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    /* =====================================================================
+       9. INITIALIZATION
+       ===================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       renderCategoryButtons();
       renderQuestions();
