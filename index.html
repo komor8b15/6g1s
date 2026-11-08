@@ -1,371 +1,886 @@
-window.chineseQuestions = [
-  // --- 是非題 (02mid 34題 + 02dif 7題 = 共41題) ---
-  { id: "c_tf_1", type: "tf", category: "tf", question: "「混合」、「混淆」兩個詞語的「混」字意思相同。", answer: "O", explanation: "" },
-  { id: "c_tf_2", type: "tf", category: "tf", question: "「泡沫」、「飛沫」兩個詞語的「沫」字意思相同。", answer: "O", explanation: "" },
-  { id: "c_tf_3", type: "tf", category: "tf", question: "「園蔬勝珍饈」是指為了追求健康，我們應該只吃昂貴稀有的山珍海味。", answer: "X", explanation: "「園蔬勝珍饈」是指飲食方面要講求簡單節約。" },
-  { id: "c_tf_4", type: "tf", category: "tf", question: "「毋枉毋縱」和「毋庸置疑」的「毋」字都是不要的意思。", answer: "O", explanation: "" },
-  { id: "c_tf_5", type: "tf", category: "tf", question: "「削皮」、「削價」兩個詞語的「削」字意思相同。", answer: "X", explanation: "「削皮」是「用刀斜著一層一層切除」；「削價」是「刪減」。" },
-  { id: "c_tf_6", type: "tf", category: "tf", question: "「熬夜」、「熬湯」兩個詞語的「熬」字意思相同。", answer: "X", explanation: "「熬夜」是「勉強忍耐」；「熬湯」是「用小火慢煮、乾煎」。" },
-  { id: "c_tf_7", type: "tf", category: "tf", question: "「壓抑」的「抑」是指壓制、扣住的意思。", answer: "O", explanation: "" },
-  { id: "c_tf_8", type: "tf", category: "tf", question: "「束縛」、「拘束」的意思相近。", answer: "O", explanation: "" },
-  { id: "c_tf_9", type: "tf", category: "tf", question: "「半絲半縷」的「縷」是指「計算絲線狀物品的單位。」", answer: "X", explanation: "半絲半「縷」：線、麻線。" },
-  { id: "c_tf_10", type: "tf", category: "tf", question: "「爭奪」和「奪標」的「奪」字意思相同。", answer: "O", explanation: "皆是指「爭取」的意思。" },
-  { id: "c_tf_11", type: "tf", category: "tf", question: "「爭奪」、「光彩奪目」兩個詞語的「奪」字意思相同。", answer: "X", explanation: "爭「奪」：爭取。光彩「奪」目：耀眼、眩目。" },
-  { id: "c_tf_12", type: "tf", category: "tf", question: "「退避三舍」的原意是指為避免正面衝突或因害怕而主動讓步逃避，不與對方相抗。", answer: "O", explanation: "" },
-  { id: "c_tf_13", type: "tf", category: "tf", question: "「出嫁」和「轉嫁」這兩個詞語中的「嫁」意思相同。", answer: "X", explanation: "出「嫁」：女子結婚。轉「嫁」：推惡於人。" },
-  { id: "c_tf_14", type: "tf", category: "tf", question: "「未雨綢繆」和「情意綢繆」的「綢繆」，都是「親密、纏綿」的意思。", answer: "X", explanation: "未雨「綢繆」：纏繞束縛，修補器物；情意「綢繆」：親密、纏綿。" },
-  { id: "c_tf_15", type: "tf", category: "tf", question: "「熬煮」的意思是利用水的熱氣蒸熟食物的烹調法。", answer: "X", explanation: "熬煮：用小火慢慢烹煮。" },
-  { id: "c_tf_16", type: "tf", category: "tf", question: "「經過這次坦誠的溝通，他們終於消除了心中的介帝，決定重新開始。」句中有兩個錯別字。", answer: "O", explanation: "介帝→芥蒂。" },
-  { id: "c_tf_17", type: "tf", category: "tf", question: "「許多人為他的才能被白白浪費感到惋惜。」句中的「惋惜」可以替換為「痛惜」。", answer: "O", explanation: "惋惜：嘆息、令人感覺可惜，與「痛惜」意思相近。" },
-  { id: "c_tf_18", type: "tf", category: "tf", question: "「濃稠滑順」和「人口稠密」這兩個詞語中的「稠」意思相同。", answer: "X", explanation: "濃「稠」滑順：深濃、厚密。人口「稠」密：繁、多。" },
-  { id: "c_tf_19", type: "tf", category: "tf", question: "「商人開倔運河，藉此將精美的絲稠運往世界各地。」句中有兩個錯別字。", answer: "O", explanation: "倔→掘，稠→綢。" },
-  { id: "c_tf_20", type: "tf", category: "tf", question: "「比賽最後倒數三秒，隊長在三分線外頂著防守壓力，奇蹟般的扭轉局勢，反敗為勝。」句中沒有錯別字。", answer: "O", explanation: "" },
-  { id: "c_tf_21", type: "tf", category: "tf", question: "「他在每一次實戰中，激發潛能，不僅提升工作能力，也看見自己更多的可能，因而遇見更好的自己。」句中的「不僅」可以替換為「不但」。", answer: "O", explanation: "此句為遞進複句，「不僅……也……」與「不但……也……」為同義關聯詞。" },
-  { id: "c_tf_22", type: "tf", category: "tf", question: "「追求更卓越的表現」中的「卓越」，可以替換成「優異」。", answer: "O", explanation: "" },
-  { id: "c_tf_23", type: "tf", category: "tf", question: "「後悔」、「反悔」的意思相近。", answer: "O", explanation: "" },
-  { id: "c_tf_24", type: "tf", category: "tf", question: "「拒絕」和「接受」是相反詞。", answer: "O", explanation: "" },
-  { id: "c_tf_25", type: "tf", category: "tf", question: "「熱騰騰」的意思是形容很熱或冒著熱氣的樣子。", answer: "O", explanation: "" },
-  { id: "c_tf_26", type: "tf", category: "tf", question: "「破碎」、「瑣碎」兩個詞語的「碎」字意思相同。", answer: "X", explanation: "「破碎」是破裂；「瑣碎」是瑣細、煩雜。" },
-  { id: "c_tf_27", type: "tf", category: "tf", question: "「壓軸」的「軸」是指「貫穿車輪中心，控制輪子轉動的橫桿」。", answer: "X", explanation: "壓「軸」：中心的、樞要的。" },
-  { id: "c_tf_28", type: "tf", category: "tf", question: "「擴展」和「擴張」這兩個詞語中的「擴」意思相同。", answer: "O", explanation: "" },
-  { id: "c_tf_29", type: "tf", category: "tf", question: "「臨渴掘井」的「掘」是指挖、穿鑿的意思。", answer: "O", explanation: "" },
-  { id: "c_tf_30", type: "tf", category: "tf", question: "「凡事當留餘地」的意思是做任何事情都不要留給他人任何緩衝的空間。", answer: "X", explanation: "「凡事當留餘地」是指凡事都應當預留退路或緩衝空間。" },
-  { id: "c_tf_31", type: "tf", category: "tf", question: "「樂極生悲」和「苦盡甘來」是相反詞。", answer: "O", explanation: "" },
-  { id: "c_tf_32", type: "tf", category: "tf", question: "「拱手讓人」是用來形容人謙虛有禮。", answer: "X", explanation: "拱手讓人：輕易的把東西讓給別人。" },
-  { id: "c_tf_33", type: "tf", category: "tf", question: "「偏心」和「不偏不倚」的「偏」字，都是「傾斜、不中正」的意思。", answer: "O", explanation: "" },
-  { id: "c_tf_34", type: "tf", category: "tf", question: "「爸爸常教導我們，給予他人恩惠時毋須張揚，默默施予更珍貴。」句中沒有錯別字。", answer: "O", explanation: "" },
-  { id: "c_tf_35", type: "tf", category: "tf", question: "「醃製」、「醃肉」兩個詞語的「醃」字意思相同。", answer: "O", explanation: "" },
-  { id: "c_tf_36", type: "tf", category: "tf", question: "「異士」和「異能」這兩個詞語中的「異」意思相同。", answer: "O", explanation: "都是指「特別的、不平常的」。" },
-  { id: "c_tf_37", type: "tf", category: "tf", question: "「喜宴」、「宴客」兩個詞語的「宴」字意思相同。", answer: "X", explanation: "「喜宴」是酒席筵席；「宴客」是以酒食款待賓客。" },
-  { id: "c_tf_38", type: "tf", category: "tf", question: "「中間隔著一段時間」的「隔」是指「距離、間隔」的意思。", answer: "O", explanation: "" },
-  { id: "c_tf_39", type: "tf", category: "tf", question: "「他欠缺的不是才華」中的「欠」是「不夠、缺乏」的意思。", answer: "O", explanation: "" },
-  { id: "c_tf_40", type: "tf", category: "tf", question: "「雞丁」、「園丁」兩個詞語的「丁」字意思相同。", answer: "X", explanation: "「雞丁」是指方形小塊；「園丁」是指從事某種勞動職業的人。" },
-  { id: "c_tf_41", type: "tf", category: "tf", question: "「驕傲」的「驕」是指「高傲自滿」，「驕陽」的「驕」意思也是「高傲自滿」。", answer: "X", explanation: "「驕」傲：高傲自滿；「驕」陽：猛烈、強烈。" },
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>國小多學科互動測驗學習平台 (數學 / 英文 / 國語 / 社會)</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Font Awesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <!-- Google Fonts Inter -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Noto+Sans+TC:wght@400;500;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Noto Sans TC', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f5f9;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-teal-500 selection:text-white">
 
-  // --- 字音字形 (02mid 48題 + 02dif 6題 = 54題) ---
-  {
-    id: "c_ph_1", type: "choice", category: "phonetic",
-    question: "「看到同學□□為班級倒垃圾，老師欣慰的朝他□頭微笑。」空格中依序應填入哪些字？",
-    options: ["點點，默", "墨墨，點", "墨墨，漠", "默默，點"],
-    answer: 3, explanation: ""
-  },
-  {
-    id: "c_ph_2", type: "choice", category: "phonetic",
-    question: "「他成功□轉了劣勢，成為帶領球隊贏得勝利的關鍵樞□。」空格中依序應填入哪些字？",
-    options: ["扭，扭", "扭，紐", "紐，扭", "紐，紐"],
-    answer: 1, explanation: "扭轉局勢、關鍵樞紐。"
-  },
-  {
-    id: "c_ph_3", type: "choice", category: "phonetic",
-    question: "「老師提醒我們，同學之間應互相砥□，彼此勸勉。」空格中應填入下列何者？",
-    options: ["萬", "勵", "礪", "歷"],
-    answer: 2, explanation: "砥礪。"
-  },
-  {
-    id: "c_ph_4", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["我不想把冠軍拱手讓人。", "那位先生氣得臉都紐曲了。", "被胡亂指責讓他覺得很委區。", "他講話不經思考，讓人很監尬。"],
-    answer: 0, explanation: "②「扭」曲，③委「屈」，④「尷」尬。"
-  },
-  {
-    id: "c_ph_5", type: "choice", category: "phonetic",
-    question: "「只要每天重□練習這個動作數次，你的□部肌肉就可以變得結實。」空格中依序應填入哪些字？",
-    options: ["複，複", "腹，腹", "腹，複", "複，腹"],
-    answer: 3, explanation: "重複練習、腹部肌肉。"
-  },
-  {
-    id: "c_ph_6", type: "choice", category: "phonetic",
-    question: "「在寧靜的夜裡，□飲一口香茗，可以忘卻白天的煩憂。」空格中應填入下列何者？",
-    options: ["輟", "綴", "啜", "叕"],
-    answer: 2, explanation: "啜飲。"
-  },
-  {
-    id: "c_ph_7", type: "choice", category: "phonetic",
-    question: "「雖然小黑熊剛出生時行動有些笨□，但在熊媽媽細心的照顧下，現在已經日漸□壯。」空格中依序應填入哪些字？",
-    options: ["茁，拙", "拙，茁", "絀，茁", "茁，絀"],
-    answer: 1, explanation: "笨拙、茁壯。"
-  },
-  {
-    id: "c_ph_8", type: "choice", category: "phonetic",
-    question: "「年糕裹上麵粉後油□，就成為美味可口的點心。」空格中應填入下列何者？",
-    options: ["詐", "炸", "作", "蚱"],
-    answer: 1, explanation: "油炸。"
-  },
-  {
-    id: "c_ph_9", type: "choice", category: "phonetic",
-    question: "「會場的主持人提醒民眾調整排隊的□離，但是偉華卻□絕。」空格中依序應填入哪些字？",
-    options: ["距，距", "矩，拒", "拒，距", "距，拒"],
-    answer: 3, explanation: "距離、拒絕。"
-  },
-  {
-    id: "c_ph_10", type: "choice", category: "phonetic",
-    question: "「小貓非常愛乾淨，時常□吮身上的毛。」空格中應填入下列何者？",
-    options: ["忝", "舔", "悿", "添"],
-    answer: 1, explanation: "舔吮。"
-  },
-  {
-    id: "c_ph_11", type: "choice", category: "phonetic",
-    question: "「他噴了許多芳香劑，試圖□蓋□製泡菜的氣味。」空格中依序應填入下列何者？",
-    options: ["煙，湮", "掩，醃", "埯，淹", "醃，淹"],
-    answer: 1, explanation: "掩蓋、醃製。"
-  },
-  {
-    id: "c_ph_12", type: "choice", category: "phonetic",
-    question: "「水庫洩洪的聲勢有如萬馬奔藤，非常壯觀。」句中哪一個字是錯別字？",
-    options: ["藤", "洩", "庫", "觀"],
-    answer: 0, explanation: "萬馬奔「藤」→萬馬奔「騰」。"
-  },
-  {
-    id: "c_ph_13", type: "choice", category: "phonetic",
-    question: "「在湖邊露□時，我們發現星星閃耀著晶□的光芒，讓夜色顯得格外美麗。」空格中依序應填入下列何者？",
-    options: ["營，營", "瑩，瑩", "營，瑩", "瑩，營"],
-    answer: 2, explanation: "露營、晶瑩。"
-  },
-  {
-    id: "c_ph_14", type: "choice", category: "phonetic",
-    question: "「這位知名作家寫的小說情節曲折、□人熱淚，大受讀者歡迎，但他待人依然□和有禮，真不容易！」空格中依序應填入哪些字？",
-    options: ["賺，嫌", "兼，賺", "賺，謙", "嫌，兼"],
-    answer: 2, explanation: "賺人熱淚、謙和有禮。"
-  },
-  {
-    id: "c_ph_15", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["這個鍵盤胺鍵有些故障。", "這杯牛奶混合一些蜂蜜後，更增添風味。", "他用舌頭把嘴邊的殘渣添乾淨。", "近期雨量豐佩，水庫水位升高不少。"],
-    answer: 1, explanation: "①「按」鍵，③「舔」乾淨，④豐「沛」。"
-  },
-  {
-    id: "c_ph_16", type: "choice", category: "phonetic",
-    question: "「磨漿製皮，竹荀切叮，後腿肉醃製攪拌，層層的相遇在高溫水氣。」句中共有幾個錯別字？",
-    options: ["一個", "二個", "三個", "四個"],
-    answer: 1, explanation: "錯別字：荀→筍，叮→丁。"
-  },
-  {
-    id: "c_ph_17", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["街口的小餐館已經般遷到別處了。", "從家裡走到學校有一大段鉅離。", "他對自己的無理取鬧感到很後誨。", "選手們個個鬥志高昂，全力以赴。"],
-    answer: 3, explanation: "①「搬」遷，②「距」離，③後「悔」。"
-  },
-  {
-    id: "c_ph_18", type: "choice", category: "phonetic",
-    question: "「□親一再提醒我們，□忘這次失敗的教訓。」空格中依序應填入哪些字？",
-    options: ["毋，毋", "毋，母", "母，母", "母，毋"],
-    answer: 3, explanation: "母親、毋忘。"
-  },
-  {
-    id: "c_ph_19", type: "choice", category: "phonetic",
-    question: "「他的個性率真爽朗，討□任何□抑個性的事。」空格中依序應填入哪些字？",
-    options: ["壓，厭", "雅，壓", "壓，雅", "厭，壓"],
-    answer: 3, explanation: "討厭、壓抑。"
-  },
-  {
-    id: "c_ph_20", type: "choice", category: "phonetic",
-    question: "「自從□購新的貓窩後，小貓睡覺前都會先用舌頭將手和腳□乾淨，再跳進裡頭睡覺。」空格中依序應填入哪些字？",
-    options: ["添，舔", "添，添", "舔，舔", "舔，添"],
-    answer: 0, explanation: "添購、舔乾淨。"
-  },
-  {
-    id: "c_ph_21", type: "choice", category: "phonetic",
-    question: "下列詞語，何者用字完全正確？",
-    options: ["宜未雨而綢繆", "母臨渴而掘井", "修補淘器", "半絲半樓"],
-    answer: 0, explanation: "②「毋」臨渴而掘井，③修補「陶」器，④半絲半「縷」。"
-  },
-  {
-    id: "c_ph_22", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["焦糖布丁入口即化，香甜的滋味令人回味無窮。", "我們消去鳳梨皮，將鳳梨心除去後，切成一塊一塊。", "塊狀的芭樂轉瞬間「粉身醉骨」。", "他會用小湯匙舀出一酌果凍。"],
-    answer: 0, explanation: "②「削」去，③粉身「碎」骨，④舀出一「勺」。"
-  },
-  {
-    id: "c_ph_23", type: "choice", category: "phonetic",
-    question: "「警察正在路口取□那些隨便亂丟菸□的人。」空格中依序應填入哪些字？",
-    options: ["地，第", "締，蒂", "帝，啼", "蒂，蹄"],
-    answer: 1, explanation: "取締、菸蒂。"
-  },
-  {
-    id: "c_ph_24", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["當發令槍一響，他便盡力向前飛奔。", "政彬認為老師篇心才做出這個決定。", "政彬對自己的無理取鬧並不後誨。", "我們會努力跑，幫你領先一段拒離。"],
-    answer: 0, explanation: "②「偏」心，③後「悔」，④「距」離。"
-  },
-  {
-    id: "c_ph_25", type: "choice", category: "phonetic",
-    question: "「幾次被誤認為是不預先準備而臨渴□井的工作態度，讓他覺得很委□，忍不住哭了起來。」空格中依序應填入哪些字？",
-    options: ["倔，崛", "掘，屈", "屈，倔", "倔，掘"],
-    answer: 1, explanation: "臨渴掘井、委屈。"
-  },
-  {
-    id: "c_ph_26", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["對於一碗弼或一碗飯，我們應當想著得來不易。", "凡事要想著未雨綢繆，預先準備。", "絲瓜藤禪繞著竹架向上生長。", "瘦弱的書生手無搏雞之力。"],
-    answer: 1, explanation: "①一碗「粥」，③「纏」繞，④「縛」雞之力。"
-  },
-  {
-    id: "c_ph_27", type: "choice", category: "phonetic",
-    question: "「我們來到花蓮的□鄉小學，學校周圍□地都是金黃色的稻穗，真是美麗。」空格中依序應填入哪些字？",
-    options: ["遍，偏", "遍，遍", "偏，遍", "偏，騙"],
-    answer: 2, explanation: "偏鄉、遍地。"
-  },
-  {
-    id: "c_ph_28", type: "choice", category: "phonetic",
-    question: "「外面正在□大風，我建議你先不要上山去採竹□。」空格中依序應填入下列何者？",
-    options: ["颳，筍", "颳，荀", "颱，筍", "颱，荀"],
-    answer: 0, explanation: "颳大風、採竹筍。"
-  },
-  {
-    id: "c_ph_29", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["政彬前幾天跑步紐傷腳踝。", "清潔志工每天墨墨的打掃公園。", "突然聽到這消息，他整個人塄住了。", "他這次的數學考試成績突飛猛進。"],
-    answer: 3, explanation: "①「扭」傷，②「默默」，③「愣」住。"
-  },
-  {
-    id: "c_ph_30", type: "choice", category: "phonetic",
-    question: "「經過一次又一次的促膝長談，□相了解後，他倆之間的誤會已冰消□解了。」空格中依序應填入哪些字？",
-    options: ["互，互", "互，瓦", "瓦，瓦", "瓦，互"],
-    answer: 1, explanation: "互相了解、冰消瓦解。"
-  },
-  {
-    id: "c_ph_31", type: "choice", category: "phonetic",
-    question: "「□師在盤子上□上醬汁後，這道料理就完成了。」空格中依序應填入下列何者？",
-    options: ["櫥，淋", "櫥，琳", "廚，淋", "廚，琳"],
-    answer: 2, explanation: "廚師、淋上。"
-  },
-  {
-    id: "c_ph_32", type: "choice", category: "phonetic",
-    question: "「他喜歡旅行遊歷，不僅上山下海，還會到□鄉探訪，為生命寫下美麗的詩□。」空格中依序應填入哪些字？",
-    options: ["偏，遍", "翩，扁", "偏，篇", "扁，匾"],
-    answer: 2, explanation: "偏鄉、詩篇。"
-  },
-  {
-    id: "c_ph_33", type: "choice", category: "phonetic",
-    question: "「想到自己當初□學，打工負擔家計的那段日子，他忍不住□泣。」空格中依序應填入哪些字？",
-    options: ["輟，輟", "啜，啜", "啜，輟", "輟，啜"],
-    answer: 3, explanation: "輟學、啜泣。"
-  },
-  {
-    id: "c_ph_34", type: "choice", category: "phonetic",
-    question: "「他努力仰制心中的不安，婉距不合理的要求。」句中共有幾個錯別字？",
-    options: ["一個", "二個", "三個", "四個"],
-    answer: 1, explanation: "仰→抑，距→拒。"
-  },
-  {
-    id: "c_ph_35", type: "choice", category: "phonetic",
-    question: "「滾滾的洪水之後，洒乾的地瓜，包覆著救命的恩情。」句中哪一個字是錯別字？",
-    options: ["滾", "洒", "瓜", "覆"],
-    answer: 1, explanation: "洒→晒。"
-  },
-  {
-    id: "c_ph_36", type: "choice", category: "phonetic",
-    question: "「我們準備了一場盛大的□宴，邀請親朋好友同樂。」空格中應填入下列何者？",
-    options: ["嚮", "響", "蠁", "饗"],
-    answer: 3, explanation: "盛大的饗宴。"
-  },
-  {
-    id: "c_ph_37", type: "choice", category: "phonetic",
-    question: "「在山野間露□時，可以在原野觀星，還可以在晶□剔透的溪水間的玩耍」空格中依序應填入下列何者？",
-    options: ["瑩，螢", "迎，仰", "營，瑩", "瀅，營"],
-    answer: 2, explanation: "露營、晶瑩剔透。"
-  },
-  {
-    id: "c_ph_38", type: "choice", category: "phonetic",
-    question: "「狂風侵襲本地，頓時飛□走石，場面十分驚人。」空格中應填入下列何者？",
-    options: ["抄", "妙", "紗", "砂"],
-    answer: 3, explanation: "飛砂走石。"
-  },
-  {
-    id: "c_ph_39", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["這些雕像乍看之下與真人無冀，非常逼真。", "同學之間應互相抵礪，彼此扶持。", "農夫不怕烈日當空，依然在農地耕芸。", "嫩苗經過細心照顧，逐漸茁壯。"],
-    answer: 3, explanation: "①無「異」，②「砥」礪，③耕「耘」。"
-  },
-  {
-    id: "c_ph_40", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["這顆藍寶石光彩奮目。", "你知道屈原的故事嗎？", "姑姑準備般到臺中住。", "校門口的氣球供門五彩繽紛。"],
-    answer: 1, explanation: "①「奪」目，③「搬」到，④「拱」門。"
-  },
-  {
-    id: "c_ph_41", type: "choice", category: "phonetic",
-    question: "「經過數年的努力，他終於敖出頭了，如今總算擁有一片屬於自己的天地。」句子中錯誤的字應該更改為什麼？",
-    options: ["「努」改為「怒」", "「擁」改為「雍」", "「自」改為「白」", "「敖」改為「熬」"],
-    answer: 3, explanation: "熬出頭。"
-  },
-  {
-    id: "c_ph_42", type: "choice", category: "phonetic",
-    question: "「□湯的時候，別忘了要時時□拌，才不會讓食材黏在鍋底。」空格中依序應填入下列何者？",
-    options: ["者，攪", "煮，覺", "煮，攪", "者，攪"],
-    answer: 2, explanation: "煮湯、攪拌。"
-  },
-  {
-    id: "c_ph_43", type: "choice", category: "phonetic",
-    question: "「自然老師□空指導我們，利用齒輪與轉□做出一輛太陽能小汽車。」空格中依序應填入哪些字？",
-    options: ["抽，妯", "油，由", "抽，軸", "軸，抽"],
-    answer: 2, explanation: "抽空、轉軸。"
-  },
-  {
-    id: "c_ph_44", type: "choice", category: "phonetic",
-    question: "「這道□肉料理是□席上最受歡迎的一道菜。」空格中依序應填入下列何者？",
-    options: ["諸，宴", "豬，晏", "諸，宴", "豬，宴"],
-    answer: 3, explanation: "豬肉、宴席。"
-  },
-  {
-    id: "c_ph_45", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["我們可以經由多做增加經驗，藉由多學陪養能力。", "宋朝的方仲永家中世代以耕田為業。", "許多人為方仲永的才能被白白浪費感到腕惜。", "在困頓中接受鍛鍊，讓自己堅強拙壯。"],
-    answer: 1, explanation: "①「培」養，③「惋」惜，④「茁」壯。"
-  },
-  {
-    id: "c_ph_46", type: "choice", category: "phonetic",
-    question: "「這道香□蛋糕淋上□糖醬，嘗起來真是美味。」空格中依序應填入哪些字？",
-    options: ["蕉，蕉", "蕉，焦", "焦，蕉", "焦，焦"],
-    answer: 1, explanation: "香蕉蛋糕、焦糖醬。"
-  },
-  {
-    id: "c_ph_47", type: "choice", category: "phonetic",
-    question: "「他們兩人為了爭奮勝利，因此產生介帝，影響彼此的感情。」句中共有幾個錯別字？",
-    options: ["一個", "二個", "三個", "四個"],
-    answer: 2, explanation: "奮→奪，介→芥，帝→蒂。"
-  },
-  {
-    id: "c_ph_48", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["葡萄樹經過農夫的細心照顧，日漸成長茁壯。", "古人說：「一分耕云，一分收穫。」", "球場上，大家都必須絕對服從栽判的判決。", "老師因為班上有自動自發的讀書精神而感到十分驕敖。"],
-    answer: 0, explanation: "②耕「云」→耕「耘」，③「栽」判→「裁」判，④驕「敖」→驕「傲」。"
-  },
-  {
-    id: "c_ph_49", type: "choice", category: "phonetic",
-    question: "下列句子，何者用字完全正確？",
-    options: ["琳雨後很容易著涼感冒。", "他晒黑了，我差點認不出來。", "爺爺在廚房裡準備水者玉米，整個屋子都飄著淡淡的玉米香味。", "最近這幾年，高樓大廈如雨後春荀般的聳立在街頭。"],
-    answer: 1, explanation: "①「淋」雨，③水「煮」玉米，④雨後春「筍」。"
-  },
-  {
-    id: "c_ph_50", type: "choice", category: "phonetic",
-    question: "「前幾天由於□水氾濫，居民無乾淨的水可以使用，里長趕緊在□橋附近設置一個□水站，提供大家使用。」空格中依序應填入哪些字？",
-    options: ["拱，供，洪", "洪，拱，供", "供，洪，拱", "洪，供，拱"],
-    answer: 1, explanation: "洪水、拱橋、供水站。"
-  },
-  {
-    id: "c_ph_51", type: "choice", category: "phonetic",
-    question: "下列詞語，何者用字完全正確？",
-    options: ["退避三捨", "下午荼飲料", "泡沫紅茶", "一刁冰淇淋"],
-    answer: 2, explanation: "①退避三「舍」，②下午「茶」飲料，④一「勺」冰淇淋。"
-  },
-  {
-    id: "c_ph_52", type: "choice", category: "phonetic",
-    question: "「這碗濃□的蘑菇湯香味四溢，讓人食指大動。」空格中應填入何者？",
-    options: ["綢", "稠", "雕", "凋"],
-    answer: 1, explanation: "濃稠。"
-  },
-  {
-    id: "c_ph_53", type: "choice", category: "phonetic",
-    question: "「學校會在期茉舉辦一場舞蹈表演，讓大家徜洋在藝術的氛圍中。」句中共有幾個錯別字？",
-    options: ["一個", "二個", "三個", "四個"],
-    answer: 1, explanation: "錯別字：茉→末；洋→徉。"
-  },
-  {
-    id: "c_ph_54", type: "choice", category: "phonetic",
-    question: "下列文句，何者用字完全正確？",
-    options: ["桌上有一杯泡沫紅茶。", "消防員在奮戰半小時後，終於息滅火源。", "請你滔出一勺蜂蜜。", "布丁上的蕉糖很美味。"],
-    answer: 0, explanation: "②「熄」滅，③「舀」出，④「焦」糖。"
-  }
-  // 其餘字詞義（137題）、修辭、成語等完整資料亦皆包含於本題庫中
-];
+  <!-- ================= TOP NAVIGATION ================= -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300" id="headerNav">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20">
+        
+        <!-- Logo & Title -->
+        <div class="flex items-center space-x-3">
+          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
+            <i id="subjectIcon" class="fa-solid fa-calculator"></i>
+          </div>
+          <div>
+            <div class="flex items-center space-x-2">
+              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-teal-100 text-teal-800 transition-colors">數學科</span>
+              <span class="text-xs text-slate-400 hidden sm:inline-block">互動題庫系統</span>
+            </div>
+            <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">國小學科多元測驗系統</h1>
+          </div>
+        </div>
+
+        <!-- Subject Switch Tabs (4 Subjects) -->
+        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto">
+          <button id="btnSwitchMath" onclick="switchSubject('math')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-teal-700 shadow-sm shrink-0">
+            <i class="fa-solid fa-calculator"></i>
+            <span>數學科</span>
+          </button>
+          <button id="btnSwitchEng" onclick="switchSubject('eng')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-purple-600 shrink-0">
+            <i class="fa-solid fa-language"></i>
+            <span>英語科</span>
+          </button>
+          <button id="btnSwitchChi" onclick="switchSubject('chi')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-rose-600 shrink-0">
+            <i class="fa-solid fa-book"></i>
+            <span>國語科</span>
+          </button>
+          <button id="btnSwitchSoc" onclick="switchSubject('soc')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-amber-600 shrink-0">
+            <i class="fa-solid fa-landmark"></i>
+            <span>社會科</span>
+          </button>
+        </div>
+
+        <!-- Utility buttons -->
+        <div class="flex items-center space-x-2">
+          <button onclick="toggleAudio()" id="btnAudioToggle" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors" title="音效切換">
+            <i id="audioIcon" class="fa-solid fa-volume-high"></i>
+          </button>
+          <button onclick="resetCurrentQuiz()" class="px-3 py-2 rounded-xl text-xs sm:text-sm font-semibold bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center space-x-1 transition-colors" title="重設進度">
+            <i class="fa-solid fa-rotate-left"></i>
+            <span class="hidden md:inline">重測</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Sub-bar: Modes & Category Filters -->
+    <div class="bg-slate-50/90 border-t border-slate-200/80 px-4 sm:px-6 lg:px-8 py-2.5">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-sm">
+        
+        <!-- Filter Tabs -->
+        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Mode Selector & Stats Indicator -->
+        <div class="flex items-center space-x-3 ml-auto">
+          <!-- Mode Toggle -->
+          <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold shadow-sm">
+            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white transition-all">
+              <i class="fa-solid fa-bolt mr-1"></i>即時解析
+            </button>
+            <button onclick="setQuizMode('exam')" id="modeExamBtn" class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all">
+              <i class="fa-solid fa-clipboard-check mr-1"></i>模擬考模式
+            </button>
+          </div>
+
+          <!-- Wrong Only Filter -->
+          <button onclick="toggleFilterWrongOnly()" id="btnWrongFilter" class="px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition-all flex items-center space-x-1">
+            <i class="fa-solid fa-filter"></i>
+            <span>僅看錯題 (<span id="wrongCountBadge">0</span>)</span>
+          </button>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Quiz Progress Bar -->
+    <div class="w-full bg-slate-200 h-1.5 relative overflow-hidden">
+      <div id="progressBar" class="bg-teal-500 h-full w-0 transition-all duration-300"></div>
+    </div>
+  </header>
+
+  <!-- ================= STATS SUMMARY BANNER ================= -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 w-full">
+    <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+        <div class="w-11 h-11 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-list-ol"></i>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-slate-500">已作答 / 總題數</div>
+          <div class="text-lg font-extrabold text-slate-900"><span id="statAnswered">0</span> / <span id="statTotal">0</span></div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+        <div class="w-11 h-11 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-slate-500">答對題數</div>
+          <div class="text-lg font-extrabold text-emerald-600" id="statCorrect">0</div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+        <div class="w-11 h-11 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-circle-xmark"></i>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-slate-500">答錯題數</div>
+          <div class="text-lg font-extrabold text-rose-600" id="statWrong">0</div>
+        </div>
+      </div>
+      <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
+        <div class="w-11 h-11 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center text-lg">
+          <i class="fa-solid fa-chart-pie"></i>
+        </div>
+        <div>
+          <div class="text-xs font-medium text-slate-500">當前正確率</div>
+          <div class="text-lg font-extrabold text-slate-900" id="statAccuracy">0%</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= EXAM SUBMISSION BANNER (EXAM MODE ONLY) ================= -->
+  <section id="examSubmitSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full hidden">
+    <div class="bg-gradient-to-r from-indigo-500 via-purple-600 to-teal-600 rounded-2xl p-5 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+      <div class="flex items-center space-x-3">
+        <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm text-2xl">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold">模擬考測驗進行中</h2>
+          <p class="text-xs sm:text-sm text-white/90">作答時不會提示正誤，完成後請點選交卷查看總分與詳解！</p>
+        </div>
+      </div>
+      <button onclick="submitExam()" class="w-full sm:w-auto px-6 py-3 bg-white text-indigo-700 hover:bg-slate-100 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+        <i class="fa-solid fa-paper-plane"></i>
+        <span>完成交卷結算</span>
+      </button>
+    </div>
+  </section>
+
+  <!-- ================= SCORE REPORT MODAL ================= -->
+  <div id="scoreReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center transform transition-all scale-95 duration-200">
+      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-teal-50 text-teal-600" id="modalScoreIcon">
+        <i class="fa-solid fa-trophy"></i>
+      </div>
+      <span class="text-xs uppercase font-extrabold tracking-widest text-teal-600 bg-teal-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
+      <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" id="modalScoreTitle">測驗成果分析</h3>
+      <p class="text-slate-500 text-sm mb-6" id="modalScoreSubtitle">以下是您本次測驗的詳細成果報告：</p>
+
+      <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 grid grid-cols-3 gap-2 mb-6">
+        <div>
+          <div class="text-xs text-slate-400 font-medium">總得分</div>
+          <div class="text-2xl font-black text-teal-600 mt-1" id="modalFinalScore">0分</div>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400 font-medium">答對題數</div>
+          <div class="text-2xl font-black text-emerald-600 mt-1" id="modalCorrectCount">0/0</div>
+        </div>
+        <div>
+          <div class="text-xs text-slate-400 font-medium">正確率</div>
+          <div class="text-2xl font-black text-indigo-600 mt-1" id="modalAccuracy">0%</div>
+        </div>
+      </div>
+
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <span>檢視錯題與詳解</span>
+        </button>
+        <button onclick="closeScoreReport(false); resetCurrentQuiz();" class="py-3 px-5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition-colors">
+          <i class="fa-solid fa-rotate-left mr-1"></i>重新測驗
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= MAIN QUESTION LIST CONTAINER ================= -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1">
+    
+    <div id="emptyState" class="hidden bg-white rounded-3xl p-12 text-center border border-dashed border-slate-300">
+      <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl mb-4">
+        <i class="fa-solid fa-folder-open"></i>
+      </div>
+      <h3 class="text-lg font-bold text-slate-800">目前分類沒有相符的題目</h3>
+      <p class="text-slate-500 text-sm mt-1">您可以切換上方分類，或是取消「僅看錯題」篩選。</p>
+      <button onclick="clearFilters()" class="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl">重置篩選</button>
+    </div>
+
+    <!-- Question Cards List -->
+    <div id="questionContainer" class="space-y-5"></div>
+
+  </main>
+
+  <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
+    <button onclick="scrollToTop()" class="w-12 h-12 bg-white/90 hover:bg-white text-slate-700 shadow-xl border border-slate-200 rounded-2xl flex items-center justify-center transition-all hover:scale-105 active:scale-95" title="回到頂部">
+      <i class="fa-solid fa-arrow-up text-lg"></i>
+    </button>
+  </div>
+
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
+      <p>國小全學科互動測驗題庫系統 • 涵蓋數學、生活英語、國語完整合輯與社會科題庫</p>
+    </div>
+  </footer>
+
+  <!-- ================= SCRIPT & DATA LOADER ================= -->
+  <!-- 載入外部分割題庫資料檔以確保完整與載入順暢 -->
+  <script src="./questions_math.js"></script>
+  <script src="./questions_eng.js"></script>
+  <script src="./questions_chinese.js"></script>
+  <script src="./questions_society.js"></script>
+
+  <script>
+    /* =====================================================================
+       APPLICATION STATE
+       ===================================================================== */
+    let currentSubject = 'chi'; // 預設先顯示剛加入的國語科
+    let currentMode = 'instant'; // 'instant' or 'exam'
+    let currentCategory = 'all';
+    let filterWrongOnly = false;
+    let audioEnabled = true;
+
+    const answersState = {};
+    const unscrambleDrafts = {};
+
+    let audioCtx = null;
+    function playChime(type) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'correct') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.08);
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.16);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(185.00, now);
+          osc.frequency.exponentialRampToValueAtTime(155.56, now + 0.15);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.31);
+        } else if (type === 'click') {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, now);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        }
+      } catch (e) {}
+    }
+
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      const icon = document.getElementById('audioIcon');
+      icon.className = audioEnabled ? 'fa-solid fa-volume-high text-teal-600' : 'fa-solid fa-volume-xmark text-slate-400';
+    }
+
+    function switchSubject(subject) {
+      if (currentSubject === subject) return;
+      currentSubject = subject;
+      currentCategory = 'all';
+      filterWrongOnly = false;
+      playChime('click');
+
+      const tabs = {
+        math: { btn: 'btnSwitchMath', badge: '數學科', icon: 'fa-calculator', color: 'teal' },
+        eng:  { btn: 'btnSwitchEng',  badge: '英語科', icon: 'fa-language',   color: 'purple' },
+        chi:  { btn: 'btnSwitchChi',  badge: '國語科', icon: 'fa-book',       color: 'rose' },
+        soc:  { btn: 'btnSwitchSoc',  badge: '社會科', icon: 'fa-landmark',   color: 'amber' }
+      };
+
+      Object.keys(tabs).forEach(k => {
+        const btn = document.getElementById(tabs[k].btn);
+        if (k === subject) {
+          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-${tabs[k].color}-700 shadow-sm shrink-0`;
+        } else {
+          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-${tabs[k].color}-600 shrink-0`;
+        }
+      });
+
+      const active = tabs[subject];
+      document.getElementById('subjectBadge').textContent = active.badge;
+      document.getElementById('subjectBadge').className = `text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-${active.color}-100 text-${active.color}-800 transition-colors`;
+      document.getElementById('subjectIconWrapper').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-${active.color}-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors`;
+      document.getElementById('subjectIcon').className = `fa-solid ${active.icon}`;
+      document.getElementById('progressBar').className = `bg-${active.color}-500 h-full w-0 transition-all duration-300`;
+
+      renderCategoryButtons();
+      renderQuestions();
+      updateDashboardStats();
+    }
+
+    function setQuizMode(mode) {
+      currentMode = mode;
+      playChime('click');
+      const instantBtn = document.getElementById('modeInstantBtn');
+      const examBtn = document.getElementById('modeExamBtn');
+      const examBanner = document.getElementById('examSubmitSection');
+
+      if (mode === 'instant') {
+        instantBtn.className = 'px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-bold transition-all';
+        examBtn.className = 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
+        examBanner.classList.add('hidden');
+      } else {
+        examBtn.className = 'px-2.5 py-1.5 rounded-md bg-indigo-600 text-white font-bold transition-all';
+        instantBtn.className = 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
+        examBanner.classList.remove('hidden');
+      }
+
+      renderQuestions();
+      updateDashboardStats();
+    }
+
+    function getCurrentDataset() {
+      if (currentSubject === 'math') return window.mathQuestions || [];
+      if (currentSubject === 'eng')  return window.engQuestions || [];
+      if (currentSubject === 'chi')  return window.chineseQuestions || [];
+      if (currentSubject === 'soc')  return window.societyQuestions || [];
+      return [];
+    }
+
+    function renderCategoryButtons() {
+      const container = document.getElementById('filterButtonGroup');
+      container.innerHTML = '';
+      const list = getCurrentDataset();
+
+      const catCounts = {};
+      list.forEach(q => {
+        catCounts[q.category] = (catCounts[q.category] || 0) + 1;
+      });
+
+      const catLabels = {
+        tf: '是非題',
+        choice: '選擇題',
+        grammar: '文法與單字',
+        unscramble: '句子重組',
+        reading: '閱讀理解',
+        phonetic: '字音字形',
+        vocabulary: '字詞義運用',
+        punctuation: '標點符號',
+        rhetoric: '基本修辭',
+        idiom: '延伸成語',
+        other: '句型與綜合'
+      };
+
+      const categories = [{ key: 'all', label: '全部題目', count: list.length }];
+      Object.keys(catCounts).forEach(catKey => {
+        categories.push({
+          key: catKey,
+          label: catLabels[catKey] || catKey,
+          count: catCounts[catKey]
+        });
+      });
+
+      categories.forEach(cat => {
+        const btn = document.createElement('button');
+        const isActive = currentCategory === cat.key;
+        btn.className = `px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center space-x-1.5 shrink-0 ${
+          isActive ? 'bg-slate-800 text-white shadow-sm' : 'bg-white text-slate-600 hover:bg-slate-100 border border-slate-200'
+        }`;
+        btn.innerHTML = `<span>${cat.label}</span><span class="text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-white/20' : 'bg-slate-100'}">${cat.count}</span>`;
+        btn.onclick = () => {
+          currentCategory = cat.key;
+          filterWrongOnly = false;
+          playChime('click');
+          renderCategoryButtons();
+          renderQuestions();
+        };
+        container.appendChild(btn);
+      });
+    }
+
+    function toggleFilterWrongOnly() {
+      filterWrongOnly = !filterWrongOnly;
+      playChime('click');
+      const btn = document.getElementById('btnWrongFilter');
+      btn.className = filterWrongOnly
+        ? 'px-2.5 py-1.5 rounded-lg border border-rose-500 bg-rose-600 text-white text-xs font-bold transition-all flex items-center space-x-1'
+        : 'px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition-all flex items-center space-x-1';
+      renderQuestions();
+    }
+
+    function clearFilters() {
+      currentCategory = 'all';
+      filterWrongOnly = false;
+      document.getElementById('btnWrongFilter').className = 'px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition-all flex items-center space-x-1';
+      renderCategoryButtons();
+      renderQuestions();
+    }
+
+    function renderQuestions() {
+      const container = document.getElementById('questionContainer');
+      const emptyState = document.getElementById('emptyState');
+      const rawList = getCurrentDataset();
+
+      let list = rawList;
+      if (currentCategory !== 'all') {
+        list = list.filter(q => q.category === currentCategory);
+      }
+      if (filterWrongOnly) {
+        list = list.filter(q => answersState[q.id] && answersState[q.id].isAnswered && !answersState[q.id].isCorrect);
+      }
+
+      container.innerHTML = '';
+
+      if (list.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      } else {
+        emptyState.classList.add('hidden');
+      }
+
+      list.forEach((q, index) => {
+        const card = createQuestionCard(q, index + 1);
+        container.appendChild(card);
+      });
+    }
+
+    function createQuestionCard(q, displayIndex) {
+      const state = answersState[q.id] || { isAnswered: false, userChoice: null, isCorrect: false };
+      const card = document.createElement('div');
+      card.id = `card_${q.id}`;
+      card.className = "bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm hover:shadow-md transition-all";
+
+      let typeBadge = '';
+      if (q.type === 'tf') {
+        typeBadge = `<span class="bg-blue-50 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-md border border-blue-200/60">是非題</span>`;
+      } else if (q.type === 'unscramble') {
+        typeBadge = `<span class="bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-md border border-amber-200/60">重組題</span>`;
+      } else if (q.type === 'category_drop') {
+        typeBadge = `<span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-md border border-emerald-200/60">分類題</span>`;
+      } else {
+        typeBadge = `<span class="bg-purple-50 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-md border border-purple-200/60">選擇題</span>`;
+      }
+
+      let contextHtml = '';
+      if (q.context) {
+        contextHtml = `
+          <div class="mb-3 p-3.5 bg-slate-50 border-l-4 border-indigo-400 rounded-r-xl text-slate-700 text-sm leading-relaxed">
+            <div class="text-[11px] font-bold text-indigo-500 uppercase tracking-wider mb-1 flex items-center">
+              <i class="fa-solid fa-book-open mr-1"></i> 題組材料 / 短文說明
+            </div>
+            ${q.context}
+          </div>
+        `;
+      }
+
+      let interactiveBody = '';
+      if (q.type === 'tf') {
+        interactiveBody = buildTrueFalseButtons(q, state);
+      } else if (q.type === 'choice') {
+        interactiveBody = buildMultipleChoiceButtons(q, state);
+      } else if (q.type === 'unscramble') {
+        interactiveBody = buildUnscrambleInteractive(q, state);
+      } else if (q.type === 'category_drop') {
+        interactiveBody = buildCategoryInteractive(q, state);
+      }
+
+      const showExplanation = state.isAnswered && (currentMode === 'instant' || state.showInExamReview);
+      let explanationHtml = '';
+      if (showExplanation) {
+        const correctColor = state.isCorrect ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-rose-700 bg-rose-50 border-rose-200';
+        const iconType = state.isCorrect ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-rose-600';
+
+        explanationHtml = `
+          <div class="mt-4 p-4 rounded-xl border ${correctColor} text-sm transition-all duration-300">
+            <div class="font-bold flex items-center space-x-1.5 mb-1">
+              <i class="fa-solid ${iconType}"></i>
+              <span>${state.isCorrect ? '回答正確！' : '回答錯誤！'}</span>
+            </div>
+            ${q.explanation ? `
+              <div class="text-slate-600 text-xs sm:text-sm leading-relaxed mt-1">
+                <strong class="text-slate-700">解析說明：</strong> ${q.explanation}
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+
+      card.innerHTML = `
+        <div class="flex items-start justify-between gap-3 mb-2">
+          <div class="flex items-center space-x-2">
+            <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-extrabold text-xs flex items-center justify-center">${displayIndex}</span>
+            ${typeBadge}
+          </div>
+          ${state.isAnswered ? `
+            <span class="text-xs font-bold px-2.5 py-1 rounded-full ${state.isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+              ${state.isCorrect ? '<i class="fa-solid fa-check mr-1"></i>答對' : '<i class="fa-solid fa-xmark mr-1"></i>答錯'}
+            </span>
+          ` : ''}
+        </div>
+
+        ${contextHtml}
+
+        <div class="text-base sm:text-lg font-bold text-slate-900 leading-snug my-2">
+          ${q.question}
+        </div>
+
+        <div class="mt-4">
+          ${interactiveBody}
+        </div>
+
+        ${explanationHtml}
+      `;
+
+      return card;
+    }
+
+    function buildTrueFalseButtons(q, state) {
+      const isAnswered = state.isAnswered;
+      const userChoice = state.userChoice;
+
+      const getBtnStyle = (val) => {
+        if (!isAnswered) return "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200";
+        if (currentMode === 'exam' && !state.showInExamReview) {
+          return userChoice === val ? "bg-indigo-600 text-white border-indigo-600 shadow-md" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
+        }
+        if (q.answer === val) return "bg-emerald-500 text-white border-emerald-500 font-bold shadow-md";
+        if (userChoice === val && !state.isCorrect) return "bg-rose-500 text-white border-rose-500 font-bold shadow-md";
+        return "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
+      };
+
+      return `
+        <div class="grid grid-cols-2 gap-3 sm:max-w-md">
+          <button onclick="handleAnswer('${q.id}', 'O')" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
+            class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('O')}">
+            <i class="fa-regular fa-circle text-lg"></i>
+            <span>正確 (○)</span>
+          </button>
+          <button onclick="handleAnswer('${q.id}', 'X')" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
+            class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('X')}">
+            <i class="fa-solid fa-xmark text-lg"></i>
+            <span>錯誤 (╳)</span>
+          </button>
+        </div>
+      `;
+    }
+
+    function buildMultipleChoiceButtons(q, state) {
+      const isAnswered = state.isAnswered;
+      const userChoice = state.userChoice;
+      const letters = ['A', 'B', 'C', 'D'];
+
+      return `
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+          ${q.options.map((opt, idx) => {
+            let btnClass = "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200";
+            if (isAnswered) {
+              if (currentMode === 'exam' && !state.showInExamReview) {
+                btnClass = userChoice === idx ? "bg-indigo-600 text-white border-indigo-600 shadow-sm" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
+              } else {
+                if (q.answer === idx) {
+                  btnClass = "bg-emerald-500 text-white border-emerald-500 font-bold shadow-sm";
+                } else if (userChoice === idx && !state.isCorrect) {
+                  btnClass = "bg-rose-500 text-white border-rose-500 font-bold shadow-sm";
+                } else {
+                  btnClass = "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
+                }
+              }
+            }
+
+            return `
+              <button onclick="handleAnswer('${q.id}', ${idx})" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
+                class="flex items-center text-left py-3 px-4 rounded-xl border transition-all text-sm sm:text-base font-medium ${btnClass}">
+                <span class="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center text-xs font-bold mr-3 shrink-0">${letters[idx] || (idx+1)}</span>
+                <span class="flex-1">${opt}</span>
+              </button>
+            `;
+          }).join('')}
+        </div>
+      `;
+    }
+
+    function buildUnscrambleInteractive(q, state) {
+      if (!unscrambleDrafts[q.id]) unscrambleDrafts[q.id] = [];
+      const draft = unscrambleDrafts[q.id];
+
+      return `
+        <div>
+          <div class="text-xs text-slate-500 mb-2 font-semibold">依序點擊單字卡排入句子：</div>
+          <div class="min-h-[52px] p-2.5 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 flex flex-wrap gap-2 items-center mb-3">
+            ${draft.length === 0 ? '<span class="text-xs text-slate-400">點擊下方單字排列...</span>' : ''}
+            ${draft.map((wordIdx, slotIdx) => `
+              <button onclick="removeFromUnscramble('${q.id}', ${slotIdx})" class="px-3 py-1.5 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm flex items-center space-x-1">
+                <span>${q.words[wordIdx]}</span>
+                <i class="fa-solid fa-xmark text-[10px] ml-1"></i>
+              </button>
+            `).join('')}
+          </div>
+          <div class="flex flex-wrap gap-2 mb-3">
+            ${q.words.map((word, wIdx) => {
+              const isUsed = draft.includes(wIdx);
+              return `
+                <button onclick="addToUnscramble('${q.id}', ${wIdx})" ${isUsed ? 'disabled' : ''}
+                  class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold border ${isUsed ? 'bg-slate-100 text-slate-300 border-slate-200' : 'bg-white hover:bg-purple-50 text-slate-800 border-slate-300'}">
+                  ${word}
+                </button>
+              `;
+            }).join('')}
+          </div>
+          <div class="flex items-center space-x-2">
+            <button onclick="checkUnscramble('${q.id}')" ${draft.length === 0 ? 'disabled' : ''} class="px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">檢查答案</button>
+            <button onclick="clearUnscramble('${q.id}')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs sm:text-sm font-semibold rounded-xl">重置</button>
+          </div>
+        </div>
+      `;
+    }
+
+    function addToUnscramble(qId, wordIdx) {
+      playChime('click');
+      if (!unscrambleDrafts[qId]) unscrambleDrafts[qId] = [];
+      unscrambleDrafts[qId].push(wordIdx);
+      renderQuestions();
+    }
+
+    function removeFromUnscramble(qId, slotIdx) {
+      playChime('click');
+      if (!unscrambleDrafts[qId]) return;
+      unscrambleDrafts[qId].splice(slotIdx, 1);
+      renderQuestions();
+    }
+
+    function clearUnscramble(qId) {
+      playChime('click');
+      unscrambleDrafts[qId] = [];
+      renderQuestions();
+    }
+
+    function checkUnscramble(qId) {
+      const q = (window.engQuestions || []).find(item => item.id === qId);
+      const draft = unscrambleDrafts[qId] || [];
+      const userSentence = draft.map(i => q.words[i]).join(' ');
+      const isCorrect = userSentence.trim() === q.correctSentence.trim();
+      handleAnswer(qId, userSentence, isCorrect);
+    }
+
+    function buildCategoryInteractive(q, state) {
+      if (!state.userClassify) state.userClassify = {};
+
+      return `
+        <div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-3">
+            ${q.items.map((item, idx) => {
+              const currentCat = state.userClassify[idx] || null;
+              let catLabel = "未分類";
+              if (currentCat === 'country') catLabel = "國家";
+              if (currentCat === 'trans') catLabel = "交通工具";
+
+              return `
+                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between space-y-2">
+                  <div class="font-extrabold text-sm text-slate-800">${item.word}</div>
+                  <div class="flex space-x-1">
+                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'country')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'country' ? 'bg-amber-600 text-white' : 'bg-white text-slate-600'}">國家</button>
+                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'trans')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'trans' ? 'bg-cyan-600 text-white' : 'bg-white text-slate-600'}">交通</button>
+                  </div>
+                </div>
+              `;
+            }).join('')}
+          </div>
+          <button onclick="checkClassifyAnswer('${q.id}')" class="px-4 py-2 bg-teal-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">確認歸類</button>
+        </div>
+      `;
+    }
+
+    function setClassifyWord(qId, itemIdx, catType) {
+      playChime('click');
+      if (!answersState[qId]) answersState[qId] = { isAnswered: false, userChoice: null, isCorrect: false, userClassify: {} };
+      if (!answersState[qId].userClassify) answersState[qId].userClassify = {};
+      answersState[qId].userClassify[itemIdx] = catType;
+      renderQuestions();
+    }
+
+    function checkClassifyAnswer(qId) {
+      const q = (window.engQuestions || []).find(item => item.id === qId);
+      const userClassify = answersState[qId]?.userClassify || {};
+      let allCorrect = true;
+      for (let i = 0; i < q.items.length; i++) {
+        if (userClassify[i] !== q.items[i].cat) {
+          allCorrect = false;
+          break;
+        }
+      }
+      handleAnswer(qId, userClassify, allCorrect);
+    }
+
+    function handleAnswer(questionId, choice, overrideCorrectness = null) {
+      const dataset = getCurrentDataset();
+      const q = dataset.find(item => item.id === questionId);
+      if (!q) return;
+
+      let isCorrect = false;
+      if (overrideCorrectness !== null) {
+        isCorrect = overrideCorrectness;
+      } else {
+        isCorrect = (q.answer === choice);
+      }
+
+      answersState[questionId] = {
+        isAnswered: true,
+        userChoice: choice,
+        isCorrect: isCorrect,
+        showInExamReview: currentMode === 'exam' ? false : true
+      };
+
+      if (currentMode === 'instant') {
+        playChime(isCorrect ? 'correct' : 'wrong');
+      } else {
+        playChime('click');
+      }
+
+      updateDashboardStats();
+      renderQuestions();
+    }
+
+    function updateDashboardStats() {
+      const dataset = getCurrentDataset();
+      const total = dataset.length;
+      let answered = 0;
+      let correct = 0;
+      let wrong = 0;
+
+      dataset.forEach(q => {
+        const state = answersState[q.id];
+        if (state && state.isAnswered) {
+          answered++;
+          if (state.isCorrect) correct++;
+          else wrong++;
+        }
+      });
+
+      const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
+      const progressPercent = total > 0 ? (answered / total) * 100 : 0;
+
+      document.getElementById('statAnswered').textContent = answered;
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statCorrect').textContent = correct;
+      document.getElementById('statWrong').textContent = wrong;
+      document.getElementById('statAccuracy').textContent = `${accuracy}%`;
+      document.getElementById('wrongCountBadge').textContent = wrong;
+      document.getElementById('progressBar').style.width = `${progressPercent}%`;
+    }
+
+    function resetCurrentQuiz() {
+      const dataset = getCurrentDataset();
+      dataset.forEach(q => {
+        delete answersState[q.id];
+        delete unscrambleDrafts[q.id];
+      });
+      playChime('click');
+      updateDashboardStats();
+      renderQuestions();
+    }
+
+    function submitExam() {
+      const dataset = getCurrentDataset();
+      let answeredCount = 0;
+      let correctCount = 0;
+
+      dataset.forEach(q => {
+        const state = answersState[q.id];
+        if (state && state.isAnswered) {
+          answeredCount++;
+          state.showInExamReview = true;
+          if (state.isCorrect) correctCount++;
+        }
+      });
+
+      const total = dataset.length;
+      const finalScore = total > 0 ? Math.round((correctCount / total) * 100) : 0;
+      const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
+
+      document.getElementById('modalSubjectTag').textContent = '測驗結算';
+      document.getElementById('modalFinalScore').textContent = `${finalScore}分`;
+      document.getElementById('modalCorrectCount').textContent = `${correctCount}/${total}`;
+      document.getElementById('modalAccuracy').textContent = `${accuracy}%`;
+
+      const titleElem = document.getElementById('modalScoreTitle');
+      const iconElem = document.getElementById('modalScoreIcon');
+      if (finalScore >= 90) {
+        titleElem.textContent = "表現極度傑出！掌握非常完美！";
+        iconElem.innerHTML = '<i class="fa-solid fa-crown text-amber-500"></i>';
+        playChime('correct');
+      } else if (finalScore >= 70) {
+        titleElem.textContent = "表現良好！複習錯題後能更上一層樓！";
+        iconElem.innerHTML = '<i class="fa-solid fa-medal text-teal-500"></i>';
+        playChime('correct');
+      } else {
+        titleElem.textContent = "再接再厲！觀看解析強化觀念！";
+        iconElem.innerHTML = '<i class="fa-solid fa-book-bookmark text-indigo-500"></i>';
+        playChime('wrong');
+      }
+
+      document.getElementById('scoreReportModal').classList.remove('hidden');
+    }
+
+    function closeScoreReport(keepReview) {
+      document.getElementById('scoreReportModal').classList.add('hidden');
+      if (keepReview) {
+        currentMode = 'instant';
+        setQuizMode('instant');
+      }
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      renderCategoryButtons();
+      renderQuestions();
+      updateDashboardStats();
+    });
+  </script>
+</body>
+</html>
