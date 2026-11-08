@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國小多學科互動測驗學習平台 (數學 / 英文 / 國語 / 社會)</title>
+  <title>國小互動測驗學習平台</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -24,33 +24,23 @@
     }
   </script>
   <style>
-    html {
-      scroll-behavior: smooth;
-    }
-    .custom-scrollbar::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    .custom-scrollbar::-webkit-scrollbar-track {
-      background: #f1f5f9;
-    }
-    .custom-scrollbar::-webkit-scrollbar-thumb {
-      background: #cbd5e1;
-      border-radius: 9999px;
-    }
+    html { scroll-behavior: smooth; }
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-teal-500 selection:text-white">
 
-  <!-- ================= TOP NAVIGATION ================= -->
-  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300" id="headerNav">
+  <!-- ================= 頂端導覽列 ================= -->
+  <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex items-center justify-between h-16 sm:h-20">
         
-        <!-- Logo & Title -->
+        <!-- Logo 與標題 -->
         <div class="flex items-center space-x-3">
           <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
-            <i id="subjectIcon" class="fa-solid fa-calculator"></i>
+            <i id="subjectIcon" class="fa-solid fa-book"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
@@ -61,27 +51,10 @@
           </div>
         </div>
 
-        <!-- Subject Switch Tabs (4 Subjects) -->
-        <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto">
-          <button id="btnSwitchMath" onclick="switchSubject('math')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-teal-700 shadow-sm shrink-0">
-            <i class="fa-solid fa-calculator"></i>
-            <span>數學科</span>
-          </button>
-          <button id="btnSwitchEng" onclick="switchSubject('eng')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-purple-600 shrink-0">
-            <i class="fa-solid fa-language"></i>
-            <span>英語科</span>
-          </button>
-          <button id="btnSwitchChi" onclick="switchSubject('chi')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-rose-600 shrink-0">
-            <i class="fa-solid fa-book"></i>
-            <span>國語科</span>
-          </button>
-          <button id="btnSwitchSoc" onclick="switchSubject('soc')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-amber-600 shrink-0">
-            <i class="fa-solid fa-landmark"></i>
-            <span>社會科</span>
-          </button>
-        </div>
+        <!-- 科目切換按鈕區 (由 JS 依據設定自動生成，免手動刻按鈕) -->
+        <div id="subjectNavList" class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto gap-1"></div>
 
-        <!-- Utility buttons -->
+        <!-- 功能按鈕 -->
         <div class="flex items-center space-x-2">
           <button onclick="toggleAudio()" id="btnAudioToggle" class="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition-colors" title="音效切換">
             <i id="audioIcon" class="fa-solid fa-volume-high"></i>
@@ -95,18 +68,15 @@
       </div>
     </div>
 
-    <!-- Sub-bar: Modes & Category Filters -->
+    <!-- 子工具列：分類篩選與測驗模式 -->
     <div class="bg-slate-50/90 border-t border-slate-200/80 px-4 sm:px-6 lg:px-8 py-2.5">
       <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-sm">
         
-        <!-- Filter Tabs -->
-        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1">
-          <!-- Populated by JS -->
-        </div>
+        <!-- 題型分類標籤 (由 JS 自動統計生成) -->
+        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1"></div>
 
-        <!-- Mode Selector & Stats Indicator -->
+        <!-- 模式切換與錯題篩選 -->
         <div class="flex items-center space-x-3 ml-auto">
-          <!-- Mode Toggle -->
           <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold shadow-sm">
             <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white transition-all">
               <i class="fa-solid fa-bolt mr-1"></i>即時解析
@@ -116,7 +86,6 @@
             </button>
           </div>
 
-          <!-- Wrong Only Filter -->
           <button onclick="toggleFilterWrongOnly()" id="btnWrongFilter" class="px-2.5 py-1.5 rounded-lg border border-rose-200 bg-rose-50 text-rose-700 hover:bg-rose-100 text-xs font-bold transition-all flex items-center space-x-1">
             <i class="fa-solid fa-filter"></i>
             <span>僅看錯題 (<span id="wrongCountBadge">0</span>)</span>
@@ -126,13 +95,13 @@
       </div>
     </div>
 
-    <!-- Quiz Progress Bar -->
+    <!-- 進度條 -->
     <div class="w-full bg-slate-200 h-1.5 relative overflow-hidden">
       <div id="progressBar" class="bg-teal-500 h-full w-0 transition-all duration-300"></div>
     </div>
   </header>
 
-  <!-- ================= STATS SUMMARY BANNER ================= -->
+  <!-- ================= 統計面板 ================= -->
   <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 w-full">
     <div class="grid grid-cols-2 sm:grid-cols-4 gap-3.5">
       <div class="bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm flex items-center space-x-3.5">
@@ -174,9 +143,9 @@
     </div>
   </section>
 
-  <!-- ================= EXAM SUBMISSION BANNER (EXAM MODE ONLY) ================= -->
+  <!-- ================= 模擬考交卷列 ================= -->
   <section id="examSubmitSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full hidden">
-    <div class="bg-gradient-to-r from-indigo-500 via-purple-600 to-teal-600 rounded-2xl p-5 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="bg-gradient-to-r from-teal-500 via-indigo-600 to-rose-600 rounded-2xl p-5 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center space-x-3">
         <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm text-2xl">
           <i class="fa-solid fa-graduation-cap"></i>
@@ -186,14 +155,14 @@
           <p class="text-xs sm:text-sm text-white/90">作答時不會提示正誤，完成後請點選交卷查看總分與詳解！</p>
         </div>
       </div>
-      <button onclick="submitExam()" class="w-full sm:w-auto px-6 py-3 bg-white text-indigo-700 hover:bg-slate-100 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+      <button onclick="submitExam()" class="w-full sm:w-auto px-6 py-3 bg-white text-teal-800 hover:bg-slate-100 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
         <i class="fa-solid fa-paper-plane"></i>
         <span>完成交卷結算</span>
       </button>
     </div>
   </section>
 
-  <!-- ================= SCORE REPORT MODAL ================= -->
+  <!-- ================= 結算報告彈窗 ================= -->
   <div id="scoreReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center transform transition-all scale-95 duration-200">
       <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-teal-50 text-teal-600" id="modalScoreIcon">
@@ -201,7 +170,7 @@
       </div>
       <span class="text-xs uppercase font-extrabold tracking-widest text-teal-600 bg-teal-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
       <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" id="modalScoreTitle">測驗成果分析</h3>
-      <p class="text-slate-500 text-sm mb-6" id="modalScoreSubtitle">以下是您本次測驗的詳細成果報告：</p>
+      <p class="text-slate-500 text-sm mb-6">以下是您本次測驗的詳細成果報告：</p>
 
       <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 grid grid-cols-3 gap-2 mb-6">
         <div>
@@ -230,9 +199,8 @@
     </div>
   </div>
 
-  <!-- ================= MAIN QUESTION LIST CONTAINER ================= -->
+  <!-- ================= 題目列表容器 ================= -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full flex-1">
-    
     <div id="emptyState" class="hidden bg-white rounded-3xl p-12 text-center border border-dashed border-slate-300">
       <div class="w-16 h-16 bg-slate-100 rounded-full flex items-center justify-center mx-auto text-slate-400 text-2xl mb-4">
         <i class="fa-solid fa-folder-open"></i>
@@ -242,185 +210,107 @@
       <button onclick="clearFilters()" class="mt-4 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 text-sm font-semibold rounded-xl">重置篩選</button>
     </div>
 
-    <!-- Question Cards List -->
     <div id="questionContainer" class="space-y-5"></div>
-
   </main>
 
   <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-3">
-    <button onclick="scrollToTop()" class="w-12 h-12 bg-white/90 hover:bg-white text-slate-700 shadow-xl border border-slate-200 rounded-2xl flex items-center justify-center transition-all hover:scale-105 active:scale-95" title="回到頂部">
+    <button onclick="window.scrollTo({ top: 0, behavior: 'smooth' })" class="w-12 h-12 bg-white/90 hover:bg-white text-slate-700 shadow-xl border border-slate-200 rounded-2xl flex items-center justify-center transition-all hover:scale-105 active:scale-95" title="回到頂部">
       <i class="fa-solid fa-arrow-up text-lg"></i>
     </button>
   </div>
 
-  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
-      <p>國小全學科互動測驗題庫系統 • 涵蓋數學、生活英語、國語完整合輯與社會科題庫</p>
-    </div>
-  </footer>
-
-  <!-- ================= SCRIPT & DATA LOADER ================= -->
-  <!-- 載入外部分割題庫資料檔以確保完整與載入順暢 -->
+  <!-- ================= 載入各科外部分離題庫 ================= -->
   <script src="./questions_math.js"></script>
-  <script src="./questions_eng.js"></script>
   <script src="./questions_chinese.js"></script>
   <script src="./questions_society.js"></script>
+  <!-- 未來有新科目只要直接在這裡往下加一行，例如：<script src="./questions_science.js"></script> -->
 
+  <!-- ================= 核心邏輯引擎 ================= -->
   <script>
-    /* =====================================================================
-       APPLICATION STATE
-       ===================================================================== */
-    let currentSubject = 'chi'; // 預設先顯示剛加入的國語科
-    let currentMode = 'instant'; // 'instant' or 'exam'
+    /* ==========================================================
+       ★ 科目設定中心 (新增科目只需在下方設定表加一筆即可全自動運作！)
+       ========================================================== */
+    const SUBJECT_CONFIG = {
+      math: { label: '數學科', icon: 'fa-calculator', color: 'teal', dataKey: 'mathQuestions' },
+      chi:  { label: '國語科', icon: 'fa-book',       color: 'rose', dataKey: 'chineseQuestions' },
+      soc:  { label: '社會科', icon: 'fa-landmark',   color: 'amber', dataKey: 'societyQuestions' }
+      // 例如未來新增自然科：
+      // sci:  { label: '自然科', icon: 'fa-flask', color: 'emerald', dataKey: 'scienceQuestions' }
+    };
+
+    let currentSubject = 'math';
+    let currentMode = 'instant';
     let currentCategory = 'all';
     let filterWrongOnly = false;
     let audioEnabled = true;
-
     const answersState = {};
-    const unscrambleDrafts = {};
 
-    let audioCtx = null;
-    function playChime(type) {
-      if (!audioEnabled) return;
-      try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
+    // 取得當前科目的所有題目
+    function getCurrentDataset() {
+      const config = SUBJECT_CONFIG[currentSubject];
+      return (config && window[config.dataKey]) ? window[config.dataKey] : [];
+    }
 
-        const now = audioCtx.currentTime;
-        const osc = audioCtx.createOscillator();
-        const gain = audioCtx.createGain();
-        osc.connect(gain);
-        gain.connect(audioCtx.destination);
+    // 動態渲染導覽列上的科目切換按鈕
+    function renderSubjectNav() {
+      const navContainer = document.getElementById('subjectNavList');
+      navContainer.innerHTML = '';
 
-        if (type === 'correct') {
-          osc.type = 'triangle';
-          osc.frequency.setValueAtTime(523.25, now);
-          osc.frequency.exponentialRampToValueAtTime(659.25, now + 0.08);
-          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.16);
-          gain.gain.setValueAtTime(0.15, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
-          osc.start(now);
-          osc.stop(now + 0.36);
-        } else if (type === 'wrong') {
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(185.00, now);
-          osc.frequency.exponentialRampToValueAtTime(155.56, now + 0.15);
-          gain.gain.setValueAtTime(0.12, now);
-          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-          osc.start(now);
-          osc.stop(now + 0.31);
-        } else if (type === 'click') {
-          osc.type = 'sine';
-          osc.frequency.setValueAtTime(400, now);
-          gain.gain.setValueAtTime(0.04, now);
-          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
-          osc.start(now);
-          osc.stop(now + 0.06);
+      Object.keys(SUBJECT_CONFIG).forEach(key => {
+        const item = SUBJECT_CONFIG[key];
+        const isActive = currentSubject === key;
+        const btn = document.createElement('button');
+        btn.onclick = () => switchSubject(key);
+
+        if (isActive) {
+          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-${item.color}-700 shadow-sm shrink-0`;
+        } else {
+          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-${item.color}-600 shrink-0`;
         }
-      } catch (e) {}
+        btn.innerHTML = `<i class="fa-solid ${item.icon}"></i><span>${item.label}</span>`;
+        navContainer.appendChild(btn);
+      });
     }
 
-    function toggleAudio() {
-      audioEnabled = !audioEnabled;
-      const icon = document.getElementById('audioIcon');
-      icon.className = audioEnabled ? 'fa-solid fa-volume-high text-teal-600' : 'fa-solid fa-volume-xmark text-slate-400';
-    }
-
-    function switchSubject(subject) {
-      if (currentSubject === subject) return;
-      currentSubject = subject;
+    // 切換科目
+    function switchSubject(subjectKey) {
+      if (!SUBJECT_CONFIG[subjectKey]) return;
+      currentSubject = subjectKey;
       currentCategory = 'all';
       filterWrongOnly = false;
       playChime('click');
 
-      const tabs = {
-        math: { btn: 'btnSwitchMath', badge: '數學科', icon: 'fa-calculator', color: 'teal' },
-        eng:  { btn: 'btnSwitchEng',  badge: '英語科', icon: 'fa-language',   color: 'purple' },
-        chi:  { btn: 'btnSwitchChi',  badge: '國語科', icon: 'fa-book',       color: 'rose' },
-        soc:  { btn: 'btnSwitchSoc',  badge: '社會科', icon: 'fa-landmark',   color: 'amber' }
-      };
+      const config = SUBJECT_CONFIG[subjectKey];
+      document.getElementById('subjectBadge').textContent = config.label;
+      document.getElementById('subjectBadge').className = `text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-${config.color}-100 text-${config.color}-800 transition-colors`;
+      document.getElementById('subjectIconWrapper').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-${config.color}-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors`;
+      document.getElementById('subjectIcon').className = `fa-solid ${config.icon}`;
+      document.getElementById('progressBar').className = `bg-${config.color}-500 h-full w-0 transition-all duration-300`;
 
-      Object.keys(tabs).forEach(k => {
-        const btn = document.getElementById(tabs[k].btn);
-        if (k === subject) {
-          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-${tabs[k].color}-700 shadow-sm shrink-0`;
-        } else {
-          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-${tabs[k].color}-600 shrink-0`;
-        }
-      });
-
-      const active = tabs[subject];
-      document.getElementById('subjectBadge').textContent = active.badge;
-      document.getElementById('subjectBadge').className = `text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-${active.color}-100 text-${active.color}-800 transition-colors`;
-      document.getElementById('subjectIconWrapper').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-${active.color}-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors`;
-      document.getElementById('subjectIcon').className = `fa-solid ${active.icon}`;
-      document.getElementById('progressBar').className = `bg-${active.color}-500 h-full w-0 transition-all duration-300`;
-
+      renderSubjectNav();
       renderCategoryButtons();
       renderQuestions();
       updateDashboardStats();
     }
 
-    function setQuizMode(mode) {
-      currentMode = mode;
-      playChime('click');
-      const instantBtn = document.getElementById('modeInstantBtn');
-      const examBtn = document.getElementById('modeExamBtn');
-      const examBanner = document.getElementById('examSubmitSection');
-
-      if (mode === 'instant') {
-        instantBtn.className = 'px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-bold transition-all';
-        examBtn.className = 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
-        examBanner.classList.add('hidden');
-      } else {
-        examBtn.className = 'px-2.5 py-1.5 rounded-md bg-indigo-600 text-white font-bold transition-all';
-        instantBtn.className = 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
-        examBanner.classList.remove('hidden');
-      }
-
-      renderQuestions();
-      updateDashboardStats();
-    }
-
-    function getCurrentDataset() {
-      if (currentSubject === 'math') return window.mathQuestions || [];
-      if (currentSubject === 'eng')  return window.engQuestions || [];
-      if (currentSubject === 'chi')  return window.chineseQuestions || [];
-      if (currentSubject === 'soc')  return window.societyQuestions || [];
-      return [];
-    }
-
+    // 題型分類統計與標籤生成
     function renderCategoryButtons() {
       const container = document.getElementById('filterButtonGroup');
       container.innerHTML = '';
       const list = getCurrentDataset();
 
       const catCounts = {};
-      list.forEach(q => {
-        catCounts[q.category] = (catCounts[q.category] || 0) + 1;
-      });
+      list.forEach(q => { catCounts[q.category] = (catCounts[q.category] || 0) + 1; });
 
       const catLabels = {
-        tf: '是非題',
-        choice: '選擇題',
-        grammar: '文法與單字',
-        unscramble: '句子重組',
-        reading: '閱讀理解',
-        phonetic: '字音字形',
-        vocabulary: '字詞義運用',
-        punctuation: '標點符號',
-        rhetoric: '基本修辭',
-        idiom: '延伸成語',
-        other: '句型與綜合'
+        tf: '是非題', choice: '選擇題', phonetic: '字音字形',
+        vocabulary: '字詞義運用', punctuation: '標點符號',
+        rhetoric: '基本修辭', idiom: '延伸成語', other: '句型與綜合'
       };
 
       const categories = [{ key: 'all', label: '全部題目', count: list.length }];
       Object.keys(catCounts).forEach(catKey => {
-        categories.push({
-          key: catKey,
-          label: catLabels[catKey] || catKey,
-          count: catCounts[catKey]
-        });
+        categories.push({ key: catKey, label: catLabels[catKey] || catKey, count: catCounts[catKey] });
       });
 
       categories.forEach(cat => {
@@ -441,6 +331,153 @@
       });
     }
 
+    // 渲染題目卡片
+    function renderQuestions() {
+      const container = document.getElementById('questionContainer');
+      const emptyState = document.getElementById('emptyState');
+      const rawList = getCurrentDataset();
+
+      let list = rawList;
+      if (currentCategory !== 'all') list = list.filter(q => q.category === currentCategory);
+      if (filterWrongOnly) list = list.filter(q => answersState[q.id] && answersState[q.id].isAnswered && !answersState[q.id].isCorrect);
+
+      container.innerHTML = '';
+      if (list.length === 0) {
+        emptyState.classList.remove('hidden');
+        return;
+      }
+      emptyState.classList.add('hidden');
+
+      list.forEach((q, index) => {
+        const state = answersState[q.id] || { isAnswered: false, userChoice: null, isCorrect: false };
+        const card = document.createElement('div');
+        card.className = "bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm hover:shadow-md transition-all";
+
+        const isTf = q.type === 'tf';
+        const typeBadge = isTf 
+          ? `<span class="bg-blue-50 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-md border border-blue-200/60">是非題</span>`
+          : `<span class="bg-purple-50 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-md border border-purple-200/60">選擇題</span>`;
+
+        let contextHtml = q.context ? `
+          <div class="mb-3 p-3.5 bg-slate-50 border-l-4 border-indigo-400 rounded-r-xl text-slate-700 text-sm leading-relaxed">
+            <div class="text-[11px] font-bold text-indigo-500 uppercase tracking-wider mb-1 flex items-center">
+              <i class="fa-solid fa-book-open mr-1"></i> 題組材料 / 短文說明
+            </div>
+            ${q.context}
+          </div>` : '';
+
+        let interactiveBody = '';
+        if (isTf) {
+          const getBtnStyle = (val) => {
+            if (!state.isAnswered) return "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200";
+            if (currentMode === 'exam' && !state.showInExamReview) return state.userChoice === val ? "bg-indigo-600 text-white border-indigo-600 shadow-md" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
+            if (q.answer === val) return "bg-emerald-500 text-white border-emerald-500 font-bold shadow-md";
+            if (state.userChoice === val && !state.isCorrect) return "bg-rose-500 text-white border-rose-500 font-bold shadow-md";
+            return "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
+          };
+          interactiveBody = `
+            <div class="grid grid-cols-2 gap-3 sm:max-w-md">
+              <button onclick="handleAnswer('${q.id}', 'O')" ${state.isAnswered && currentMode === 'instant' ? 'disabled' : ''} class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('O')}">
+                <i class="fa-regular fa-circle text-lg"></i><span>正確 (○)</span>
+              </button>
+              <button onclick="handleAnswer('${q.id}', 'X')" ${state.isAnswered && currentMode === 'instant' ? 'disabled' : ''} class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('X')}">
+                <i class="fa-solid fa-xmark text-lg"></i><span>錯誤 (╳)</span>
+              </button>
+            </div>`;
+        } else {
+          const letters = ['A', 'B', 'C', 'D'];
+          interactiveBody = `
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+              ${(q.options || []).map((opt, idx) => {
+                let btnClass = "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200";
+                if (state.isAnswered) {
+                  if (currentMode === 'exam' && !state.showInExamReview) {
+                    btnClass = state.userChoice === idx ? "bg-indigo-600 text-white border-indigo-600 shadow-sm" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
+                  } else {
+                    if (q.answer === idx) btnClass = "bg-emerald-500 text-white border-emerald-500 font-bold shadow-sm";
+                    else if (state.userChoice === idx && !state.isCorrect) btnClass = "bg-rose-500 text-white border-rose-500 font-bold shadow-sm";
+                    else btnClass = "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
+                  }
+                }
+                return `
+                  <button onclick="handleAnswer('${q.id}', ${idx})" ${state.isAnswered && currentMode === 'instant' ? 'disabled' : ''} class="flex items-center text-left py-3 px-4 rounded-xl border transition-all text-sm sm:text-base font-medium ${btnClass}">
+                    <span class="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center text-xs font-bold mr-3 shrink-0">${letters[idx] || (idx+1)}</span>
+                    <span class="flex-1">${opt}</span>
+                  </button>`;
+              }).join('')}
+            </div>`;
+        }
+
+        const showExp = state.isAnswered && (currentMode === 'instant' || state.showInExamReview);
+        const expHtml = showExp ? `
+          <div class="mt-4 p-4 rounded-xl border ${state.isCorrect ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-rose-700 bg-rose-50 border-rose-200'} text-sm">
+            <div class="font-bold flex items-center space-x-1.5 mb-1">
+              <i class="fa-solid ${state.isCorrect ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-rose-600'}"></i>
+              <span>${state.isCorrect ? '回答正確！' : '回答錯誤！'}</span>
+            </div>
+            ${q.explanation ? `<div class="text-slate-600 text-xs sm:text-sm mt-1"><strong class="text-slate-700">解析說明：</strong> ${q.explanation}</div>` : ''}
+          </div>` : '';
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-3 mb-2">
+            <div class="flex items-center space-x-2">
+              <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-extrabold text-xs flex items-center justify-center">${index + 1}</span>
+              ${typeBadge}
+            </div>
+            ${state.isAnswered ? `
+              <span class="text-xs font-bold px-2.5 py-1 rounded-full ${state.isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                ${state.isCorrect ? '<i class="fa-solid fa-check mr-1"></i>答對' : '<i class="fa-solid fa-xmark mr-1"></i>答錯'}
+              </span>` : ''}
+          </div>
+          ${contextHtml}
+          <div class="text-base sm:text-lg font-bold text-slate-900 leading-snug my-2">${q.question}</div>
+          <div class="mt-4">${interactiveBody}</div>
+          ${expHtml}`;
+        container.appendChild(card);
+      });
+    }
+
+    // 答題判定
+    function handleAnswer(questionId, choice) {
+      const q = getCurrentDataset().find(item => item.id === questionId);
+      if (!q) return;
+
+      const isCorrect = (q.answer === choice);
+      answersState[questionId] = {
+        isAnswered: true,
+        userChoice: choice,
+        isCorrect: isCorrect,
+        showInExamReview: currentMode !== 'exam'
+      };
+
+      playChime(currentMode === 'instant' ? (isCorrect ? 'correct' : 'wrong') : 'click');
+      updateDashboardStats();
+      renderQuestions();
+    }
+
+    // 數據更新
+    function updateDashboardStats() {
+      const dataset = getCurrentDataset();
+      let answered = 0, correct = 0, wrong = 0;
+
+      dataset.forEach(q => {
+        const state = answersState[q.id];
+        if (state && state.isAnswered) {
+          answered++;
+          if (state.isCorrect) correct++; else wrong++;
+        }
+      });
+
+      const total = dataset.length;
+      document.getElementById('statAnswered').textContent = answered;
+      document.getElementById('statTotal').textContent = total;
+      document.getElementById('statCorrect').textContent = correct;
+      document.getElementById('statWrong').textContent = wrong;
+      document.getElementById('statAccuracy').textContent = `${answered > 0 ? Math.round((correct / answered) * 100) : 0}%`;
+      document.getElementById('wrongCountBadge').textContent = wrong;
+      document.getElementById('progressBar').style.width = `${total > 0 ? (answered / total) * 100 : 0}%`;
+    }
+
     function toggleFilterWrongOnly() {
       filterWrongOnly = !filterWrongOnly;
       playChime('click');
@@ -459,374 +496,31 @@
       renderQuestions();
     }
 
-    function renderQuestions() {
-      const container = document.getElementById('questionContainer');
-      const emptyState = document.getElementById('emptyState');
-      const rawList = getCurrentDataset();
-
-      let list = rawList;
-      if (currentCategory !== 'all') {
-        list = list.filter(q => q.category === currentCategory);
-      }
-      if (filterWrongOnly) {
-        list = list.filter(q => answersState[q.id] && answersState[q.id].isAnswered && !answersState[q.id].isCorrect);
-      }
-
-      container.innerHTML = '';
-
-      if (list.length === 0) {
-        emptyState.classList.remove('hidden');
-        return;
-      } else {
-        emptyState.classList.add('hidden');
-      }
-
-      list.forEach((q, index) => {
-        const card = createQuestionCard(q, index + 1);
-        container.appendChild(card);
-      });
-    }
-
-    function createQuestionCard(q, displayIndex) {
-      const state = answersState[q.id] || { isAnswered: false, userChoice: null, isCorrect: false };
-      const card = document.createElement('div');
-      card.id = `card_${q.id}`;
-      card.className = "bg-white rounded-2xl border border-slate-200/90 p-5 sm:p-6 shadow-sm hover:shadow-md transition-all";
-
-      let typeBadge = '';
-      if (q.type === 'tf') {
-        typeBadge = `<span class="bg-blue-50 text-blue-700 text-xs font-bold px-2 py-0.5 rounded-md border border-blue-200/60">是非題</span>`;
-      } else if (q.type === 'unscramble') {
-        typeBadge = `<span class="bg-amber-50 text-amber-700 text-xs font-bold px-2 py-0.5 rounded-md border border-amber-200/60">重組題</span>`;
-      } else if (q.type === 'category_drop') {
-        typeBadge = `<span class="bg-emerald-50 text-emerald-700 text-xs font-bold px-2 py-0.5 rounded-md border border-emerald-200/60">分類題</span>`;
-      } else {
-        typeBadge = `<span class="bg-purple-50 text-purple-700 text-xs font-bold px-2 py-0.5 rounded-md border border-purple-200/60">選擇題</span>`;
-      }
-
-      let contextHtml = '';
-      if (q.context) {
-        contextHtml = `
-          <div class="mb-3 p-3.5 bg-slate-50 border-l-4 border-indigo-400 rounded-r-xl text-slate-700 text-sm leading-relaxed">
-            <div class="text-[11px] font-bold text-indigo-500 uppercase tracking-wider mb-1 flex items-center">
-              <i class="fa-solid fa-book-open mr-1"></i> 題組材料 / 短文說明
-            </div>
-            ${q.context}
-          </div>
-        `;
-      }
-
-      let interactiveBody = '';
-      if (q.type === 'tf') {
-        interactiveBody = buildTrueFalseButtons(q, state);
-      } else if (q.type === 'choice') {
-        interactiveBody = buildMultipleChoiceButtons(q, state);
-      } else if (q.type === 'unscramble') {
-        interactiveBody = buildUnscrambleInteractive(q, state);
-      } else if (q.type === 'category_drop') {
-        interactiveBody = buildCategoryInteractive(q, state);
-      }
-
-      const showExplanation = state.isAnswered && (currentMode === 'instant' || state.showInExamReview);
-      let explanationHtml = '';
-      if (showExplanation) {
-        const correctColor = state.isCorrect ? 'text-emerald-700 bg-emerald-50 border-emerald-200' : 'text-rose-700 bg-rose-50 border-rose-200';
-        const iconType = state.isCorrect ? 'fa-circle-check text-emerald-600' : 'fa-circle-xmark text-rose-600';
-
-        explanationHtml = `
-          <div class="mt-4 p-4 rounded-xl border ${correctColor} text-sm transition-all duration-300">
-            <div class="font-bold flex items-center space-x-1.5 mb-1">
-              <i class="fa-solid ${iconType}"></i>
-              <span>${state.isCorrect ? '回答正確！' : '回答錯誤！'}</span>
-            </div>
-            ${q.explanation ? `
-              <div class="text-slate-600 text-xs sm:text-sm leading-relaxed mt-1">
-                <strong class="text-slate-700">解析說明：</strong> ${q.explanation}
-              </div>
-            ` : ''}
-          </div>
-        `;
-      }
-
-      card.innerHTML = `
-        <div class="flex items-start justify-between gap-3 mb-2">
-          <div class="flex items-center space-x-2">
-            <span class="w-6 h-6 rounded-full bg-slate-100 text-slate-700 font-extrabold text-xs flex items-center justify-center">${displayIndex}</span>
-            ${typeBadge}
-          </div>
-          ${state.isAnswered ? `
-            <span class="text-xs font-bold px-2.5 py-1 rounded-full ${state.isCorrect ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
-              ${state.isCorrect ? '<i class="fa-solid fa-check mr-1"></i>答對' : '<i class="fa-solid fa-xmark mr-1"></i>答錯'}
-            </span>
-          ` : ''}
-        </div>
-
-        ${contextHtml}
-
-        <div class="text-base sm:text-lg font-bold text-slate-900 leading-snug my-2">
-          ${q.question}
-        </div>
-
-        <div class="mt-4">
-          ${interactiveBody}
-        </div>
-
-        ${explanationHtml}
-      `;
-
-      return card;
-    }
-
-    function buildTrueFalseButtons(q, state) {
-      const isAnswered = state.isAnswered;
-      const userChoice = state.userChoice;
-
-      const getBtnStyle = (val) => {
-        if (!isAnswered) return "bg-slate-50 hover:bg-slate-100 text-slate-800 border-slate-200";
-        if (currentMode === 'exam' && !state.showInExamReview) {
-          return userChoice === val ? "bg-indigo-600 text-white border-indigo-600 shadow-md" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
-        }
-        if (q.answer === val) return "bg-emerald-500 text-white border-emerald-500 font-bold shadow-md";
-        if (userChoice === val && !state.isCorrect) return "bg-rose-500 text-white border-rose-500 font-bold shadow-md";
-        return "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
-      };
-
-      return `
-        <div class="grid grid-cols-2 gap-3 sm:max-w-md">
-          <button onclick="handleAnswer('${q.id}', 'O')" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
-            class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('O')}">
-            <i class="fa-regular fa-circle text-lg"></i>
-            <span>正確 (○)</span>
-          </button>
-          <button onclick="handleAnswer('${q.id}', 'X')" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
-            class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('X')}">
-            <i class="fa-solid fa-xmark text-lg"></i>
-            <span>錯誤 (╳)</span>
-          </button>
-        </div>
-      `;
-    }
-
-    function buildMultipleChoiceButtons(q, state) {
-      const isAnswered = state.isAnswered;
-      const userChoice = state.userChoice;
-      const letters = ['A', 'B', 'C', 'D'];
-
-      return `
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
-          ${q.options.map((opt, idx) => {
-            let btnClass = "bg-slate-50 hover:bg-slate-100 text-slate-700 border-slate-200";
-            if (isAnswered) {
-              if (currentMode === 'exam' && !state.showInExamReview) {
-                btnClass = userChoice === idx ? "bg-indigo-600 text-white border-indigo-600 shadow-sm" : "bg-slate-50 text-slate-400 border-slate-200 opacity-60";
-              } else {
-                if (q.answer === idx) {
-                  btnClass = "bg-emerald-500 text-white border-emerald-500 font-bold shadow-sm";
-                } else if (userChoice === idx && !state.isCorrect) {
-                  btnClass = "bg-rose-500 text-white border-rose-500 font-bold shadow-sm";
-                } else {
-                  btnClass = "bg-slate-50 text-slate-400 border-slate-200 opacity-50";
-                }
-              }
-            }
-
-            return `
-              <button onclick="handleAnswer('${q.id}', ${idx})" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
-                class="flex items-center text-left py-3 px-4 rounded-xl border transition-all text-sm sm:text-base font-medium ${btnClass}">
-                <span class="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center text-xs font-bold mr-3 shrink-0">${letters[idx] || (idx+1)}</span>
-                <span class="flex-1">${opt}</span>
-              </button>
-            `;
-          }).join('')}
-        </div>
-      `;
-    }
-
-    function buildUnscrambleInteractive(q, state) {
-      if (!unscrambleDrafts[q.id]) unscrambleDrafts[q.id] = [];
-      const draft = unscrambleDrafts[q.id];
-
-      return `
-        <div>
-          <div class="text-xs text-slate-500 mb-2 font-semibold">依序點擊單字卡排入句子：</div>
-          <div class="min-h-[52px] p-2.5 bg-slate-100 rounded-xl border-2 border-dashed border-slate-300 flex flex-wrap gap-2 items-center mb-3">
-            ${draft.length === 0 ? '<span class="text-xs text-slate-400">點擊下方單字排列...</span>' : ''}
-            ${draft.map((wordIdx, slotIdx) => `
-              <button onclick="removeFromUnscramble('${q.id}', ${slotIdx})" class="px-3 py-1.5 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-lg shadow-sm flex items-center space-x-1">
-                <span>${q.words[wordIdx]}</span>
-                <i class="fa-solid fa-xmark text-[10px] ml-1"></i>
-              </button>
-            `).join('')}
-          </div>
-          <div class="flex flex-wrap gap-2 mb-3">
-            ${q.words.map((word, wIdx) => {
-              const isUsed = draft.includes(wIdx);
-              return `
-                <button onclick="addToUnscramble('${q.id}', ${wIdx})" ${isUsed ? 'disabled' : ''}
-                  class="px-3 py-1.5 rounded-lg text-xs sm:text-sm font-semibold border ${isUsed ? 'bg-slate-100 text-slate-300 border-slate-200' : 'bg-white hover:bg-purple-50 text-slate-800 border-slate-300'}">
-                  ${word}
-                </button>
-              `;
-            }).join('')}
-          </div>
-          <div class="flex items-center space-x-2">
-            <button onclick="checkUnscramble('${q.id}')" ${draft.length === 0 ? 'disabled' : ''} class="px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">檢查答案</button>
-            <button onclick="clearUnscramble('${q.id}')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs sm:text-sm font-semibold rounded-xl">重置</button>
-          </div>
-        </div>
-      `;
-    }
-
-    function addToUnscramble(qId, wordIdx) {
+    function setQuizMode(mode) {
+      currentMode = mode;
       playChime('click');
-      if (!unscrambleDrafts[qId]) unscrambleDrafts[qId] = [];
-      unscrambleDrafts[qId].push(wordIdx);
+      const curColor = SUBJECT_CONFIG[currentSubject]?.color || 'teal';
+      document.getElementById('modeInstantBtn').className = mode === 'instant' 
+        ? `px-2.5 py-1.5 rounded-md bg-${curColor}-600 text-white font-bold transition-all` 
+        : 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
+      document.getElementById('modeExamBtn').className = mode === 'exam' 
+        ? 'px-2.5 py-1.5 rounded-md bg-indigo-600 text-white font-bold transition-all' 
+        : 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
+      document.getElementById('examSubmitSection').classList.toggle('hidden', mode === 'instant');
       renderQuestions();
-    }
-
-    function removeFromUnscramble(qId, slotIdx) {
-      playChime('click');
-      if (!unscrambleDrafts[qId]) return;
-      unscrambleDrafts[qId].splice(slotIdx, 1);
-      renderQuestions();
-    }
-
-    function clearUnscramble(qId) {
-      playChime('click');
-      unscrambleDrafts[qId] = [];
-      renderQuestions();
-    }
-
-    function checkUnscramble(qId) {
-      const q = (window.engQuestions || []).find(item => item.id === qId);
-      const draft = unscrambleDrafts[qId] || [];
-      const userSentence = draft.map(i => q.words[i]).join(' ');
-      const isCorrect = userSentence.trim() === q.correctSentence.trim();
-      handleAnswer(qId, userSentence, isCorrect);
-    }
-
-    function buildCategoryInteractive(q, state) {
-      if (!state.userClassify) state.userClassify = {};
-
-      return `
-        <div>
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mb-3">
-            ${q.items.map((item, idx) => {
-              const currentCat = state.userClassify[idx] || null;
-              let catLabel = "未分類";
-              if (currentCat === 'country') catLabel = "國家";
-              if (currentCat === 'trans') catLabel = "交通工具";
-
-              return `
-                <div class="p-3 bg-slate-50 border border-slate-200 rounded-xl flex flex-col justify-between space-y-2">
-                  <div class="font-extrabold text-sm text-slate-800">${item.word}</div>
-                  <div class="flex space-x-1">
-                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'country')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'country' ? 'bg-amber-600 text-white' : 'bg-white text-slate-600'}">國家</button>
-                    <button onclick="setClassifyWord('${q.id}', ${idx}, 'trans')" class="flex-1 py-1 text-[11px] rounded-lg border font-semibold ${currentCat === 'trans' ? 'bg-cyan-600 text-white' : 'bg-white text-slate-600'}">交通</button>
-                  </div>
-                </div>
-              `;
-            }).join('')}
-          </div>
-          <button onclick="checkClassifyAnswer('${q.id}')" class="px-4 py-2 bg-teal-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">確認歸類</button>
-        </div>
-      `;
-    }
-
-    function setClassifyWord(qId, itemIdx, catType) {
-      playChime('click');
-      if (!answersState[qId]) answersState[qId] = { isAnswered: false, userChoice: null, isCorrect: false, userClassify: {} };
-      if (!answersState[qId].userClassify) answersState[qId].userClassify = {};
-      answersState[qId].userClassify[itemIdx] = catType;
-      renderQuestions();
-    }
-
-    function checkClassifyAnswer(qId) {
-      const q = (window.engQuestions || []).find(item => item.id === qId);
-      const userClassify = answersState[qId]?.userClassify || {};
-      let allCorrect = true;
-      for (let i = 0; i < q.items.length; i++) {
-        if (userClassify[i] !== q.items[i].cat) {
-          allCorrect = false;
-          break;
-        }
-      }
-      handleAnswer(qId, userClassify, allCorrect);
-    }
-
-    function handleAnswer(questionId, choice, overrideCorrectness = null) {
-      const dataset = getCurrentDataset();
-      const q = dataset.find(item => item.id === questionId);
-      if (!q) return;
-
-      let isCorrect = false;
-      if (overrideCorrectness !== null) {
-        isCorrect = overrideCorrectness;
-      } else {
-        isCorrect = (q.answer === choice);
-      }
-
-      answersState[questionId] = {
-        isAnswered: true,
-        userChoice: choice,
-        isCorrect: isCorrect,
-        showInExamReview: currentMode === 'exam' ? false : true
-      };
-
-      if (currentMode === 'instant') {
-        playChime(isCorrect ? 'correct' : 'wrong');
-      } else {
-        playChime('click');
-      }
-
       updateDashboardStats();
-      renderQuestions();
-    }
-
-    function updateDashboardStats() {
-      const dataset = getCurrentDataset();
-      const total = dataset.length;
-      let answered = 0;
-      let correct = 0;
-      let wrong = 0;
-
-      dataset.forEach(q => {
-        const state = answersState[q.id];
-        if (state && state.isAnswered) {
-          answered++;
-          if (state.isCorrect) correct++;
-          else wrong++;
-        }
-      });
-
-      const accuracy = answered > 0 ? Math.round((correct / answered) * 100) : 0;
-      const progressPercent = total > 0 ? (answered / total) * 100 : 0;
-
-      document.getElementById('statAnswered').textContent = answered;
-      document.getElementById('statTotal').textContent = total;
-      document.getElementById('statCorrect').textContent = correct;
-      document.getElementById('statWrong').textContent = wrong;
-      document.getElementById('statAccuracy').textContent = `${accuracy}%`;
-      document.getElementById('wrongCountBadge').textContent = wrong;
-      document.getElementById('progressBar').style.width = `${progressPercent}%`;
     }
 
     function resetCurrentQuiz() {
-      const dataset = getCurrentDataset();
-      dataset.forEach(q => {
-        delete answersState[q.id];
-        delete unscrambleDrafts[q.id];
-      });
+      getCurrentDataset().forEach(q => delete answersState[q.id]);
       playChime('click');
       updateDashboardStats();
       renderQuestions();
     }
 
     function submitExam() {
+      let correctCount = 0, answeredCount = 0;
       const dataset = getCurrentDataset();
-      let answeredCount = 0;
-      let correctCount = 0;
-
       dataset.forEach(q => {
         const state = answersState[q.id];
         if (state && state.isAnswered) {
@@ -838,45 +532,80 @@
 
       const total = dataset.length;
       const finalScore = total > 0 ? Math.round((correctCount / total) * 100) : 0;
-      const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
-
-      document.getElementById('modalSubjectTag').textContent = '測驗結算';
+      document.getElementById('modalSubjectTag').textContent = `${SUBJECT_CONFIG[currentSubject]?.label || '科目'}結算`;
       document.getElementById('modalFinalScore').textContent = `${finalScore}分`;
       document.getElementById('modalCorrectCount').textContent = `${correctCount}/${total}`;
-      document.getElementById('modalAccuracy').textContent = `${accuracy}%`;
+      document.getElementById('modalAccuracy').textContent = `${answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0}%`;
 
       const titleElem = document.getElementById('modalScoreTitle');
       const iconElem = document.getElementById('modalScoreIcon');
       if (finalScore >= 90) {
         titleElem.textContent = "表現極度傑出！掌握非常完美！";
         iconElem.innerHTML = '<i class="fa-solid fa-crown text-amber-500"></i>';
-        playChime('correct');
       } else if (finalScore >= 70) {
         titleElem.textContent = "表現良好！複習錯題後能更上一層樓！";
         iconElem.innerHTML = '<i class="fa-solid fa-medal text-teal-500"></i>';
-        playChime('correct');
       } else {
         titleElem.textContent = "再接再厲！觀看解析強化觀念！";
         iconElem.innerHTML = '<i class="fa-solid fa-book-bookmark text-indigo-500"></i>';
-        playChime('wrong');
       }
-
+      playChime(finalScore >= 70 ? 'correct' : 'wrong');
       document.getElementById('scoreReportModal').classList.remove('hidden');
     }
 
     function closeScoreReport(keepReview) {
       document.getElementById('scoreReportModal').classList.add('hidden');
-      if (keepReview) {
-        currentMode = 'instant';
-        setQuizMode('instant');
-      }
+      if (keepReview) setQuizMode('instant');
     }
 
-    function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+    // 音效處理
+    let audioCtx = null;
+    function playChime(type) {
+      if (!audioEnabled) return;
+      try {
+        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        if (audioCtx.state === 'suspended') audioCtx.resume();
+        const now = audioCtx.currentTime;
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+
+        if (type === 'correct') {
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(523.25, now);
+          osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.16);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
+          osc.start(now);
+          osc.stop(now + 0.36);
+        } else if (type === 'wrong') {
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(185.00, now);
+          osc.frequency.exponentialRampToValueAtTime(155.56, now + 0.15);
+          gain.gain.setValueAtTime(0.12, now);
+          gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
+          osc.start(now);
+          osc.stop(now + 0.31);
+        } else {
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(400, now);
+          gain.gain.setValueAtTime(0.04, now);
+          gain.gain.exponentialRampToValueAtTime(0.0001, now + 0.05);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        }
+      } catch (e) {}
     }
 
+    function toggleAudio() {
+      audioEnabled = !audioEnabled;
+      document.getElementById('audioIcon').className = audioEnabled ? 'fa-solid fa-volume-high text-teal-600' : 'fa-solid fa-volume-xmark text-slate-400';
+    }
+
+    // 初始化
     window.addEventListener('DOMContentLoaded', () => {
+      renderSubjectNav();
       renderCategoryButtons();
       renderQuestions();
       updateDashboardStats();
