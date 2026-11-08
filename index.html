@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國小多學科互動測驗學習平台</title>
+  <title>國小互動測驗學習平台</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -30,7 +30,7 @@
     .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 9999px; }
   </style>
 </head>
-<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-teal-500 selection:text-white">
+<body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col selection:bg-rose-500 selection:text-white">
 
   <!-- ================= 頂端導覽列 ================= -->
   <header class="sticky top-0 z-50 bg-white/95 backdrop-blur-md border-b border-slate-200 shadow-sm transition-all duration-300">
@@ -39,12 +39,12 @@
         
         <!-- Logo 與標題 -->
         <div class="flex items-center space-x-3">
-          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
-            <i id="subjectIcon" class="fa-solid fa-calculator"></i>
+          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-rose-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
+            <i id="subjectIcon" class="fa-solid fa-book"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-teal-100 text-teal-800 transition-colors">數學科</span>
+              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-rose-100 text-rose-800 transition-colors">國語科</span>
               <span class="text-xs text-slate-400 hidden sm:inline-block">互動題庫系統</span>
             </div>
             <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">國小學科多元測驗系統</h1>
@@ -78,7 +78,7 @@
         <!-- 模式切換與錯題篩選 -->
         <div class="flex items-center space-x-3 ml-auto">
           <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold shadow-sm">
-            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-bold transition-all">
+            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-rose-600 text-white font-bold transition-all">
               <i class="fa-solid fa-bolt mr-1"></i>即時解析
             </button>
             <button onclick="setQuizMode('exam')" id="modeExamBtn" class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all">
@@ -97,7 +97,7 @@
 
     <!-- 進度條 -->
     <div class="w-full bg-slate-200 h-1.5 relative overflow-hidden">
-      <div id="progressBar" class="bg-teal-500 h-full w-0 transition-all duration-300"></div>
+      <div id="progressBar" class="bg-rose-500 h-full w-0 transition-all duration-300"></div>
     </div>
   </header>
 
@@ -145,7 +145,7 @@
 
   <!-- ================= 模擬考交卷列 ================= -->
   <section id="examSubmitSection" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4 w-full hidden">
-    <div class="bg-gradient-to-r from-teal-500 via-indigo-600 to-rose-600 rounded-2xl p-5 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
+    <div class="bg-gradient-to-r from-rose-500 via-purple-600 to-amber-600 rounded-2xl p-5 text-white shadow-lg flex flex-col sm:flex-row items-center justify-between gap-4">
       <div class="flex items-center space-x-3">
         <div class="p-3 bg-white/20 rounded-xl backdrop-blur-sm text-2xl">
           <i class="fa-solid fa-graduation-cap"></i>
@@ -155,7 +155,7 @@
           <p class="text-xs sm:text-sm text-white/90">作答時不會提示正誤，完成後請點選交卷查看總分與詳解！</p>
         </div>
       </div>
-      <button onclick="submitExam()" class="w-full sm:w-auto px-6 py-3 bg-white text-teal-800 hover:bg-slate-100 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
+      <button onclick="submitExam()" class="w-full sm:w-auto px-6 py-3 bg-white text-rose-800 hover:bg-slate-100 font-extrabold rounded-xl shadow-md transition-all flex items-center justify-center space-x-2">
         <i class="fa-solid fa-paper-plane"></i>
         <span>完成交卷結算</span>
       </button>
@@ -165,17 +165,17 @@
   <!-- ================= 結算報告彈窗 ================= -->
   <div id="scoreReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center transform transition-all scale-95 duration-200">
-      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-teal-50 text-teal-600" id="modalScoreIcon">
+      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-rose-50 text-rose-600" id="modalScoreIcon">
         <i class="fa-solid fa-trophy"></i>
       </div>
-      <span class="text-xs uppercase font-extrabold tracking-widest text-teal-600 bg-teal-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
+      <span class="text-xs uppercase font-extrabold tracking-widest text-rose-600 bg-rose-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
       <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" id="modalScoreTitle">測驗成果分析</h3>
       <p class="text-slate-500 text-sm mb-6">以下是您本次測驗的詳細成果報告：</p>
 
       <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 grid grid-cols-3 gap-2 mb-6">
         <div>
           <div class="text-xs text-slate-400 font-medium">總得分</div>
-          <div class="text-2xl font-black text-teal-600 mt-1" id="modalFinalScore">0分</div>
+          <div class="text-2xl font-black text-rose-600 mt-1" id="modalFinalScore">0分</div>
         </div>
         <div>
           <div class="text-xs text-slate-400 font-medium">答對題數</div>
@@ -188,7 +188,7 @@
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
+        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-rose-600 hover:bg-rose-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
           <i class="fa-solid fa-magnifying-glass"></i>
           <span>檢視錯題與詳解</span>
         </button>
@@ -219,27 +219,19 @@
     </button>
   </div>
 
-  <!-- ================= 載入外部分離題庫 ================= -->
-  <script src="./questions_math.js"></script>
+  <footer class="bg-white border-t border-slate-200 py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
+      <p>國小多元測驗系統 • 國語科完整題庫與社會科題庫</p>
+    </div>
+  </footer>
+
+  <!-- ================= 載入外部分離題庫 (僅載入國語與社會) ================= -->
   <script src="./questions_chinese.js"></script>
   <script src="./questions_society.js"></script>
 
   <!-- ================= 核心邏輯引擎 ================= -->
   <script>
     const SUBJECT_CONFIG = {
-      math: {
-        label: '數學科',
-        icon: 'fa-calculator',
-        theme: {
-          activeBtn: 'bg-white text-teal-700 shadow-sm',
-          inactiveBtn: 'text-slate-600 hover:text-teal-600',
-          badge: 'bg-teal-100 text-teal-800',
-          iconWrap: 'bg-teal-600 text-white',
-          progress: 'bg-teal-500',
-          modeBtn: 'bg-teal-600 text-white'
-        },
-        getData: () => window.mathQuestions || []
-      },
       chi: {
         label: '國語科',
         icon: 'fa-book',
@@ -268,7 +260,7 @@
       }
     };
 
-    let currentSubject = 'math';
+    let currentSubject = 'chi';
     let currentMode = 'instant';
     let currentCategory = 'all';
     let filterWrongOnly = false;
@@ -525,7 +517,7 @@
       playChime('click');
       const config = SUBJECT_CONFIG[currentSubject];
       document.getElementById('modeInstantBtn').className = mode === 'instant' 
-        ? `px-2.5 py-1.5 rounded-md font-bold transition-all ${config ? config.theme.modeBtn : 'bg-teal-600 text-white'}` 
+        ? `px-2.5 py-1.5 rounded-md font-bold transition-all ${config ? config.theme.modeBtn : 'bg-rose-600 text-white'}` 
         : 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
       document.getElementById('modeExamBtn').className = mode === 'exam' 
         ? 'px-2.5 py-1.5 rounded-md bg-indigo-600 text-white font-bold transition-all' 
@@ -626,14 +618,12 @@
       document.getElementById('audioIcon').className = audioEnabled ? 'fa-solid fa-volume-high text-teal-600' : 'fa-solid fa-volume-xmark text-slate-400';
     }
 
-    // 初始化與防延遲自動重試機制
     function bootstrap() {
       renderSubjectNav();
       renderCategoryButtons();
       renderQuestions();
       updateDashboardStats();
 
-      // 如果初次載入為 0 題，自動於 100ms 後重試一次，防止外部腳本異步延遲
       if (getCurrentDataset().length === 0) {
         setTimeout(() => {
           renderCategoryButtons();
