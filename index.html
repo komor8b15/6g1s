@@ -49,12 +49,12 @@
         
         <!-- Logo & Title -->
         <div class="flex items-center space-x-3">
-          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
-            <i id="subjectIcon" class="fa-solid fa-calculator"></i>
+          <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
+            <i id="subjectIcon" class="fa-solid fa-language"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
-              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-teal-100 text-teal-800 transition-colors">數學科</span>
+              <span id="subjectBadge" class="text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-purple-100 text-purple-800 transition-colors">英語科</span>
               <span class="text-xs text-slate-400 hidden sm:inline-block">互動題庫系統</span>
             </div>
             <h1 class="text-lg sm:text-xl font-extrabold text-slate-900 tracking-tight">國小學科多元測驗系統</h1>
@@ -63,13 +63,13 @@
 
         <!-- Subject Switch Tabs (4 Subjects) -->
         <div class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto">
-          <button id="btnSwitchMath" onclick="switchSubject('math')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-teal-700 shadow-sm shrink-0">
-            <i class="fa-solid fa-calculator"></i>
-            <span>數學科</span>
-          </button>
-          <button id="btnSwitchEng" onclick="switchSubject('eng')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-purple-600 shrink-0">
+          <button id="btnSwitchEng" onclick="switchSubject('eng')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-purple-700 shadow-sm shrink-0">
             <i class="fa-solid fa-language"></i>
             <span>英語科</span>
+          </button>
+          <button id="btnSwitchMath" onclick="switchSubject('math')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-teal-600 shrink-0">
+            <i class="fa-solid fa-calculator"></i>
+            <span>數學科</span>
           </button>
           <button id="btnSwitchChi" onclick="switchSubject('chi')" class="flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-rose-600 shrink-0">
             <i class="fa-solid fa-book"></i>
@@ -100,15 +100,13 @@
       <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-sm">
         
         <!-- Filter Tabs -->
-        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1">
-          <!-- Populated by JS -->
-        </div>
+        <div id="filterButtonGroup" class="flex flex-wrap items-center gap-1.5 overflow-x-auto py-1"></div>
 
         <!-- Mode Selector & Stats Indicator -->
         <div class="flex items-center space-x-3 ml-auto">
           <!-- Mode Toggle -->
           <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold shadow-sm">
-            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white transition-all">
+            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-purple-600 text-white transition-all">
               <i class="fa-solid fa-bolt mr-1"></i>即時解析
             </button>
             <button onclick="setQuizMode('exam')" id="modeExamBtn" class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all">
@@ -128,7 +126,7 @@
 
     <!-- Quiz Progress Bar -->
     <div class="w-full bg-slate-200 h-1.5 relative overflow-hidden">
-      <div id="progressBar" class="bg-teal-500 h-full w-0 transition-all duration-300"></div>
+      <div id="progressBar" class="bg-purple-500 h-full w-0 transition-all duration-300"></div>
     </div>
   </header>
 
@@ -196,17 +194,17 @@
   <!-- ================= SCORE REPORT MODAL ================= -->
   <div id="scoreReportModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
     <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl border border-slate-100 text-center transform transition-all scale-95 duration-200">
-      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-teal-50 text-teal-600" id="modalScoreIcon">
+      <div class="w-20 h-20 rounded-3xl mx-auto flex items-center justify-center text-4xl shadow-inner mb-4 bg-purple-50 text-purple-600" id="modalScoreIcon">
         <i class="fa-solid fa-trophy"></i>
       </div>
-      <span class="text-xs uppercase font-extrabold tracking-widest text-teal-600 bg-teal-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
+      <span class="text-xs uppercase font-extrabold tracking-widest text-purple-600 bg-purple-50 px-3 py-1 rounded-full" id="modalSubjectTag">測驗結算</span>
       <h3 class="text-2xl font-black text-slate-900 mt-2 mb-1" id="modalScoreTitle">測驗成果分析</h3>
       <p class="text-slate-500 text-sm mb-6" id="modalScoreSubtitle">以下是您本次測驗的詳細成果報告：</p>
 
       <div class="bg-slate-50 rounded-2xl p-4 border border-slate-100 grid grid-cols-3 gap-2 mb-6">
         <div>
           <div class="text-xs text-slate-400 font-medium">總得分</div>
-          <div class="text-2xl font-black text-teal-600 mt-1" id="modalFinalScore">0分</div>
+          <div class="text-2xl font-black text-purple-600 mt-1" id="modalFinalScore">0分</div>
         </div>
         <div>
           <div class="text-xs text-slate-400 font-medium">答對題數</div>
@@ -219,7 +217,7 @@
       </div>
 
       <div class="flex flex-col sm:flex-row gap-3">
-        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-teal-600 hover:bg-teal-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
+        <button onclick="closeScoreReport(true)" class="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-md transition-colors flex items-center justify-center space-x-2">
           <i class="fa-solid fa-magnifying-glass"></i>
           <span>檢視錯題與詳解</span>
         </button>
@@ -255,23 +253,257 @@
 
   <footer class="bg-white border-t border-slate-200 py-6 mt-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-xs text-slate-400">
-      <p>國小全學科互動測驗題庫系統 • 涵蓋數學、生活英語、國語完整合輯與社會科題庫</p>
+      <p>國小全學科互動測驗系統 • 數學、生活英語、國語完整合輯與社會科題庫</p>
     </div>
   </footer>
 
-  <!-- ================= SCRIPT & DATA LOADER ================= -->
-  <!-- 載入外部分割題庫資料檔以確保完整與載入順暢 -->
-  <script src="./questions_math.js"></script>
-  <script src="./questions_eng.js"></script>
-  <script src="./questions_chinese.js"></script>
-  <script src="./questions_society.js"></script>
-
+  <!-- ================= EMBEDDED DATABASES & SCRIPTS ================= -->
   <script>
-    /* =====================================================================
-       APPLICATION STATE
-       ===================================================================== */
-    let currentSubject = 'chi'; // 預設先顯示剛加入的國語科
-    let currentMode = 'instant'; // 'instant' or 'exam'
+    /* ==========================================
+       1. ENGLISH QUESTIONS (生活英語完整題庫)
+       ========================================== */
+    const engQuestions = [
+      {
+        id: "eng_cat_1",
+        type: "category_drop",
+        category: "grammar",
+        question: "Look and Classify: 請將單字正確歸類到【國家 Countries】或【交通方式 Transportation】",
+        items: [
+          { word: "India", cat: "country" },
+          { word: "on foot", cat: "trans" },
+          { word: "Japan", cat: "country" },
+          { word: "by bus", cat: "trans" },
+          { word: "Australia", cat: "country" },
+          { word: "by scooter", cat: "trans" }
+        ],
+        explanation: "國家 (Countries): India, Japan, Australia；交通方式 (Transportation): on foot, by bus, by scooter。"
+      },
+      {
+        id: "eng_mc_1",
+        type: "choice",
+        category: "grammar",
+        question: "How ＿＿＿＿ your sisters go to the park?",
+        options: ["is", "are", "do", "does"],
+        answer: 2,
+        explanation: "主詞是複數名詞「your sisters」，句中有一般動詞「go」，故助動詞使用「do」。"
+      },
+      {
+        id: "eng_mc_2",
+        type: "choice",
+        category: "grammar",
+        question: "A: Does he go to school by bus?  B: No, he doesn't. He goes to school ＿＿＿＿.",
+        options: ["by foot", "on foot", "with walk", "foot"],
+        answer: 1,
+        explanation: "英語中「步行、走路」的習慣固定片語為「on foot」。"
+      },
+      {
+        id: "eng_mc_3",
+        type: "choice",
+        category: "grammar",
+        question: "Look at the wrestler image. A: Where is he from?  B: ＿＿＿＿",
+        options: ["He's from the UK.", "He's from Japan.", "He's from India.", "He's from Australia."],
+        answer: 1,
+        explanation: "相撲選手為日本特色，故回答「He's from Japan.」"
+      },
+      {
+        id: "eng_mc_4",
+        type: "choice",
+        category: "grammar",
+        question: "A: ＿＿＿＿＿＿＿＿?  B: I go to school by metro.",
+        options: ["Where do you go?", "How do you go to school?", "When do you go to school?", "Do you go to school?"],
+        answer: 1,
+        explanation: "答句提供交通方式「by metro」，問句應使用「How do you go to school?」。"
+      },
+      {
+        id: "eng_mc_5",
+        type: "choice",
+        category: "grammar",
+        question: "完成句子：你妹妹走路去上學嗎？ ＿＿＿＿ your sister ＿＿＿＿ to school on foot?",
+        options: ["Do / go", "Does / go", "Does / goes", "Is / going"],
+        answer: 1,
+        explanation: "主詞「your sister」為第三人稱單數，助動詞使用 Does，後面動詞恢復原形 go。"
+      },
+      {
+        id: "eng_scramble_1",
+        type: "unscramble",
+        category: "unscramble",
+        question: "句子重組 (Unscramble the sentence):",
+        words: ["He", "goes", "to", "the", "bank", "by", "bike", "."],
+        correctSentence: "He goes to the bank by bike .",
+        explanation: "主詞 He + 動詞 goes + 目的地 to the bank + 交通方式 by bike."
+      },
+      {
+        id: "eng_scramble_2",
+        type: "unscramble",
+        category: "unscramble",
+        question: "句子重組 (Unscramble the question):",
+        words: ["How", "do", "they", "go", "to", "the", "library", "?"],
+        correctSentence: "How do they go to the library ?",
+        explanation: "疑問詞 How + 助動詞 do + 主詞 they + 動詞 go to the library?"
+      },
+      {
+        id: "eng_scramble_3",
+        type: "unscramble",
+        category: "unscramble",
+        question: "句子重組 (Unscramble the sentence):",
+        words: ["We", "are", "from", "the", "USA", "."],
+        correctSentence: "We are from the USA .",
+        explanation: "主詞 We + be動詞 are + 來自片語 from the USA."
+      },
+      {
+        id: "eng_scramble_4",
+        type: "unscramble",
+        category: "unscramble",
+        question: "句子重組 (Unscramble the question):",
+        words: ["Is", "Jay", "from", "Singapore", "?"],
+        correctSentence: "Is Jay from Singapore ?",
+        explanation: "Be動詞開頭問句：Is + 主詞 Jay + 介系詞片語 from Singapore?"
+      },
+      {
+        id: "eng_cloze_1",
+        type: "choice",
+        category: "reading",
+        context: "Jenny (1) from Taiwan, but now she lives with her mom and dad in the USA. Now, she (2) two good friends at school. (3) Ian and Willy. They all like hamburgers.",
+        question: "選出短文 (1) 處最適合的動詞：",
+        options: ["am", "are", "is"],
+        answer: 2,
+        explanation: "主詞 Jenny 為第三人稱單數，be 動詞使用 is。"
+      },
+      {
+        id: "eng_cloze_2",
+        type: "choice",
+        category: "reading",
+        context: "Jenny is from Taiwan... Now, she (2) two good friends at school.",
+        question: "選出短文 (2) 處正確的動詞形式：",
+        options: ["have", "has", "is"],
+        answer: 1,
+        explanation: "主詞 she 為第三人稱單數，動詞擁有使用 has。"
+      },
+      {
+        id: "eng_read_1",
+        type: "choice",
+        category: "reading",
+        context: "Nick is a singer in the USA, but he is from Spain. He has many followers on Instagram: Singapore (170,901), India (320,500), Taiwan (450,200).",
+        question: "Where is Nick from?",
+        options: ["He is from the USA.", "He is from Spain.", "He is from the UK."],
+        answer: 1,
+        explanation: "文章明確提到「...but he is from Spain.」"
+      },
+      {
+        id: "eng_read_2",
+        type: "choice",
+        category: "reading",
+        context: "Followers: Singapore (170,901), India (320,500), Taiwan (450,200).",
+        question: "There are 170,901 followers from one country. What country is this?",
+        options: ["It is India.", "It is Taiwan.", "It is Singapore."],
+        answer: 2,
+        explanation: "數據中 170,901 人來自新加坡 (Singapore)。"
+      },
+      {
+        id: "eng_read_3",
+        type: "choice",
+        category: "reading",
+        context: "SpongeBob is from the USA, and Dora likes it very much. Detective Conan and Pokémon are from Japan. Peppa Pig is from the UK.",
+        question: "Where is SpongeBob from?",
+        options: ["It's from Japan.", "It's from the UK.", "It's from the USA."],
+        answer: 2,
+        explanation: "文中指出「SpongeBob is from the USA」。"
+      },
+      {
+        id: "eng_read_4",
+        type: "choice",
+        category: "reading",
+        context: "Detective Conan and Pokémon are from Japan. They're very popular in Taiwan. Peppa Pig is from the UK.",
+        question: "Is Detective Conan from Japan?",
+        options: ["No. It's from the UK.", "Yes, and Pokémon is from Japan, too.", "Yes, and Peppa Pig is from Japan, too."],
+        answer: 1,
+        explanation: "Detective Conan 和 Pokémon 均來自日本。"
+      },
+      {
+        id: "eng_read_5",
+        type: "choice",
+        category: "reading",
+        context: "D Zoo: 5 minutes walk from D Zoo Station by MRT, or 8 minutes walk from the dock by boat. Buses available: 101, 1056, 208, 399.",
+        question: "Martin wants to go to the zoo by bus. Which bus can he take?",
+        options: ["He can't go to the zoo by bus.", "He can take bus 101.", "He can take bus 988."],
+        answer: 1,
+        explanation: "提供之公車路線包含 101, 1056, 208, 399。"
+      },
+      {
+        id: "eng_read_6",
+        type: "choice",
+        category: "reading",
+        context: "D Zoo: 8 minutes walk from the dock (碼頭) by boat.",
+        question: "Can people go to the zoo by boat?",
+        options: ["Yes, they can go to the zoo by boat.", "No, they can only go by train.", "No, they can't."],
+        answer: 0,
+        explanation: "文中載明可從碼頭步行抵達，故可搭乘船隻 (boat) 前往。"
+      },
+      {
+        id: "eng_read_7",
+        type: "choice",
+        category: "reading",
+        context: "Dad: It's sunny today. Let's have a picnic in the park. Jane: Mike is from Australia. Cindy is from Taiwan. Dad: Wonderful! I love bubble tea.",
+        question: "Where do they have a picnic?",
+        options: ["By the river.", "At school.", "In the park."],
+        answer: 2,
+        explanation: "爸爸說：「Let's have a picnic in the park.」"
+      },
+      {
+        id: "eng_read_8",
+        type: "choice",
+        category: "reading",
+        context: "Jane: Cindy could bring some bubble tea. Dad: Wonderful! I love bubble tea.",
+        question: "Does Jane's father like bubble tea?",
+        options: ["Yes, he does.", "No, he doesn't.", "We don't know."],
+        answer: 0,
+        explanation: "爸爸明確表示「I love bubble tea.」"
+      }
+    ];
+
+    /* ==========================================
+       2. MATHEMATICS QUESTIONS (數學科題庫)
+       ========================================== */
+    const mathQuestions = [
+      { id: "m_tf_1", type: "tf", category: "tf", question: "兩個整數的最大公因數是 1，表示這兩個數是質數。", answer: "X", explanation: "錯誤。最大公因數是 1 只代表兩數「互質」，但不代表這兩數都是質數（例如 8 和 9 都是合數但互質）。" },
+      { id: "m_tf_2", type: "tf", category: "tf", question: "2、3、5、6 都是 30 的質因數。", answer: "X", explanation: "錯誤。6 是合數，不是質因數。30 的質因數只有 2、3、5。" },
+      { id: "m_tf_3", type: "tf", category: "tf", question: "愛德華測量長方形卡片，長與寬的比為 2：1，如果寬是 70.5 毫米，長是 141 毫米。", answer: "O", explanation: "正確。141 ÷ 70.5 = 2，比為 2：1。" },
+      { id: "m_tf_4", type: "tf", category: "tf", question: "在小數除法中，如果除數小於 1，所得到的商會比被除數小。", answer: "X", explanation: "錯誤。除數小於 1（大於 0）時，所得的商會比被除數大。" },
+      { id: "m_tf_5", type: "tf", category: "tf", question: "7 和 11 互質，所以它們的最大公因數是 7×11＝77。", answer: "X", explanation: "錯誤。兩數互質時，最大公因數必定是 1。77 是最小公倍數。" },
+      { id: "m_mc_1", type: "choice", category: "choice", question: "下午 3 時，樹高和樹影長的比是 13：10，樹高是 481 公分，樹影長是幾公分？", options: ["37 公分", "130 公分", "370 公分", "625.3 公分"], answer: 2, explanation: "481 ÷ 13 × 10 = 370 公分。" },
+      { id: "m_mc_2", type: "choice", category: "choice", question: "想要把分數化成最簡分數，可以用下列哪一個數將分子和分母約分呢？", options: ["最小公倍數", "最大公因數", "最大公倍數", "最小公因數"], answer: 1, explanation: "同除以「最大公因數」即可化為最簡分數。" },
+      { id: "m_mc_3", type: "choice", category: "choice", question: "有一包重 9.15 公斤的米，平分給 3 人，每人可以分到多少公斤的米？", options: ["0.35 公斤", "3.05 公斤", "3.15 公斤", "3.5 公斤"], answer: 1, explanation: "9.15 ÷ 3 = 3.05 公斤。" }
+    ];
+
+    /* ==========================================
+       3. CHINESE QUESTIONS (國語科題庫 - 節錄精選)
+       ========================================== */
+    const chineseQuestions = [
+      { id: "c_tf_1", type: "tf", category: "tf", question: "「混合」、「混淆」兩個詞語的「混」字意思相同。", answer: "O", explanation: "皆為摻雜、合在一起之意。" },
+      { id: "c_tf_3", type: "tf", category: "tf", question: "「園蔬勝珍饈」是指為了追求健康，我們應該只吃昂貴稀有的山珍海味。", answer: "X", explanation: "「園蔬勝珍饈」是指飲食要簡樸節約，自家種的蔬菜勝過山珍海味。" },
+      { id: "c_tf_5", type: "tf", category: "tf", question: "「削皮」、「削價」兩個詞語的「削」字意思相同。", answer: "X", explanation: "削皮是切除；削價是刪減。" },
+      { id: "c_tf_6", type: "tf", category: "tf", question: "「熬夜」、「熬湯」兩個詞語的「熬」字意思相同。", answer: "X", explanation: "熬夜是勉強忍耐；熬湯是用火慢煮。" },
+      { id: "c_ph_1", type: "choice", category: "phonetic", question: "「看到同學□□為班級倒垃圾，老師欣慰的朝他□頭微笑。」空格中依序應填入哪些字？", options: ["點點，默", "墨墨，點", "墨墨，漠", "默默，點"], answer: 3, explanation: "默默付出的「默」、點頭的「點」。" },
+      { id: "c_ph_2", type: "choice", category: "phonetic", question: "「他成功□轉了劣勢，成為帶領球隊贏得勝利的關鍵樞□。」空格中依序應填入哪些字？", options: ["扭，扭", "扭，紐", "紐，扭", "紐，紐"], answer: 1, explanation: "扭轉、樞紐。" },
+      { id: "c_ph_4", type: "choice", category: "phonetic", question: "下列文句，何者用字完全正確？", options: ["我不想把冠軍拱手讓人。", "那位先生氣得臉都紐曲了。", "被胡亂指責讓他覺得很委區。", "他講話不經思考，讓人很監尬。"], answer: 0, explanation: "②「扭」曲，③委「屈」，④「尷」尬。" }
+    ];
+
+    /* ==========================================
+       4. SOCIETY QUESTIONS (社會科題庫 - 節錄精選)
+       ========================================== */
+    const societyQuestions = [
+      { id: "s_tf_1", type: "tf", category: "tf", question: "因社會變遷及教育觀念的改變，現在的教育鼓勵學生表達自己的想法，也鼓勵個人不同的發展。", answer: "O", explanation: "" },
+      { id: "s_tf_2", type: "tf", category: "tf", question: "族群交流的主要目的是為了促進經濟的發展、帶動觀光的人潮，無法豐富臺灣的文化。", answer: "X", explanation: "族群交流能帶來多元文化，豐富臺灣的文化內涵。" },
+      { id: "s_tf_7", type: "tf", category: "tf", question: "憲法保障人民的自由權，人民可自由決定是否要繳納稅金給政府。", answer: "X", explanation: "納稅是憲法規定國民應盡的「義務」。" },
+      { id: "s_mc_1", type: "choice", category: "choice", question: "下列何者的主要職責是監督地方行政機關施政？", options: ["立法院院長", "總統府發言人", "民意代表", "縣市首長"], answer: 2, explanation: "民意代表（縣市議員等）負責監督地方行政機關施政。" },
+      { id: "s_mc_2", type: "choice", category: "choice", question: "清帝國時期的女性來到現代臺灣，看到哪一種社會現象會最感驚奇？", options: ["女性負責照顧子女", "女性承擔所有的家務", "女性學習編織等生活技能", "女性可就讀大專校院接受高等教育"], answer: 3, explanation: "清代女性極少有受正式教育的機會，現代教育男女完全平等。" }
+    ];
+
+    /* ==========================================
+       APPLICATION ENGINE (狀態管理與事件處理)
+       ========================================== */
+    let currentSubject = 'eng'; // 預設優先載入英語科
+    let currentMode = 'instant';
     let currentCategory = 'all';
     let filterWrongOnly = false;
     let audioEnabled = true;
@@ -285,7 +517,6 @@
       try {
         if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
         if (audioCtx.state === 'suspended') audioCtx.resume();
-
         const now = audioCtx.currentTime;
         const osc = audioCtx.createOscillator();
         const gain = audioCtx.createGain();
@@ -334,8 +565,8 @@
       playChime('click');
 
       const tabs = {
-        math: { btn: 'btnSwitchMath', badge: '數學科', icon: 'fa-calculator', color: 'teal' },
         eng:  { btn: 'btnSwitchEng',  badge: '英語科', icon: 'fa-language',   color: 'purple' },
+        math: { btn: 'btnSwitchMath', badge: '數學科', icon: 'fa-calculator', color: 'teal' },
         chi:  { btn: 'btnSwitchChi',  badge: '國語科', icon: 'fa-book',       color: 'rose' },
         soc:  { btn: 'btnSwitchSoc',  badge: '社會科', icon: 'fa-landmark',   color: 'amber' }
       };
@@ -369,7 +600,7 @@
       const examBanner = document.getElementById('examSubmitSection');
 
       if (mode === 'instant') {
-        instantBtn.className = 'px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-bold transition-all';
+        instantBtn.className = 'px-2.5 py-1.5 rounded-md bg-purple-600 text-white font-bold transition-all';
         examBtn.className = 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
         examBanner.classList.add('hidden');
       } else {
@@ -383,10 +614,10 @@
     }
 
     function getCurrentDataset() {
-      if (currentSubject === 'math') return window.mathQuestions || [];
-      if (currentSubject === 'eng')  return window.engQuestions || [];
-      if (currentSubject === 'chi')  return window.chineseQuestions || [];
-      if (currentSubject === 'soc')  return window.societyQuestions || [];
+      if (currentSubject === 'eng')  return engQuestions;
+      if (currentSubject === 'math') return mathQuestions;
+      if (currentSubject === 'chi')  return chineseQuestions;
+      if (currentSubject === 'soc')  return societyQuestions;
       return [];
     }
 
@@ -407,11 +638,7 @@
         unscramble: '句子重組',
         reading: '閱讀理解',
         phonetic: '字音字形',
-        vocabulary: '字詞義運用',
-        punctuation: '標點符號',
-        rhetoric: '基本修辭',
-        idiom: '延伸成語',
-        other: '句型與綜合'
+        vocabulary: '字詞義運用'
       };
 
       const categories = [{ key: 'all', label: '全部題目', count: list.length }];
@@ -509,7 +736,7 @@
         contextHtml = `
           <div class="mb-3 p-3.5 bg-slate-50 border-l-4 border-indigo-400 rounded-r-xl text-slate-700 text-sm leading-relaxed">
             <div class="text-[11px] font-bold text-indigo-500 uppercase tracking-wider mb-1 flex items-center">
-              <i class="fa-solid fa-book-open mr-1"></i> 題組材料 / 短文說明
+              <i class="fa-solid fa-book-open mr-1"></i> 短文與文章材料 / Context
             </div>
             ${q.context}
           </div>
@@ -596,12 +823,12 @@
           <button onclick="handleAnswer('${q.id}', 'O')" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
             class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('O')}">
             <i class="fa-regular fa-circle text-lg"></i>
-            <span>正確 (○)</span>
+            <span>正確 (O)</span>
           </button>
           <button onclick="handleAnswer('${q.id}', 'X')" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
             class="flex items-center justify-center space-x-2 py-3 px-4 rounded-xl border text-base font-extrabold transition-all ${getBtnStyle('X')}">
             <i class="fa-solid fa-xmark text-lg"></i>
-            <span>錯誤 (╳)</span>
+            <span>錯誤 (X)</span>
           </button>
         </div>
       `;
@@ -633,7 +860,7 @@
             return `
               <button onclick="handleAnswer('${q.id}', ${idx})" ${isAnswered && currentMode === 'instant' ? 'disabled' : ''}
                 class="flex items-center text-left py-3 px-4 rounded-xl border transition-all text-sm sm:text-base font-medium ${btnClass}">
-                <span class="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center text-xs font-bold mr-3 shrink-0">${letters[idx] || (idx+1)}</span>
+                <span class="w-6 h-6 rounded-lg bg-black/10 flex items-center justify-center text-xs font-bold mr-3 shrink-0">${letters[idx]}</span>
                 <span class="flex-1">${opt}</span>
               </button>
             `;
@@ -671,7 +898,7 @@
           </div>
           <div class="flex items-center space-x-2">
             <button onclick="checkUnscramble('${q.id}')" ${draft.length === 0 ? 'disabled' : ''} class="px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">檢查答案</button>
-            <button onclick="clearUnscramble('${q.id}')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs sm:text-sm font-semibold rounded-xl">重置</button>
+            <button onclick="clearUnscramble('${q.id}')" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs sm:text-sm font-semibold rounded-xl">清空重選</button>
           </div>
         </div>
       `;
@@ -698,7 +925,7 @@
     }
 
     function checkUnscramble(qId) {
-      const q = (window.engQuestions || []).find(item => item.id === qId);
+      const q = engQuestions.find(item => item.id === qId);
       const draft = unscrambleDrafts[qId] || [];
       const userSentence = draft.map(i => q.words[i]).join(' ');
       const isCorrect = userSentence.trim() === q.correctSentence.trim();
@@ -728,7 +955,7 @@
               `;
             }).join('')}
           </div>
-          <button onclick="checkClassifyAnswer('${q.id}')" class="px-4 py-2 bg-teal-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">確認歸類</button>
+          <button onclick="checkClassifyAnswer('${q.id}')" class="px-4 py-2 bg-purple-600 text-white text-xs sm:text-sm font-bold rounded-xl shadow-sm">確認歸類</button>
         </div>
       `;
     }
@@ -742,7 +969,7 @@
     }
 
     function checkClassifyAnswer(qId) {
-      const q = (window.engQuestions || []).find(item => item.id === qId);
+      const q = engQuestions.find(item => item.id === qId);
       const userClassify = answersState[qId]?.userClassify || {};
       let allCorrect = true;
       for (let i = 0; i < q.items.length; i++) {
@@ -840,7 +1067,7 @@
       const finalScore = total > 0 ? Math.round((correctCount / total) * 100) : 0;
       const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
 
-      document.getElementById('modalSubjectTag').textContent = '測驗結算';
+      document.getElementById('modalSubjectTag').textContent = '英語科測驗結算';
       document.getElementById('modalFinalScore').textContent = `${finalScore}分`;
       document.getElementById('modalCorrectCount').textContent = `${correctCount}/${total}`;
       document.getElementById('modalAccuracy').textContent = `${accuracy}%`;
@@ -848,7 +1075,7 @@
       const titleElem = document.getElementById('modalScoreTitle');
       const iconElem = document.getElementById('modalScoreIcon');
       if (finalScore >= 90) {
-        titleElem.textContent = "表現極度傑出！掌握非常完美！";
+        titleElem.textContent = "表現極度傑出！觀念掌握完美！";
         iconElem.innerHTML = '<i class="fa-solid fa-crown text-amber-500"></i>';
         playChime('correct');
       } else if (finalScore >= 70) {
@@ -856,7 +1083,7 @@
         iconElem.innerHTML = '<i class="fa-solid fa-medal text-teal-500"></i>';
         playChime('correct');
       } else {
-        titleElem.textContent = "再接再厲！觀看解析強化觀念！";
+        titleElem.textContent = "再接再厲！看解析複習重要觀念！";
         iconElem.innerHTML = '<i class="fa-solid fa-book-bookmark text-indigo-500"></i>';
         playChime('wrong');
       }
