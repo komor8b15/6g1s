@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>國小互動測驗學習平台</title>
+  <title>國小多學科互動測驗學習平台</title>
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Font Awesome Icons -->
@@ -40,7 +40,7 @@
         <!-- Logo 與標題 -->
         <div class="flex items-center space-x-3">
           <div id="subjectIconWrapper" class="w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-teal-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300">
-            <i id="subjectIcon" class="fa-solid fa-book"></i>
+            <i id="subjectIcon" class="fa-solid fa-calculator"></i>
           </div>
           <div>
             <div class="flex items-center space-x-2">
@@ -51,7 +51,7 @@
           </div>
         </div>
 
-        <!-- 科目切換按鈕區 (由 JS 依據設定自動生成，免手動刻按鈕) -->
+        <!-- 科目切換按鈕區 (由 JS 動態生成) -->
         <div id="subjectNavList" class="flex bg-slate-100 p-1.5 rounded-2xl border border-slate-200 shadow-inner overflow-x-auto gap-1"></div>
 
         <!-- 功能按鈕 -->
@@ -78,7 +78,7 @@
         <!-- 模式切換與錯題篩選 -->
         <div class="flex items-center space-x-3 ml-auto">
           <div class="flex items-center bg-white border border-slate-200 rounded-lg p-0.5 text-xs font-semibold shadow-sm">
-            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white transition-all">
+            <button onclick="setQuizMode('instant')" id="modeInstantBtn" class="px-2.5 py-1.5 rounded-md bg-teal-600 text-white font-bold transition-all">
               <i class="fa-solid fa-bolt mr-1"></i>即時解析
             </button>
             <button onclick="setQuizMode('exam')" id="modeExamBtn" class="px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all">
@@ -219,23 +219,53 @@
     </button>
   </div>
 
-  <!-- ================= 載入各科外部分離題庫 ================= -->
+  <!-- ================= 載入外部分離題庫 ================= -->
   <script src="./questions_math.js"></script>
   <script src="./questions_chinese.js"></script>
   <script src="./questions_society.js"></script>
-  <!-- 未來有新科目只要直接在這裡往下加一行，例如：<script src="./questions_science.js"></script> -->
 
   <!-- ================= 核心邏輯引擎 ================= -->
   <script>
-    /* ==========================================================
-       ★ 科目設定中心 (新增科目只需在下方設定表加一筆即可全自動運作！)
-       ========================================================== */
     const SUBJECT_CONFIG = {
-      math: { label: '數學科', icon: 'fa-calculator', color: 'teal', dataKey: 'mathQuestions' },
-      chi:  { label: '國語科', icon: 'fa-book',       color: 'rose', dataKey: 'chineseQuestions' },
-      soc:  { label: '社會科', icon: 'fa-landmark',   color: 'amber', dataKey: 'societyQuestions' }
-      // 例如未來新增自然科：
-      // sci:  { label: '自然科', icon: 'fa-flask', color: 'emerald', dataKey: 'scienceQuestions' }
+      math: {
+        label: '數學科',
+        icon: 'fa-calculator',
+        theme: {
+          activeBtn: 'bg-white text-teal-700 shadow-sm',
+          inactiveBtn: 'text-slate-600 hover:text-teal-600',
+          badge: 'bg-teal-100 text-teal-800',
+          iconWrap: 'bg-teal-600 text-white',
+          progress: 'bg-teal-500',
+          modeBtn: 'bg-teal-600 text-white'
+        },
+        getData: () => window.mathQuestions || []
+      },
+      chi: {
+        label: '國語科',
+        icon: 'fa-book',
+        theme: {
+          activeBtn: 'bg-white text-rose-700 shadow-sm',
+          inactiveBtn: 'text-slate-600 hover:text-rose-600',
+          badge: 'bg-rose-100 text-rose-800',
+          iconWrap: 'bg-rose-600 text-white',
+          progress: 'bg-rose-500',
+          modeBtn: 'bg-rose-600 text-white'
+        },
+        getData: () => window.chineseQuestions || []
+      },
+      soc: {
+        label: '社會科',
+        icon: 'fa-landmark',
+        theme: {
+          activeBtn: 'bg-white text-amber-700 shadow-sm',
+          inactiveBtn: 'text-slate-600 hover:text-amber-600',
+          badge: 'bg-amber-100 text-amber-800',
+          iconWrap: 'bg-amber-600 text-white',
+          progress: 'bg-amber-500',
+          modeBtn: 'bg-amber-600 text-white'
+        },
+        getData: () => window.societyQuestions || []
+      }
     };
 
     let currentSubject = 'math';
@@ -245,13 +275,11 @@
     let audioEnabled = true;
     const answersState = {};
 
-    // 取得當前科目的所有題目
     function getCurrentDataset() {
       const config = SUBJECT_CONFIG[currentSubject];
-      return (config && window[config.dataKey]) ? window[config.dataKey] : [];
+      return config ? config.getData() : [];
     }
 
-    // 動態渲染導覽列上的科目切換按鈕
     function renderSubjectNav() {
       const navContainer = document.getElementById('subjectNavList');
       navContainer.innerHTML = '';
@@ -261,18 +289,14 @@
         const isActive = currentSubject === key;
         const btn = document.createElement('button');
         btn.onclick = () => switchSubject(key);
-
-        if (isActive) {
-          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all bg-white text-${item.color}-700 shadow-sm shrink-0`;
-        } else {
-          btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all text-slate-600 hover:text-${item.color}-600 shrink-0`;
-        }
+        btn.className = `flex items-center space-x-1.5 px-3 py-1.5 rounded-xl text-xs sm:text-sm font-bold transition-all shrink-0 ${
+          isActive ? item.theme.activeBtn : item.theme.inactiveBtn
+        }`;
         btn.innerHTML = `<i class="fa-solid ${item.icon}"></i><span>${item.label}</span>`;
         navContainer.appendChild(btn);
       });
     }
 
-    // 切換科目
     function switchSubject(subjectKey) {
       if (!SUBJECT_CONFIG[subjectKey]) return;
       currentSubject = subjectKey;
@@ -282,10 +306,14 @@
 
       const config = SUBJECT_CONFIG[subjectKey];
       document.getElementById('subjectBadge').textContent = config.label;
-      document.getElementById('subjectBadge').className = `text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider bg-${config.color}-100 text-${config.color}-800 transition-colors`;
-      document.getElementById('subjectIconWrapper').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-2xl bg-${config.color}-600 text-white flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors`;
+      document.getElementById('subjectBadge').className = `text-xs px-2 py-0.5 rounded-full font-bold uppercase tracking-wider transition-colors ${config.theme.badge}`;
+      document.getElementById('subjectIconWrapper').className = `w-10 h-10 sm:w-12 sm:h-12 rounded-2xl flex items-center justify-center text-xl sm:text-2xl shadow-md transition-colors duration-300 ${config.theme.iconWrap}`;
       document.getElementById('subjectIcon').className = `fa-solid ${config.icon}`;
-      document.getElementById('progressBar').className = `bg-${config.color}-500 h-full w-0 transition-all duration-300`;
+      document.getElementById('progressBar').className = `h-full w-0 transition-all duration-300 ${config.theme.progress}`;
+
+      if (currentMode === 'instant') {
+        document.getElementById('modeInstantBtn').className = `px-2.5 py-1.5 rounded-md font-bold transition-all ${config.theme.modeBtn}`;
+      }
 
       renderSubjectNav();
       renderCategoryButtons();
@@ -293,7 +321,6 @@
       updateDashboardStats();
     }
 
-    // 題型分類統計與標籤生成
     function renderCategoryButtons() {
       const container = document.getElementById('filterButtonGroup');
       container.innerHTML = '';
@@ -331,7 +358,6 @@
       });
     }
 
-    // 渲染題目卡片
     function renderQuestions() {
       const container = document.getElementById('questionContainer');
       const emptyState = document.getElementById('emptyState');
@@ -437,7 +463,6 @@
       });
     }
 
-    // 答題判定
     function handleAnswer(questionId, choice) {
       const q = getCurrentDataset().find(item => item.id === questionId);
       if (!q) return;
@@ -455,7 +480,6 @@
       renderQuestions();
     }
 
-    // 數據更新
     function updateDashboardStats() {
       const dataset = getCurrentDataset();
       let answered = 0, correct = 0, wrong = 0;
@@ -499,9 +523,9 @@
     function setQuizMode(mode) {
       currentMode = mode;
       playChime('click');
-      const curColor = SUBJECT_CONFIG[currentSubject]?.color || 'teal';
+      const config = SUBJECT_CONFIG[currentSubject];
       document.getElementById('modeInstantBtn').className = mode === 'instant' 
-        ? `px-2.5 py-1.5 rounded-md bg-${curColor}-600 text-white font-bold transition-all` 
+        ? `px-2.5 py-1.5 rounded-md font-bold transition-all ${config ? config.theme.modeBtn : 'bg-teal-600 text-white'}` 
         : 'px-2.5 py-1.5 rounded-md text-slate-600 hover:text-slate-900 transition-all';
       document.getElementById('modeExamBtn').className = mode === 'exam' 
         ? 'px-2.5 py-1.5 rounded-md bg-indigo-600 text-white font-bold transition-all' 
@@ -558,7 +582,6 @@
       if (keepReview) setQuizMode('instant');
     }
 
-    // 音效處理
     let audioCtx = null;
     function playChime(type) {
       if (!audioEnabled) return;
@@ -603,13 +626,24 @@
       document.getElementById('audioIcon').className = audioEnabled ? 'fa-solid fa-volume-high text-teal-600' : 'fa-solid fa-volume-xmark text-slate-400';
     }
 
-    // 初始化
-    window.addEventListener('DOMContentLoaded', () => {
+    // 初始化與防延遲自動重試機制
+    function bootstrap() {
       renderSubjectNav();
       renderCategoryButtons();
       renderQuestions();
       updateDashboardStats();
-    });
+
+      // 如果初次載入為 0 題，自動於 100ms 後重試一次，防止外部腳本異步延遲
+      if (getCurrentDataset().length === 0) {
+        setTimeout(() => {
+          renderCategoryButtons();
+          renderQuestions();
+          updateDashboardStats();
+        }, 100);
+      }
+    }
+
+    window.addEventListener('DOMContentLoaded', bootstrap);
   </script>
 </body>
 </html>
