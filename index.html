@@ -225,9 +225,10 @@
     </div>
   </footer>
 
-  <!-- ================= 載入外部分離題庫 (僅載入國語與社會) ================= -->
+  <!-- ================= 載入外部分離題庫 (國語社會數學及後續要新增的....) ================= -->
   <script src="./questions_chinese.js"></script>
   <script src="./questions_society.js"></script>
+  <script src="./questions_math.js"></script>
 
   <!-- ================= 核心邏輯引擎 ================= -->
   <script>
@@ -258,6 +259,20 @@
         },
         getData: () => window.societyQuestions || []
       }
+      sci: {
+        label: '數學科',
+        icon: 'fa-flask',
+        theme: {
+          activeBtn: 'bg-white text-emerald-700 shadow-sm',
+          inactiveBtn: 'text-slate-600 hover:text-emerald-600',
+          badge: 'bg-emerald-100 text-emerald-800',
+          iconWrap: 'bg-emerald-600 text-white',
+          progress: 'bg-emerald-500',
+          modeBtn: 'bg-emerald-600 text-white'
+        },
+        getData: () => window.mathQuestions || []
+      }
+    };
     };
 
     let currentSubject = 'chi';
