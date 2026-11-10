@@ -235,7 +235,7 @@
   
   <!-- ================= 核心邏輯引擎 ================= -->
   <script>
-    // 依序註冊：國語科 -> 社會科 -> 數學科
+    /// 依序註冊：國語科 -> 社會科 -> 數學科 -> 數學(難)
     const SUBJECT_CONFIG = {
       chi: {
         label: '國語科',
@@ -275,7 +275,7 @@
           modeBtn: 'bg-teal-600 text-white'
         },
         getData: () => window.mathQuestions || []
-      }
+      }, // <--- 這裡補上逗號！
       math1: {
         label: '數學(難)',
         icon: 'fa-calculator',
