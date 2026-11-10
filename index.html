@@ -229,7 +229,10 @@
   <script src="./questions_chinese.js"></script>
   <script src="./questions_society.js"></script>
   <script src="./questions_math.js"></script>
+  <script src="./questions_math1.js"></script>
 
+
+  
   <!-- ================= 核心邏輯引擎 ================= -->
   <script>
     // 依序註冊：國語科 -> 社會科 -> 數學科
@@ -272,6 +275,19 @@
           modeBtn: 'bg-teal-600 text-white'
         },
         getData: () => window.mathQuestions || []
+      }
+      math1: {
+        label: '數學(難)',
+        icon: 'fa-calculator',
+        theme: {
+          activeBtn: 'bg-white text-teal-700 shadow-sm',
+          inactiveBtn: 'text-slate-600 hover:text-teal-600',
+          badge: 'bg-teal-100 text-teal-800',
+          iconWrap: 'bg-teal-600 text-white',
+          progress: 'bg-teal-500',
+          modeBtn: 'bg-teal-600 text-white'
+        },
+        getData: () => window.math1Questions || []
       }
     };
 
